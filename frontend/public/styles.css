@@ -1,0 +1,65 @@
+/* Общий стиль для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #007BFF;
+}
+
+/* Стили формы */
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"] {
+    padding: 10px;
+    margin-right: 10px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    width: 200px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для списка клиентов */
+h3 {
+    color: #007BFF;
+    margin-top: 30px;
+}
+
+ul#clientList {
+    list-style: none;
+    padding: 0;
+}
+
+ul#clientList li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Добавляем эффекты для элементов списка */
+ul#clientList li:last-child {
+    border-bottom: none;
+}
+
+ul#clientList li:hover {
+    background-color: #e7f1ff;
+}

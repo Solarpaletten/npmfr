@@ -1,0 +1,45 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff9900; /* Оранжевый цвет, например, для Solar */
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+  
+  .header-center {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .header-center span {
+    cursor: pointer;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-right span {
+    margin-right: 10px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0; /* Плейсхолдер для аватара пользователя */
+    border-radius: 50%;
+    display: inline-block;
+  }
+  

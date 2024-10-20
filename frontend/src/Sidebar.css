@@ -1,0 +1,40 @@
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #ffa500; /* Оранжевый фон для боковой панели */
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar h2 {
+  color: white; /* Белый текст для заголовка */
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+/* Кнопки с оранжевым фоном и белым текстом */
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffa500; /* Оранжевый цвет кнопки */
+  border: none;
+  color: white; /* Белый цвет текста */
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  border-radius: 4px; /* Скругляем углы для красоты */
+  transition: background-color 0.3s ease; /* Плавный переход при наведении */
+}
+
+/* Изменение фона при наведении */
+.sidebar button:hover {
+  background-color: #cc8400; /* Темный оттенок оранжевого при наведении */
+}

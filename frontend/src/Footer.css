@@ -1,0 +1,56 @@
+/* Стили для футера, аналогичные шапке */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff9900; /* Оранжевый цвет, как и в Header */
+    padding: 10px 20px;
+    color: white;
+    position: fixed;  /* Закрепляем футер внизу */
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Левая часть футера (логотип и т.д.) */
+  .footer-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Логотип в футере */
+  .logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+  
+  /* Центральная часть футера (навигационные элементы) */
+  .footer-center {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Стиль для элементов в центральной части футера */
+  .footer-center span {
+    cursor: pointer;
+  }
+  
+  /* Правая часть футера (информация о пользователе) */
+  .footer-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Отступы для текста в правой части футера */
+  .footer-right span {
+    margin-right: 10px;
+  }
+  
+  /* Плейсхолдер для аватара в футере (если используется) */
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0; /* Плейсхолдер для аватара пользователя */
+    border-radius: 50%;
+    display: inline-block;
+  }
+  

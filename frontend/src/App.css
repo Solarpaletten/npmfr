@@ -1,0 +1,38 @@
+/* Главный контейнер приложения */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Занимаем всю высоту окна браузера */
+}
+
+/* Контейнер для контента и боковой панели */
+.app {
+  display: flex;
+  flex: 1; /* Контент занимает оставшееся пространство */
+}
+
+/* Основная область контента */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  overflow-y: auto; /* Добавляем прокрутку для контента, если его много */
+}
+
+/* Боковая панель (Sidebar) */
+.sidebar {
+  width: 200px;
+  background-color: #ff9900;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+/* Футер */
+footer {
+  background-color: #ff9900;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
