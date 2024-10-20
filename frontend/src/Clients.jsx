@@ -8,7 +8,7 @@ function Clients() {
 
   useEffect(() => {
     // Запрос к API для получения данных клиентов
-    fetch('http://localhost:3000/api/clients')  // URL API
+    fetch('https://npmbk.onrender.com/api/clients')  // URL API
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
