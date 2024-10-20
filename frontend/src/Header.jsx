@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.css';  // Import styles for the top bar
+import Logo from './solar.png';  // Import the logo
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,7 +8,7 @@ function Header() {
   return (
     <div className="header">
       <div className="header-left">
-        <img src="solar.png" alt="Solar.de logo" className="logo" />
+        <img src={Logo} alt="Solar Logo" className="logo" /> {/* Исправлен синтаксис */}
       </div>
       <div className="header-center">
         <span>Invite users</span>
@@ -26,5 +27,3 @@ function Header() {
 }
 
 export default Header;
-
-
