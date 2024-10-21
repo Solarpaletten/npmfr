@@ -1,15 +1,11 @@
-.error_plug {
-  height: 30px;
-}
-
-.error {
-  color: #ffffff;
-  background: #e13c3c;
-  font-size: 14px;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
+.container_error {
+  flex-grow: 1;
+  margin: 10px;
   justify-content: center;
   align-items: center;
-  padding: 2px;
+  display: flex;
+}
+
+.error p {
+  font-size: 14px;
 }

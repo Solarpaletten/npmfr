@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Field from '../Field';
 import Form from '../Form';
 import Button from '../Button';
-import Error from '../Error';
+import ValidationError from '../ValidationError';
 
 function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState('');
@@ -56,7 +56,7 @@ function RegisterForm({ onRegister }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Error error={error} />
+        <ValidationError error={error} />
         <div>
           <Button type="submit">Register</Button>
           <Button type="button" onClick={() => navigate('/')}>Home</Button>

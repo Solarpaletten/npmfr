@@ -1,40 +1,23 @@
 .sidebar {
-  width: 200px;
-  height: 100vh;
-  background-color: #ffa500; /* Оранжевый фон для боковой панели */
+  min-width: 200px;
+  background-color: #173B45;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  border-right: 1px solid #ddd;
+  margin: 10px;
+  height: calc(100vh - 120px);
+  position: sticky;
+  border-radius: 5px;
 }
 
-.sidebar h2 {
-  color: white; /* Белый текст для заголовка */
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin-bottom: 10px;
-}
-
-/* Кнопки с оранжевым фоном и белым текстом */
-.sidebar button {
-  width: 100%;
-  padding: 10px;
-  background-color: #ffa500; /* Оранжевый цвет кнопки */
-  border: none;
-  color: white; /* Белый цвет текста */
-  cursor: pointer;
-  text-align: left;
+.sidebar a {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 4px 0;
   font-size: 14px;
-  border-radius: 4px; /* Скругляем углы для красоты */
-  transition: background-color 0.3s ease; /* Плавный переход при наведении */
 }
 
-/* Изменение фона при наведении */
-.sidebar button:hover {
-  background-color: #cc8400; /* Темный оттенок оранжевого при наведении */
+.sidebar a:hover {
+  color: #c0dde5;
 }

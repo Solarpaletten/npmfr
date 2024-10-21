@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import Loader from '../Loader';
+import Error from '../Error';
 
 import styles from './index.module.css';
 
 function Clients() {
-  const [clients, setClients] = useState([]);  // Состояние для хранения данных клиентов
-  const [loading, setLoading] = useState(true);  // Состояние для отображения загрузки
-  const [error, setError] = useState(null);  // Состояние для отображения ошибок
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Запрос к API для получения данных клиентов
-    fetch('https://npmbk.onrender.com/api/clients')  // URL API
+    fetch('https://npmbk.onrender.com/api/clients')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -17,47 +18,47 @@ function Clients() {
         return response.json();
       })
       .then(data => {
-        setClients(data);  // Устанавливаем полученные данные в состояние
-        setLoading(false);  // Останавливаем загрузку
+        setClients(data);
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching clients:', error);
-        setError(error.toString());  // Устанавливаем ошибку в состояние
-        setLoading(false);  // Останавливаем загрузку
+        setError(error.toString());
+        setLoading(false);
       });
   }, []);
 
   if (loading) {
-    return <p>Загрузка списка клиентов...</p>;  // Больше информации для пользователя
+    return <Loader />;
   }
 
   if (error) {
-    return <p>Ошибка загрузки клиентов: {error}</p>;  // Отображение ошибки
+    return <Error error={error} />;
   }
 
   return (
-    <div>
-      <h1>Список клиентов</h1>
-      <table>
+    <div className={styles.clients_container}>
+      <h1>Clients</h1>
+      <table className={styles.table}>
         <thead>
           <tr>
-            <th>Дата регистрации</th>
-            <th>Имя</th>
-            <th>Код</th>
-            <th>Код НДС</th>
-            <th>Номер телефона</th>
+            <th>Registration date</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>VAT code</th>
+            <th>Phone number</th>
             <th>Email</th>
           </tr>
         </thead>
         <tbody>
           {clients.map(client => (
             <tr key={client.id}>
-              <td>{client.registrationDate}</td>
-              <td>{client.name}</td>
-              <td>{client.code}</td>
-              <td>{client.vatCode}</td>
-              <td>{client.phoneNumber}</td>
-              <td>{client.email}</td>
+              <td>{client.registrationDate || '-'}</td>
+              <td>{client.name || '-'}</td>
+              <td>{client.code || '-'}</td>
+              <td>{client.vatCode || '-'}</td>
+              <td>{client.phoneNumber || '-'}</td>
+              <td>{client.email || '-'}</td>
             </tr>
           ))}
         </tbody>

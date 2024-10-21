@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from './solar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSmile } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './index.module.css';
 
@@ -20,7 +20,7 @@ function Header() {
       <div className={styles.header_right}>
         <span>Leanid</span>
         <span>UG SWAPOIL</span>
-        <FontAwesomeIcon icon={faSmile} style={{ color: 'orange', marginLeft: '10px' }} />
+        <FontAwesomeIcon icon={faUser} style={{ color: '#B43F3F', margin: '0 5px 0 10px' }} />
         <div className={styles.user_avatar}></div>
       </div>
     </div>

@@ -1,0 +1,15 @@
+.error_plug {
+  height: 30px;
+}
+
+.error {
+  color: #ffffff;
+  background: #B43F3F;
+  font-size: 14px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+}

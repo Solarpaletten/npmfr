@@ -2,10 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ff9900;
-  /* Оранжевый цвет, например, для Solar */
+  background-color: #FF8225;
   padding: 10px 20px;
   color: #fff;
+  max-height: 60px;
 }
 
 .header_left {
@@ -39,8 +39,8 @@
 .user_avatar {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   background-color: #f0f0f0;
-  /* Плейсхолдер для аватара пользователя */
   border-radius: 50%;
   display: inline-block;
 }

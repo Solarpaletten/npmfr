@@ -1,9 +1,17 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './index.module.css';
 
 function Error({ error }) {
-  return <div className={styles.error_plug}>{error && <div className={styles.error}>{error}</div>}</div>;
+  return (
+  <div className={styles.container_error}>
+    <div className={styles.error}>
+      <FontAwesomeIcon icon={faBug} style={{ color: '#B43F3F', fontSize: '28px' }} />
+      <h3>Something wrong happened!</h3>
+      <p>{error}</p>
+  </div></div>);
 }
 
 export default Error;
