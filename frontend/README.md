@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Solar Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project consists of two main components:
+1. npmfr - The user interface of the application
+2. npmbk - The backend/server-side component
+
+## Setup
+
+- Clone the repository
+- Set up the **npmfr**
+- Set up the [npmbk](https://github.com/Solarpaletten/npmbk)
 
 ## Run the project
 
