@@ -1,5 +1,5 @@
 .error_plug {
-  height: 20px;
+  height: 30px;
 }
 
 .error {
@@ -11,4 +11,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2px;
 }
