@@ -6,8 +6,8 @@ import RegisterForm from './components/RegisterForm/index.jsx';
 import LoginForm from './components/LoginForm/index.jsx';
 import Dashboard from './components/Dashboard/index.jsx';
 import Clients from './components/Clients/index.jsx';
-
-import styles from './index.css';
+import Button from './components/Button/index.jsx';
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,17 +40,20 @@ function App() {
   };
 
   return (
-    <div className={styles["app-container"]}>
+    <div className="app-container">
       <Header onLogout={handleLogout} />
-      <div className={styles["main-content"]}>
+      <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route 
-            path="/dashboard" 
-            element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />} 
+          <Route
+            path="/clients"
+            element={isLoggedIn ? <Clients /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/dashboard"
+            element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
           /> {/* Проверка: если не залогинен, перенаправляем на логин */}
         </Routes>
       </div>
@@ -58,7 +61,6 @@ function App() {
   );
 }
 
-// Оборачиваем App в <Router> в корневом файле
 export default function RootApp() {
   return (
     <Router>

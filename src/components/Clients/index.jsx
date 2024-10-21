@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from './index.css';
+import styles from './index.module.css';
 
 function Clients() {
   const [clients, setClients] = useState([]);  // Состояние для хранения данных клиентов
@@ -67,4 +67,3 @@ function Clients() {
 }
 
 export default Clients;
-// Compare this snippet from frontend/src/components/ClientDetails.jsx:

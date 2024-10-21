@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './index.css';
+import styles from './index.module.css';
 
 function Footer() {
   return (

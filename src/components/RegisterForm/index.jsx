@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import styles from './index.css';
+import Field from '../Field';
+import Form from '../Form';
+import Button from '../Button';
+import Error from '../Error';
 
 function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState('');
@@ -13,71 +15,54 @@ function RegisterForm({ onRegister }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Простая валидация
     if (!username || !email || !password) {
       setError('All fields are required!');
       return;
     }
 
-    // Логика регистрации (например, отправка данных на сервер)
     console.log('User registered:', { username, email, password });
 
-    // Очистка формы
     setUsername('');
     setEmail('');
     setPassword('');
     setError('');
 
-    // Вызываем функцию onRegister и перенаправляем на страницу логина
     if (onRegister) {
       onRegister();
     } else {
-      navigate('/login'); // Перенаправляем на страницу логина
+      navigate('/login');
     }
   };
 
   return (
-    <div className="register-form">
+    <Form>
       <h2>Register</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
+        <Field
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Field
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Field
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Error error={error} />
         <div>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <Button type="submit">Register</Button>
+          <Button type="button" onClick={() => navigate('/')}>Home</Button>
         </div>
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="register-button">
-          Register
-        </button>
-        {/* Кнопка Домой */}
-        <button
-          type="button"
-          className="home-button"
-          onClick={() => navigate('/')}
-        >
-          Home
-        </button>
       </form>
-    </div>
+    </Form>
   );
 }
 

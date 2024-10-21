@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import styles from './index.css';
-
 function FetchButton({ label, apiUrl }) {  // Компонент принимает название кнопки и URL API
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);

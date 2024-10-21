@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import styles from './index.css';
+import Field from '../Field';
+import Form from '../Form';
+import Button from '../Button';
+import Error from '../Error';
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -12,64 +14,48 @@ function LoginForm({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Простая валидация
     if (!email || !password) {
       setError('All fields are required!');
       return;
     }
 
-    // Логика логина (например, проверка данных на сервере)
     console.log('User logged in:', { email, password });
 
-    // Очистка формы
     setEmail('');
     setPassword('');
     setError('');
 
-    // Вызываем функцию onLogin и перенаправляем на страницу клиентов
     if (onLogin) {
       onLogin();
     } else {
-      navigate('/clients'); // Перенаправляем на страницу клиентов
+      navigate('/clients');
     }
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
+    <Form>
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
+        <Field
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Field
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Error error={error} />
         <div>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <Button type="submit">Login</Button>
+          <Button type="button" onClick={() => navigate('/')}>Home</Button>
         </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" style={{ marginTop: '10px', padding: '10px 20px' }}>
-          Login
-        </button>
-        {/* Кнопка Домой */}
-        <button
-          type="button"
-          style={{ marginLeft: '10px', padding: '10px 20px', marginTop: '10px' }}
-          onClick={() => navigate('/')}
-        >
-          Home
-        </button>
       </form>
-    </div>
+    </Form>
   );
 }
 
 export default LoginForm;
-// Compare this snippet from frontend/src/components/Header/Header.js:

@@ -3,25 +3,25 @@ import Logo from './solar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './index.css';
+import styles from './index.module.css';
 
 function Header() {
   return (
-    <div className="header">
-      <div className="header-left">
-        <img src={Logo} alt="Solar Logo" className="logo" /> {/* Исправлен синтаксис */}
+    <div className={styles.header}>
+      <div className={styles.header_left}>
+        <img src={Logo} alt="Solar Logo" className={styles.logo} />
       </div>
-      <div className="header-center">
+      <div className={styles.header_center}>
         <span>Invite users</span>
         <span>Minimal</span>
         <span>Balance 0,00 €</span>
         <span>Partnership points 0,00 €</span>
       </div>
-      <div className="header-right">
+      <div className={styles.header_right}>
         <span>Leanid</span>
         <span>UG SWAPOIL</span>
         <FontAwesomeIcon icon={faSmile} style={{ color: 'orange', marginLeft: '10px' }} />
-        <div className="user-avatar"></div> {/* Placeholder for the user avatar */}
+        <div className={styles.user_avatar}></div>
       </div>
     </div>
   );
