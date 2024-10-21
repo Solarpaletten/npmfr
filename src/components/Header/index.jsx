@@ -1,8 +1,9 @@
 import React from 'react';
-import './Header.css';  // Import styles for the top bar
-import Logo from './solar.png';  // Import the logo
+import Logo from './solar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './index.css';
 
 function Header() {
   return (

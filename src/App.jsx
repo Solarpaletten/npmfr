@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from 'react-router-dom'; // Правильный импорт
-import Header from './Header';
-import Home from './Home';
-import RegisterForm from './RegisterForm';
-import LoginForm from './LoginForm';
-import Dashboard from './Dashboard';
-import Clients from './Clients';
-import './App.css';
+import Header from './components/Header/index.jsx';
+import Home from './components/Home/index.jsx';
+import RegisterForm from './components/RegisterForm/index.jsx';
+import LoginForm from './components/LoginForm/index.jsx';
+import Dashboard from './components/Dashboard/index.jsx';
+import Clients from './components/Clients/index.jsx';
+
+import styles from './index.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,9 +40,9 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className={styles["app-container"]}>
       <Header onLogout={handleLogout} />
-      <div className="main-content">
+      <div className={styles["main-content"]}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />

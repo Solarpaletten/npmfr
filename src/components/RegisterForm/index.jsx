@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function LoginForm({ onLogin }) {
+import styles from './index.css';
+
+function RegisterForm({ onRegister }) {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,32 +14,41 @@ function LoginForm({ onLogin }) {
     e.preventDefault();
 
     // Простая валидация
-    if (!email || !password) {
+    if (!username || !email || !password) {
       setError('All fields are required!');
       return;
     }
 
-    // Логика логина (например, проверка данных на сервере)
-    console.log('User logged in:', { email, password });
+    // Логика регистрации (например, отправка данных на сервер)
+    console.log('User registered:', { username, email, password });
 
     // Очистка формы
+    setUsername('');
     setEmail('');
     setPassword('');
     setError('');
 
-    // Вызываем функцию onLogin и перенаправляем на страницу клиентов
-    if (onLogin) {
-      onLogin();
+    // Вызываем функцию onRegister и перенаправляем на страницу логина
+    if (onRegister) {
+      onRegister();
     } else {
-      navigate('/clients'); // Перенаправляем на страницу клиентов
+      navigate('/login'); // Перенаправляем на страницу логина
     }
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      <h2>Login</h2>
+    <div className="register-form">
+      <h2>Register</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
         <div>
           <input
             type="email"
@@ -53,13 +65,13 @@ function LoginForm({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" style={{ marginTop: '10px', padding: '10px 20px' }}>
-          Login
+        <button type="submit" className="register-button">
+          Register
         </button>
         {/* Кнопка Домой */}
         <button
           type="button"
-          style={{ marginLeft: '10px', padding: '10px 20px', marginTop: '10px' }}
+          className="home-button"
           onClick={() => navigate('/')}
         >
           Home
@@ -69,5 +81,4 @@ function LoginForm({ onLogin }) {
   );
 }
 
-export default LoginForm;
-// Compare this snippet from frontend/src/components/Header/Header.js:
+export default RegisterForm;

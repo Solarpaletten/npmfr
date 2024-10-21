@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './Clients.css';  // Подключаем стили для компонента
+
+import styles from './index.css';
 
 function Clients() {
   const [clients, setClients] = useState([]);  // Состояние для хранения данных клиентов

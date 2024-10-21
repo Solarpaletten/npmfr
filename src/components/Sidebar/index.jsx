@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import styles from './index.css';
+
 function Sidebar() {
   return (
     <div className="sidebar">
@@ -12,4 +14,3 @@ function Sidebar() {
 }
 
 export default Sidebar;
-// Compare this snippet from frontend/src/Footer.js:

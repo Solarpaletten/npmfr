@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RegisterForm.css';
 
-function RegisterForm({ onRegister }) {
-  const [username, setUsername] = useState('');
+import styles from './index.css';
+
+function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,41 +13,32 @@ function RegisterForm({ onRegister }) {
     e.preventDefault();
 
     // Простая валидация
-    if (!username || !email || !password) {
+    if (!email || !password) {
       setError('All fields are required!');
       return;
     }
 
-    // Логика регистрации (например, отправка данных на сервер)
-    console.log('User registered:', { username, email, password });
+    // Логика логина (например, проверка данных на сервере)
+    console.log('User logged in:', { email, password });
 
     // Очистка формы
-    setUsername('');
     setEmail('');
     setPassword('');
     setError('');
 
-    // Вызываем функцию onRegister и перенаправляем на страницу логина
-    if (onRegister) {
-      onRegister();
+    // Вызываем функцию onLogin и перенаправляем на страницу клиентов
+    if (onLogin) {
+      onLogin();
     } else {
-      navigate('/login'); // Перенаправляем на страницу логина
+      navigate('/clients'); // Перенаправляем на страницу клиентов
     }
   };
 
   return (
-    <div className="register-form">
-      <h2>Register</h2>
+    <div style={{ textAlign: 'center', padding: '50px' }}>
+      <h2>Login</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
         <div>
           <input
             type="email"
@@ -64,13 +55,13 @@ function RegisterForm({ onRegister }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="register-button">
-          Register
+        <button type="submit" style={{ marginTop: '10px', padding: '10px 20px' }}>
+          Login
         </button>
         {/* Кнопка Домой */}
         <button
           type="button"
-          className="home-button"
+          style={{ marginLeft: '10px', padding: '10px 20px', marginTop: '10px' }}
           onClick={() => navigate('/')}
         >
           Home
@@ -80,4 +71,5 @@ function RegisterForm({ onRegister }) {
   );
 }
 
-export default RegisterForm;
+export default LoginForm;
+// Compare this snippet from frontend/src/components/Header/Header.js:

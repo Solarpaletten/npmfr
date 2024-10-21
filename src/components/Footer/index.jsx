@@ -1,7 +1,8 @@
 import React from 'react';
-import './Footer.css';  // Используем стили из Header, чтобы футер был аналогичным
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './index.css';
 
 function Footer() {
   return (
