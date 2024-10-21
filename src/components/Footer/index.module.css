@@ -17,12 +17,6 @@
     align-items: center;
   }
   
-  /* Логотип в футере */
-  .logo {
-    height: 40px;
-    margin-right: 20px;
-  }
-  
   /* Центральная часть футера (навигационные элементы) */
   .footer-center {
     display: flex;
@@ -43,14 +37,5 @@
   /* Отступы для текста в правой части футера */
   .footer-right span {
     margin-right: 10px;
-  }
-  
-  /* Плейсхолдер для аватара в футере (если используется) */
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    background-color: #f0f0f0; /* Плейсхолдер для аватара пользователя */
-    border-radius: 50%;
-    display: inline-block;
   }
   

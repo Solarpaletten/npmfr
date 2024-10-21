@@ -15,4 +15,4 @@ function Field({ type, placeholder, value, onChange }) {
   );
 }
 
-export default Field
+export default Field;
