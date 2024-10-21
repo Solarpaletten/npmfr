@@ -1,0 +1,29 @@
+.clients_container {
+  flex-grow: 1;
+  margin: 10px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.table tr:hover td {
+  background: #F5F5F7;
+}
+
+.table td,
+.table th {
+  text-align: left;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 10px 10px;
+  font-size: 14px;
+}
+
+.table th {
+  font-weight: bold;
+}

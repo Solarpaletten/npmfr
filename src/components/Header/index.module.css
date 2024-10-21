@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FF8225;
+  padding: 10px 20px;
+  color: #fff;
+  max-height: 60px;
+}
+
+.header_left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 20px;
+}
+
+.header_center {
+  display: flex;
+  gap: 20px;
+}
+
+.header_center span {
+  cursor: pointer;
+}
+
+.header_right {
+  display: flex;
+  align-items: center;
+}
+
+.header_right span {
+  margin-right: 10px;
+}
+
+.user_avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  display: inline-block;
+}
