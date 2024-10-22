@@ -1,27 +1,56 @@
-import React from 'react';
-import Logo from './solar.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import User from "./user.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGear,
+  faArrowRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
-function Header() {
+function Header({ onLogout }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <div className={styles.header}>
-      <div className={styles.header_left}>
-        <img src={Logo} alt="Solar Logo" className={styles.logo} />
-      </div>
       <div className={styles.header_center}>
         <span>Invite users</span>
         <span>Minimal</span>
         <span>Balance 0,00 €</span>
         <span>Partnership points 0,00 €</span>
       </div>
-      <div className={styles.header_right}>
-        <span>Leanid</span>
-        <span>UG SWAPOIL</span>
-        <FontAwesomeIcon icon={faUser} style={{ color: '#B43F3F', margin: '0 5px 0 10px' }} />
-        <div className={styles.user_avatar}></div>
+      <div
+        className={styles.header_right}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <span>Leanid UG SWAPOIL</span>
+        <div className={styles.user_avatar}>
+          <img src={User} alt="user" />
+        </div>
+        {isHovered && (
+          <div className={styles.dropdown}>
+            <div className={styles.dropdown_content}>
+              <div className={styles.dropdown_item}>
+                <FontAwesomeIcon icon={faGear} />
+                <Link to="/settings">Settings</Link>
+              </div>
+              <div className={styles.dropdown_item}>
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                <Link to="/">Log Out</Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

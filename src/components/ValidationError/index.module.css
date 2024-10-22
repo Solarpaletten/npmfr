@@ -3,13 +3,7 @@
 }
 
 .error {
-  color: #ffffff;
-  background: #B43F3F;
-  font-size: 14px;
-  border-radius: 5px;
-  text-align: center;
+  color: #B43F3F;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 2px;
 }
