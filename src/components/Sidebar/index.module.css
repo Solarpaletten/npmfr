@@ -35,6 +35,10 @@
   padding: 10px 0;
 }
 
+.menu_icon{
+  width: 14px;
+}
+
 .menu_item a,
 .sub_menu_title {
   color: #ffffff;

@@ -54,23 +54,21 @@ const MenuItem = ({ item }) => {
             }`}
             onClick={toggleMenu}
           >
-            {item.label}
+            <div>
+              <FontAwesomeIcon icon={item.icon} className={styles.menu_icon} />
+              {item.label}
+            </div>
             {isOpen ? (
-              <>
-                <FontAwesomeIcon
-                  icon={faAngleUp}
-                  style={{ fontSize: "14px", margin: "0 5px" }}
-                />
-              </>
+              <FontAwesomeIcon icon={faAngleUp} />
             ) : (
-              <FontAwesomeIcon
-                icon={faAngleDown}
-                style={{ fontSize: "14px", margin: "0 5px" }}
-              />
+              <FontAwesomeIcon icon={faAngleDown} />
             )}
           </div>
         ) : (
-          <Link to={item.path}>{item.label}</Link>
+          <Link to={item.path}>
+            <FontAwesomeIcon icon={item.icon} className={styles.menu_icon} />
+            {item.label}
+          </Link>
         )}
       </div>
 
