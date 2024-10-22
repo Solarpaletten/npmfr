@@ -3,6 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   color: #173B45;
+  font-size: 14px;
 }
 
 .main-content {

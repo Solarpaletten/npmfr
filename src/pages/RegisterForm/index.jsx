@@ -1,36 +1,37 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Field from '../Field';
-import Form from '../Form';
-import Button from '../Button';
-import ValidationError from '../ValidationError';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Field from "../../components/Field";
+import Form from "../../components/Form";
+import Button from "../../components/Button";
+import ValidationError from "../../components/ValidationError";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function RegisterForm({ onRegister }) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!username || !email || !password) {
-      setError('All fields are required!');
+      setError("All fields are required!");
       return;
     }
 
-    console.log('User registered:', { username, email, password });
+    console.log("User registered:", { username, email, password });
 
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setError('');
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setError("");
 
     if (onRegister) {
       onRegister();
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   };
 
@@ -58,8 +59,12 @@ function RegisterForm({ onRegister }) {
         />
         <ValidationError error={error} />
         <div>
-          <Button type="submit">Register</Button>
-          <Button type="button" onClick={() => navigate('/')}>Home</Button>
+          <Button primary type="submit">
+            Register
+          </Button>
+          <Button icon={faArrowLeft} onClick={() => navigate("/")}>
+            Back to Home page
+          </Button>
         </div>
       </form>
     </Form>

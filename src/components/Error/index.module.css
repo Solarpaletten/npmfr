@@ -1,11 +1,7 @@
 .container_error {
-  flex-grow: 1;
   margin: 10px;
   justify-content: center;
   align-items: center;
   display: flex;
-}
-
-.error p {
-  font-size: 14px;
+  height: calc(100vh - 80px);
 }
