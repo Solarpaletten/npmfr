@@ -6,6 +6,7 @@ import {
   Routes,
   useNavigate,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import Home from "./pages/Home/index.jsx";
 import RegisterForm from "./pages/RegisterForm/index.jsx";
@@ -18,11 +19,12 @@ import "./App.css";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleLogin = () => {
+  const handleLogin = (path) => {
     console.log("User logged in");
     setIsLoggedIn(true);
-    navigate("/dashboard");
+    navigate(path)
   };
 
   const handleLogout = () => {
@@ -44,7 +46,7 @@ function App() {
         if (decodedToken.exp < currentTime) {
           handleLogout();
         } else {
-          handleLogin();
+          handleLogin(location.pathname);
         }
       } catch (error) {
         handleLogout();
