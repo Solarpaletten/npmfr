@@ -9,7 +9,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // TODO
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -20,17 +21,42 @@ function LoginForm({ onLogin }) {
       return;
     }
 
-    console.log("User logged in:", { email, password });
+    const loginUser = async (email, password) => {
+      setLoading(true);
+      setError(null);
 
-    setEmail("");
-    setPassword("");
-    setError("");
+      try {
+        const response = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
 
-    if (onLogin) {
-      onLogin();
-    } else {
-      navigate("/clients");
-    }
+        if (!response.ok) {
+          throw new Error("Login failed, please check your credentials");
+        }
+
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+
+        setEmail("");
+        setPassword("");
+        setError("");
+
+        onLogin();
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loginUser(email, password);
   };
 
   return (
