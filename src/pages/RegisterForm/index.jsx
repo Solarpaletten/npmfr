@@ -10,7 +10,10 @@ function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -21,18 +24,45 @@ function RegisterForm({ onRegister }) {
       return;
     }
 
-    console.log("User registered:", { username, email, password });
+    const registerUser = async (username, email, password) => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch("https://npmbk.onrender.com/api/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Registration failed");
+        }
+
+        const data = await response.json();
+        console.log("User registered successfully:", data);
+        setSuccess(true);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    registerUser(username, email, password);
 
     setUsername("");
     setEmail("");
     setPassword("");
     setError("");
 
-    if (onRegister) {
-      onRegister();
-    } else {
-      navigate("/login");
-    }
+    onRegister();
   };
 
   return (
