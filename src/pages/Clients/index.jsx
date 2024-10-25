@@ -8,21 +8,35 @@ function Clients({ onLogout }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://npmbk.onrender.com/api/clients")
-      .then((response) => {
+    const fetchClients = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch("http://localhost:3000/api/clients", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json();
-      })
-      .then((data) => {
+
+        const data = await response.json();
         setClients(data);
-        setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         setError(error.toString());
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchClients();
   }, []);
 
   return (
@@ -42,11 +56,12 @@ function Clients({ onLogout }) {
         <tbody>
           {clients.map((client) => (
             <tr key={client.id}>
-              <td>{client.registrationDate || "-"}</td>
+              {/* TODO date format */}
+              <td>{client.created_at || "-"}</td> 
               <td>{client.name || "-"}</td>
               <td>{client.code || "-"}</td>
-              <td>{client.vatCode || "-"}</td>
-              <td>{client.phoneNumber || "-"}</td>
+              <td>{client.vat_code || "-"}</td>
+              <td>{client.phone || "-"}</td>
               <td>{client.email || "-"}</td>
             </tr>
           ))}
