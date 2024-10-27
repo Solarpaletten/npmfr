@@ -1,3 +1,4 @@
+//App.js
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
@@ -54,7 +55,9 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-  }, [isLoggedIn]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);  
+
 
   const handleRegister = () => {
     console.log("User registered");

@@ -15,7 +15,7 @@ function Form({ children }) {
           <img
             className={styles.picture}
             src={MaimPicture}
-            alt="Main picture"
+            alt="Main visual representation"
           />
         </div>
       </div>
