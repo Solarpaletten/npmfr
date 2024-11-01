@@ -9,7 +9,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // TODO
+  const [loading, setLoading] = useState(false); // Добавили состояние загрузки
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -77,8 +77,8 @@ function LoginForm({ onLogin }) {
         />
         <ValidationError error={error} />
         <div>
-          <Button primary type="submit">
-            Login
+          <Button primary type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Login"}
           </Button>
           <Button icon={faArrowLeft} onClick={() => navigate("/")}>
             Back to Home page

@@ -15,8 +15,9 @@ import LoginForm from "./pages/LoginForm/index.jsx";
 import Dashboard from "./pages/Dashboard/index.jsx";
 import Clients from "./pages/Clients/index.jsx";
 import Warehouse from "./pages/Warehouse/index.jsx";
-
 import "./App.css";
+
+// const apiUrl = process.env.REACT_APP_API_URL; //   const apiUrl = "https://npmbk.onrender.com/api";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
