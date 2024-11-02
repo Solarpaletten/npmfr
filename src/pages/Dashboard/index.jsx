@@ -4,19 +4,13 @@ import styles from './index.module.css';
 
 function Dashboard({ onLogout }) {
   const [stats, setStats] = useState({
-    clients: {
-      total: 0,
-      newThisMonth: 0,
-      active: 0
+    summary: {
+      customers: { total: 0, revenue: 0 },
+      suppliers: { total: 0, spending: 0 }
     },
-    transactions: {
-      total: 0,
-      thisMonth: 0,
-      amount: 0
-    },
-    topClients: []
+    topCustomers: [],
+    topSuppliers: []
   });
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -42,64 +36,109 @@ function Dashboard({ onLogout }) {
     }
   };
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(amount);
+  };
+
   return (
     <Page loading={loading} error={error} onLogout={onLogout}>
       <div className={styles.container}>
         <h1>Dashboard</h1>
 
-        <div className={styles.statsGrid}>
-          {/* Клиенты */}
-          <div className={styles.statCard}>
-            <h3>Clients</h3>
-            <div className={styles.statValue}>{stats.clients.total}</div>
-            <div className={styles.statSubtext}>
-              <span className={styles.highlight}>+{stats.clients.newThisMonth}</span> new this month
+        {/* Summary Statistics */}
+        <div className={styles.summaryGrid}>
+          <div className={styles.summarySection}>
+            <h2>Customers</h2>
+            <div className={styles.statsGrid}>
+              <div className={styles.statCard}>
+                <h3>Total Customers</h3>
+                <div className={styles.statValue}>{stats.summary.customers.total}</div>
+              </div>
+              <div className={styles.statCard}>
+                <h3>Total Revenue</h3>
+                <div className={styles.statValue}>
+                  {formatCurrency(stats.summary.customers.revenue)}
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Транзакции */}
-          <div className={styles.statCard}>
-            <h3>Transactions</h3>
-            <div className={styles.statValue}>{stats.transactions.total}</div>
-            <div className={styles.statSubtext}>
-              <span className={styles.highlight}>{stats.transactions.thisMonth}</span> this month
+          <div className={styles.summarySection}>
+            <h2>Suppliers</h2>
+            <div className={styles.statsGrid}>
+              <div className={styles.statCard}>
+                <h3>Total Suppliers</h3>
+                <div className={styles.statValue}>{stats.summary.suppliers.total}</div>
+              </div>
+              <div className={styles.statCard}>
+                <h3>Total Spending</h3>
+                <div className={styles.statValue}>
+                  {formatCurrency(stats.summary.suppliers.spending)}
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* Сумма транзакций */}
-          <div className={styles.statCard}>
-            <h3>Total Amount</h3>
-            <div className={styles.statValue}>
-              ${stats.transactions.amount.toLocaleString()}
-            </div>
-            <div className={styles.statSubtext}>all time</div>
           </div>
         </div>
 
-        {/* Топ клиентов */}
-        <div className={styles.topClients}>
-          <h2>Top Clients</h2>
-          <div className={styles.clientsTable}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Transactions</th>
-                  <th>Total Amount</th>
-                  <th>Last Activity</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stats.topClients.map(client => (
-                  <tr key={client.id}>
-                    <td>{client.name}</td>
-                    <td>{client.transactions}</td>
-                    <td>${client.totalAmount.toLocaleString()}</td>
-                    <td>{new Date(client.lastActivity).toLocaleDateString()}</td>
+        {/* Top Lists */}
+        <div className={styles.topLists}>
+          <div className={styles.topSection}>
+            <h2>Top 3 Customers</h2>
+            <div className={styles.table}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>VAT Code</th>
+                    <th>Transactions</th>
+                    <th>Total Amount</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {stats.topCustomers.map(customer => (
+                    <tr key={customer.id}>
+                      <td>{customer.name}</td>
+                      <td>{customer.code || '-'}</td>
+                      <td>{customer.vatCode || '-'}</td>
+                      <td>{customer.transactions}</td>
+                      <td>{formatCurrency(customer.amount)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className={styles.topSection}>
+            <h2>Top 3 Suppliers</h2>
+            <div className={styles.table}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>VAT Code</th>
+                    <th>Transactions</th>
+                    <th>Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stats.topSuppliers.map(supplier => (
+                    <tr key={supplier.id}>
+                      <td>{supplier.name}</td>
+                      <td>{supplier.code || '-'}</td>
+                      <td>{supplier.vatCode || '-'}</td>
+                      <td>{supplier.transactions}</td>
+                      <td>{formatCurrency(supplier.amount)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
