@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Page from '../../components/Page';
 import styles from './index.module.css';
-import Table from './Table';
 
 function Dashboard({ onLogout }) {
   const [stats, setStats] = useState({
@@ -90,17 +89,6 @@ function Dashboard({ onLogout }) {
                 <h3>Both</h3>
                 <div className={styles.statValue}>{stats.summary.clients.both}</div>
               </div>
-            </div>
-          </div>
-
-          <div className={styles.tablesGrid}>
-            <div className={styles.tableSection}>
-              <h2>Top Customers</h2>
-              <Table data={stats.topCustomers} />
-            </div>
-            <div className={styles.tableSection}>
-              <h2>Top Suppliers</h2>
-              <Table data={stats.topSuppliers} />
             </div>
           </div>
 
