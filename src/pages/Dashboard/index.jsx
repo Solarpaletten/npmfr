@@ -34,11 +34,29 @@ function Dashboard({ onLogout }) {
       });
       if (!response.ok) throw new Error("Failed to fetch dashboard data");
       const data = await response.json();
-      setStats(data);
+      setStats(data || {
+        clients: { total: 0, newThisMonth: 0, active: 0 },
+        transactions: { total: 0, thisMonth: 0, amount: 0 },
+        topClients: []
+      });
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Безопасное форматирование чисел
+  const formatNumber = (num) => {
+    return typeof num === 'number' ? num.toLocaleString() : '0';
+  };
+
+  // Безопасное форматирование дат
+  const formatDate = (dateString) => {
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch {
+      return '-';
     }
   };
 
@@ -48,35 +66,31 @@ function Dashboard({ onLogout }) {
         <h1>Dashboard</h1>
 
         <div className={styles.statsGrid}>
-          {/* Клиенты */}
           <div className={styles.statCard}>
             <h3>Clients</h3>
-            <div className={styles.statValue}>{stats.clients.total}</div>
+            <div className={styles.statValue}>{formatNumber(stats.clients?.total)}</div>
             <div className={styles.statSubtext}>
-              <span className={styles.highlight}>+{stats.clients.newThisMonth}</span> new this month
+              <span className={styles.highlight}>+{formatNumber(stats.clients?.newThisMonth)}</span> new this month
             </div>
           </div>
 
-          {/* Транзакции */}
           <div className={styles.statCard}>
             <h3>Transactions</h3>
-            <div className={styles.statValue}>{stats.transactions.total}</div>
+            <div className={styles.statValue}>{formatNumber(stats.transactions?.total)}</div>
             <div className={styles.statSubtext}>
-              <span className={styles.highlight}>{stats.transactions.thisMonth}</span> this month
+              <span className={styles.highlight}>{formatNumber(stats.transactions?.thisMonth)}</span> this month
             </div>
           </div>
 
-          {/* Сумма транзакций */}
           <div className={styles.statCard}>
             <h3>Total Amount</h3>
             <div className={styles.statValue}>
-              ${stats.transactions.amount.toLocaleString()}
+              ${formatNumber(stats.transactions?.amount)}
             </div>
             <div className={styles.statSubtext}>all time</div>
           </div>
         </div>
 
-        {/* Топ клиентов */}
         <div className={styles.topClients}>
           <h2>Top Clients</h2>
           <div className={styles.clientsTable}>
@@ -90,12 +104,12 @@ function Dashboard({ onLogout }) {
                 </tr>
               </thead>
               <tbody>
-                {stats.topClients.map(client => (
+                {(stats.topClients || []).map(client => (
                   <tr key={client.id}>
-                    <td>{client.name}</td>
-                    <td>{client.transactions}</td>
-                    <td>${client.totalAmount.toLocaleString()}</td>
-                    <td>{new Date(client.lastActivity).toLocaleDateString()}</td>
+                    <td>{client.name || '-'}</td>
+                    <td>{formatNumber(client.transactions)}</td>
+                    <td>${formatNumber(client.total_amount)}</td>
+                    <td>{formatDate(client.last_activity)}</td>
                   </tr>
                 ))}
               </tbody>
