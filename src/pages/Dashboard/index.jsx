@@ -74,6 +74,35 @@ function Dashboard({ onLogout }) {
             </div>
           </div>
 
+          <div className={styles.statsSection}>
+            <h2>Client Types</h2>
+            <div className={styles.statsGrid}>
+              <div className={styles.statCard}>
+                <h3>Customers</h3>
+                <div className={styles.statValue}>{stats.summary.clients.customers}</div>
+              </div>
+              <div className={styles.statCard}>
+                <h3>Suppliers</h3>
+                <div className={styles.statValue}>{stats.summary.clients.suppliers}</div>
+              </div>
+              <div className={styles.statCard}>
+                <h3>Both</h3>
+                <div className={styles.statValue}>{stats.summary.clients.both}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className={styles.tablesGrid}>
+            <div className={styles.tableSection}>
+              <h2>Top Customers</h2>
+              <Table data={stats.topCustomers} />
+            </div>
+            <div className={styles.tableSection}>
+              <h2>Top Suppliers</h2>
+              <Table data={stats.topSuppliers} />
+            </div>
+          </div> */}
+
           <div className={styles.statCard}>
             <h3>Transactions</h3>
             <div className={styles.statValue}>{formatNumber(stats.transactions?.total)}</div>
@@ -120,5 +149,6 @@ function Dashboard({ onLogout }) {
     </Page>
   );
 }
+
 
 export default Dashboard;
