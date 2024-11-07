@@ -80,7 +80,7 @@ function LoginForm({ onLogin }) {
         />
         <ValidationError error={error} />
         <div>
-          <Button primary type="submit">
+          <Button primary type="submit" disabled={loading}>
             {loading ? "Logining..." : "Login"}
           </Button>
           <Button icon={faArrowLeft} onClick={() => navigate("/")}>

@@ -1,9 +1,9 @@
-//src/pages/Clients/index.jsx
 import React, { useState, useEffect } from "react";
 import Page from "../../components/Page";
 import Table from "../../components/Table";
 import Button from "../../components/Button";
-import styles from "./index.module.css";  // Создадим стили
+
+import styles from "./index.module.css";
 
 function Clients({ onLogout }) {
   const [clients, setClients] = useState([]);
@@ -15,23 +15,32 @@ function Clients({ onLogout }) {
     email: "",
     phone: "",
     code: "",
-    vat_code: ""
+    vat_code: "",
   });
 
-  // Получение клиентов
   const fetchClients = async () => {
     setLoading(true);
     setError(null);
+
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://npmbk.onrender.com/api/clients", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) throw new Error("Failed to fetch clients");
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/clients`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch clients");
+      }
+
       const data = await response.json();
+
       setClients(data);
     } catch (error) {
       setError(error.toString());
@@ -41,69 +50,45 @@ function Clients({ onLogout }) {
   };
 
   useEffect(() => {
-    const fetchClients = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const token = localStorage.getItem("token");
-
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/clients`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        setClients(data);
-      } catch (error) {
-        setError(error.toString());
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchClients();
   }, []);
 
-  // Удаление клиента
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this client?")) {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`https://npmbk.onrender.com/api/clients/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/clients/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (!response.ok) throw new Error("Failed to delete client");
-        fetchClients(); // Обновляем список
+        fetchClients();
       } catch (error) {
         setError(error.toString());
       }
     }
   };
 
-  // Добавление клиента
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://npmbk.onrender.com/api/clients", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newClient),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/clients`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newClient),
+        }
+      );
       if (!response.ok) throw new Error("Failed to add client");
       fetchClients();
       setShowAddForm(false);
@@ -128,38 +113,50 @@ function Clients({ onLogout }) {
               type="text"
               placeholder="Name"
               value={newClient.name}
-              onChange={(e) => setNewClient({...newClient, name: e.target.value})}
+              onChange={(e) =>
+                setNewClient({ ...newClient, name: e.target.value })
+              }
               required
             />
             <input
               type="email"
               placeholder="Email"
               value={newClient.email}
-              onChange={(e) => setNewClient({...newClient, email: e.target.value})}
+              onChange={(e) =>
+                setNewClient({ ...newClient, email: e.target.value })
+              }
               required
             />
             <input
               type="tel"
               placeholder="Phone"
               value={newClient.phone}
-              onChange={(e) => setNewClient({...newClient, phone: e.target.value})}
+              onChange={(e) =>
+                setNewClient({ ...newClient, phone: e.target.value })
+              }
               required
             />
             <input
               type="text"
               placeholder="Code"
               value={newClient.code}
-              onChange={(e) => setNewClient({...newClient, code: e.target.value})}
+              onChange={(e) =>
+                setNewClient({ ...newClient, code: e.target.value })
+              }
             />
             <input
               type="text"
               placeholder="VAT Code"
               value={newClient.vat_code}
-              onChange={(e) => setNewClient({...newClient, vat_code: e.target.value})}
+              onChange={(e) =>
+                setNewClient({ ...newClient, vat_code: e.target.value })
+              }
             />
             <div className={styles.formButtons}>
               <Button type="submit">Save</Button>
-              <Button type="button" onClick={() => setShowAddForm(false)}>Cancel</Button>
+              <Button type="button" onClick={() => setShowAddForm(false)}>
+                Cancel
+              </Button>
             </div>
           </form>
         </div>
@@ -188,7 +185,9 @@ function Clients({ onLogout }) {
               <td>{client.email || "-"}</td>
               <td>
                 <div className={styles.actions}>
-                  <Button onClick={() => handleDelete(client.id)}>Delete</Button>
+                  <Button onClick={() => handleDelete(client.id)}>
+                    Delete
+                  </Button>
                 </div>
               </td>
             </tr>

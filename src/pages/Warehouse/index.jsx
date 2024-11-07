@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Page from '../../components/Page';  // Исправленный путь
-import ProductList from './components/ProductList';
-import Incoming from './components/Incoming';
-import Sales from './components/Sales';
-import Button from '../../components/Button';
-import styles from './index.module.css';  // Исправленный путь к стилям
+import React, { useState, useEffect } from "react";
+import Page from "../../components/Page";
+import ProductList from "./components/ProductList";
+import Incoming from "./components/Incoming";
+import Sales from "./components/Sales";
+import Button from "../../components/Button";
+
+import styles from "./index.module.css";
 
 function Warehouse({ onLogout }) {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,6 @@ function Warehouse({ onLogout }) {
   const [showIncomingForm, setShowIncomingForm] = useState(false);
   const [showSalesForm, setShowSalesForm] = useState(false);
 
-  // Загрузка товаров
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -22,12 +22,15 @@ function Warehouse({ onLogout }) {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://npmbk.onrender.com/api/warehouse", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/warehouse`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) throw new Error("Failed to fetch products");
       const data = await response.json();
       setProducts(data);
@@ -38,47 +41,50 @@ function Warehouse({ onLogout }) {
     }
   };
 
-  // Обработка прихода товара
   const handleIncoming = async (data) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://npmbk.onrender.com/api/warehouse/incoming", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/warehouse/incoming`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (!response.ok) throw new Error("Failed to add stock");
-      fetchProducts();  // Обновляем список товаров
+      fetchProducts();
       setShowIncomingForm(false);
     } catch (error) {
       setError(error.message);
     }
   };
 
-  // Обработка продажи
   const handleSale = async (data) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://npmbk.onrender.com/api/warehouse/sales", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/warehouse/sales`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (!response.ok) throw new Error("Failed to create sale");
-      fetchProducts();  // Обновляем список товаров
+      fetchProducts();
       setShowSalesForm(false);
     } catch (error) {
       setError(error.message);
     }
   };
 
-  // Обработка добавления товара на склад
   const handleAddStock = (productId) => {
     setShowIncomingForm(true);
   };
@@ -92,24 +98,18 @@ function Warehouse({ onLogout }) {
           <Button onClick={() => setShowSalesForm(true)}>Create Sale</Button>
         </div>
       </div>
-      
-      <ProductList 
-        products={products} 
-        onAddStock={handleAddStock}
-      />
-      
+
+      <ProductList products={products} onAddStock={handleAddStock} />
+
       {showIncomingForm && (
-        <Incoming 
+        <Incoming
           onSubmit={handleIncoming}
           onClose={() => setShowIncomingForm(false)}
         />
       )}
-      
+
       {showSalesForm && (
-        <Sales 
-          onSubmit={handleSale}
-          onClose={() => setShowSalesForm(false)}
-        />
+        <Sales onSubmit={handleSale} onClose={() => setShowSalesForm(false)} />
       )}
     </Page>
   );
