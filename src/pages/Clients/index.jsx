@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Page from "../../components/Page";
 import Table from "../../components/Table";
 import Button from "../../components/Button";
+import api from "../../utils/api";
 
 import styles from "./index.module.css";
 
@@ -23,27 +24,11 @@ function Clients({ onLogout }) {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/clients`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch clients");
-      }
-
-      const data = await response.json();
+      const data = await api.get("/clients");
 
       setClients(data);
     } catch (error) {
-      setError(error.toString());
+      setError("Failed to fetch clients");
     } finally {
       setLoading(false);
     }
@@ -56,20 +41,11 @@ function Clients({ onLogout }) {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this client?")) {
       try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/clients/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) throw new Error("Failed to delete client");
+        await api.delete(`/clients/${id}`);
+
         fetchClients();
       } catch (error) {
-        setError(error.toString());
+        setError("Failed to delete client");
       }
     }
   };
@@ -77,24 +53,13 @@ function Clients({ onLogout }) {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/clients`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newClient),
-        }
-      );
-      if (!response.ok) throw new Error("Failed to add client");
+      await api.post("/clients", newClient);
+
       fetchClients();
       setShowAddForm(false);
       setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
     } catch (error) {
-      setError(error.toString());
+      setError("Failed to add client");
     }
   };
 

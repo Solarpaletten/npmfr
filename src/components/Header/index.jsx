@@ -6,6 +6,7 @@ import {
   faGear,
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import Button from "../Button";
 
 import styles from "./index.module.css";
 
@@ -46,7 +47,7 @@ function Header({ onLogout }) {
               </div>
               <div className={styles.dropdown_item}>
                 <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                <Link to="/">Log Out</Link>
+                <Button variant="link" onClick={onLogout}>Log Out</Button>
               </div>
             </div>
           </div>
