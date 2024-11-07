@@ -14,7 +14,6 @@ import {
   faFolderOpen,        // Documents
   faHandHoldingDollar, // Salary
   faReceipt,           // Declaration
-  faGear               // Settings
 } from "@fortawesome/free-solid-svg-icons";
 
 const menuData = [
@@ -118,11 +117,5 @@ const menuData = [
     icon: faReceipt,
     active: false
   },
-  { 
-    label: "Settings", 
-    path: "/settings", 
-    icon: faGear,
-    active: false
-  }
 ];
 export default menuData;

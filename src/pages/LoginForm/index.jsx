@@ -5,6 +5,7 @@ import Form from "../../components/Form";
 import Button from "../../components/Button";
 import ValidationError from "../../components/ValidationError";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import api from "../../utils/api";
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -26,25 +27,11 @@ function LoginForm({ onLogin }) {
       setError(null);
 
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-          }
-        );
+        const { token } = await api.post("/auth/login", {
+          email,
+          password,
+        });
 
-        if (!response.ok) {
-          throw new Error("Login failed, please check your credentials");
-        }
-
-        const { token } = await response.json();
         localStorage.setItem("token", token);
 
         setEmail("");
@@ -53,7 +40,7 @@ function LoginForm({ onLogin }) {
 
         onLogin("/dashboard");
       } catch (error) {
-        setError(error.message);
+        setError("Login failed, please check your credentials");
       } finally {
         setLoading(false);
       }
@@ -80,7 +67,7 @@ function LoginForm({ onLogin }) {
         />
         <ValidationError error={error} />
         <div>
-          <Button primary type="submit" disabled={loading}>
+          <Button variant="primary" type="submit" disabled={loading}>
             {loading ? "Logining..." : "Login"}
           </Button>
           <Button icon={faArrowLeft} onClick={() => navigate("/")}>

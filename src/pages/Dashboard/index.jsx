@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Page from "../../components/Page";
+import api from "../../utils/api";
 
 import styles from "./index.module.css";
 
@@ -21,20 +22,11 @@ function Dashboard({ onLogout }) {
 
   const fetchDashboardData = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/dashboard/stats`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Failed to fetch dashboard data");
-      const data = await response.json();
+      const data = await api.get("/dashboard/stats");
+
       setStats(data);
     } catch (error) {
-      setError(error.message);
+      setError("Failed to fetch dashboard data");
     } finally {
       setLoading(false);
     }

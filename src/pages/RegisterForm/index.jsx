@@ -4,6 +4,7 @@ import Field from "../../components/Field";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import ValidationError from "../../components/ValidationError";
+import api from "../../utils/api";
 
 function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState("");
@@ -28,37 +29,23 @@ function RegisterForm({ onRegister }) {
       setSuccess(false);
 
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/auth/register`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username,
-              email,
-              password,
-            }),
-          }
-        );
+        const data = await api.post("auth/register", {
+          username,
+          email,
+          password,
+        });
 
-        if (!response.ok) {
-          throw new Error("Registration failed, please try again");
-        }
-
-        const data = await response.json();
         console.log("User registered successfully:", data);
         setSuccess(true);
-        
+
         setUsername("");
         setEmail("");
         setPassword("");
         setError("");
-    
+
         onRegister();
       } catch (error) {
-        setError(error.message);
+        setError("Registration failed, please try again");
       } finally {
         setLoading(false);
       }
@@ -92,12 +79,10 @@ function RegisterForm({ onRegister }) {
         <ValidationError error={error} />
         {success && <p className="success-message">Registration successful!</p>}
         <div>
-          <Button primary type="submit" disabled={loading}>
+          <Button variant="primary" type="submit" disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </Button>
-          <Button onClick={() => navigate("/login")}>
-            Go to Login
-          </Button>
+          <Button onClick={() => navigate("/login")}>Go to Login</Button>
         </div>
       </form>
     </Form>

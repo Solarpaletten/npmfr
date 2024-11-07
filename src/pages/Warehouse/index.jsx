@@ -4,6 +4,7 @@ import ProductList from "./components/ProductList";
 import Incoming from "./components/Incoming";
 import Sales from "./components/Sales";
 import Button from "../../components/Button";
+import api from "../../utils/api";
 
 import styles from "./index.module.css";
 
@@ -20,22 +21,13 @@ function Warehouse({ onLogout }) {
 
   const fetchProducts = async () => {
     setLoading(true);
+
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/warehouse`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Failed to fetch products");
-      const data = await response.json();
+      const data = await api.get("/warehouse");
+
       setProducts(data);
     } catch (error) {
-      setError(error.message);
+      setError("Failed to fetch products");
     } finally {
       setLoading(false);
     }
@@ -43,45 +35,23 @@ function Warehouse({ onLogout }) {
 
   const handleIncoming = async (data) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/warehouse/incoming`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      if (!response.ok) throw new Error("Failed to add stock");
+      await api.post("/warehouse/incoming", data);
+
       fetchProducts();
       setShowIncomingForm(false);
     } catch (error) {
-      setError(error.message);
+      setError("Failed to add stock");
     }
   };
 
   const handleSale = async (data) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/warehouse/sales`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      if (!response.ok) throw new Error("Failed to create sale");
+      await api.post("/warehouse/sales", data);
+
       fetchProducts();
       setShowSalesForm(false);
     } catch (error) {
-      setError(error.message);
+      setError("Failed to create sale");
     }
   };
 
