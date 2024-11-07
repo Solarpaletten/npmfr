@@ -29,17 +29,20 @@ function RegisterForm({ onRegister }) {
       setError(null);
 
       try {
-        const response = await fetch("https://npmbk.onrender.com/api/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            email,
-            password,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/auth/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username,
+              email,
+              password,
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Registration failed");
@@ -48,6 +51,13 @@ function RegisterForm({ onRegister }) {
         const data = await response.json();
         console.log("User registered successfully:", data);
         setSuccess(true);
+        
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setError("");
+    
+        onRegister();
       } catch (error) {
         setError(error.message);
       } finally {
@@ -56,13 +66,6 @@ function RegisterForm({ onRegister }) {
     };
 
     registerUser(username, email, password);
-
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setError("");
-
-    onRegister();
   };
 
   return (
@@ -90,7 +93,7 @@ function RegisterForm({ onRegister }) {
         <ValidationError error={error} />
         <div>
           <Button primary type="submit">
-            Register
+            {loading ? "Registering..." : "Register"}
           </Button>
           <Button icon={faArrowLeft} onClick={() => navigate("/")}>
             Back to Home page

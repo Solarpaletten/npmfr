@@ -1,29 +1,23 @@
-//Sidebar/menuData.js
 import {
-  // Активные разделы
-  faPeopleLine,     // Clients
-  faWarehouse,      // Warehouse
-  faBox,            // Products
-  faArrowDown,      // Incoming
-  faArrowUp,        // Sales
-  faBoxesStacked,   // Stock
-  
-  // Будущие разделы (пока неактивные)
-  faTableColumns,   // Dashboard
-  faBook,           // General ledger
-  faCashRegister,   // Cashier
-  faSheetPlastic,   // Reports
-  faUsers,          // Personnel
-  faSackDollar,     // Assets
-  faFolderOpen,     // Documents
+  faPeopleLine,        // Clients
+  faWarehouse,         // Warehouse
+  faBox,               // Products
+  faArrowDown,         // Incoming
+  faArrowUp,           // Sales
+  faBoxesStacked,      // Stock
+  faTableColumns,      // Dashboard
+  faBook,              // General ledger
+  faCashRegister,      // Cashier
+  faSheetPlastic,      // Reports
+  faUsers,             // Personnel
+  faSackDollar,        // Assets
+  faFolderOpen,        // Documents
   faHandHoldingDollar, // Salary
-  faReceipt,        // Declaration
-  faGear            // Settings
+  faReceipt,           // Declaration
+  faGear               // Settings
 } from "@fortawesome/free-solid-svg-icons";
 
 const menuData = [
-  // Активные разделы
-  
   { 
     label: "Clients", 
     path: "/clients", 
@@ -61,8 +55,6 @@ const menuData = [
       }
     ],
   },
-
-  // Неактивные разделы (для будущей реализации)
   { 
     label: "Dashboard", 
     path: "/dashboard", 

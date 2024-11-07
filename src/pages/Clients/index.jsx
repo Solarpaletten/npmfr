@@ -15,7 +15,7 @@ function Clients({ onLogout }) {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch("https://npmbk.onrender.com/api/clients", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/clients`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

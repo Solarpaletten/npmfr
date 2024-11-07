@@ -9,7 +9,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // TODO
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -26,16 +26,19 @@ function LoginForm({ onLogin }) {
       setError(null);
 
       try {
-        const response = await fetch("https://npmbk.onrender.com/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Login failed, please check your credentials");
@@ -78,7 +81,7 @@ function LoginForm({ onLogin }) {
         <ValidationError error={error} />
         <div>
           <Button primary type="submit">
-            Login
+            {loading ? "Logining..." : "Login"}
           </Button>
           <Button icon={faArrowLeft} onClick={() => navigate("/")}>
             Back to Home page

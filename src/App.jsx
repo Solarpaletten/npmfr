@@ -1,5 +1,4 @@
-//App.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
   BrowserRouter as Router,
@@ -22,19 +21,22 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogin = (path) => {
-    console.log("User logged in");
-    setIsLoggedIn(true);
-    navigate(path)
-  };
+  const handleLogin = useCallback(
+    (path) => {
+      console.log("User logged in");
+      setIsLoggedIn(true);
+      navigate(path);
+    },
+    [navigate]
+  );
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     console.log("Invalid token");
     console.log("User logged out");
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     navigate("/login");
-  };
+  }, [navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -55,9 +57,7 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);  
-
+  }, [isLoggedIn, location.pathname, handleLogin, handleLogout]);
 
   const handleRegister = () => {
     console.log("User registered");
