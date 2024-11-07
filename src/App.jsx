@@ -1,47 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { jwtDecode } from "jwt-decode";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useNavigate,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import Home from "./pages/Home/index.jsx";
 import RegisterForm from "./pages/RegisterForm/index.jsx";
 import LoginForm from "./pages/LoginForm/index.jsx";
 import Dashboard from "./pages/Dashboard/index.jsx";
 import Clients from "./pages/Clients/index.jsx";
-
+import Warehouse from "./pages/Warehouse/index.jsx";
 import "./App.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogin = useCallback(
+    (path) => {
+      console.log("User logged in");
+      setIsLoggedIn(true);
+      navigate(path);
+    },
+    [navigate]
+  );
+
+  const handleLogout = useCallback(() => {
+    console.log("Invalid token");
+    console.log("User logged out");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  }, [navigate]);
 
   useEffect(() => {
-    const loggedInStatus = localStorage.getItem("isLoggedIn");
-    if (loggedInStatus === "true") {
-      setIsLoggedIn(true);
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+
+        if (decodedToken.exp < currentTime) {
+          handleLogout();
+        } else {
+          handleLogin(location.pathname);
+        }
+      } catch (error) {
+        handleLogout();
+      }
+    } else {
+      setIsLoggedIn(false);
     }
-  }, []);
+  }, [isLoggedIn, location.pathname, handleLogin, handleLogout]);
 
   const handleRegister = () => {
     console.log("User registered");
     navigate("/login");
   };
 
-  const handleLogin = () => {
-    console.log("User logged in");
-    setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", "true");
-    navigate("/dashboard");
-  };
-
-  const handleLogout = () => {
-    console.log("User logged out");
-    setIsLoggedIn(false);
-    localStorage.setItem("isLoggedIn", "false");
-    navigate("/login");
+  const ProtectedRoute = ({ children }) => {
+    return isLoggedIn ? children : <Navigate to="/login" />;
   };
 
   return (
@@ -56,21 +80,25 @@ function App() {
         <Route
           path="/clients"
           element={
-            isLoggedIn ? (
+            <ProtectedRoute>
               <Clients onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/warehouse"
+          element={
+            <ProtectedRoute>
+              <Warehouse onLogout={handleLogout} />
+            </ProtectedRoute>
           }
         />
         <Route
           path="/dashboard"
           element={
-            isLoggedIn ? (
+            <ProtectedRoute>
               <Dashboard onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            </ProtectedRoute>
           }
         />
       </Routes>

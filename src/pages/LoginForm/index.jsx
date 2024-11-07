@@ -9,7 +9,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -20,17 +21,45 @@ function LoginForm({ onLogin }) {
       return;
     }
 
-    console.log("User logged in:", { email, password });
+    const loginUser = async (email, password) => {
+      setLoading(true);
+      setError(null);
 
-    setEmail("");
-    setPassword("");
-    setError("");
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
+          }
+        );
 
-    if (onLogin) {
-      onLogin();
-    } else {
-      navigate("/clients");
-    }
+        if (!response.ok) {
+          throw new Error("Login failed, please check your credentials");
+        }
+
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+
+        setEmail("");
+        setPassword("");
+        setError("");
+
+        onLogin("/dashboard");
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loginUser(email, password);
   };
 
   return (
@@ -51,8 +80,8 @@ function LoginForm({ onLogin }) {
         />
         <ValidationError error={error} />
         <div>
-          <Button primary type="submit">
-            Login
+          <Button primary type="submit" disabled={loading}>
+            {loading ? "Logining..." : "Login"}
           </Button>
           <Button icon={faArrowLeft} onClick={() => navigate("/")}>
             Back to Home page

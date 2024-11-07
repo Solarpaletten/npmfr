@@ -4,13 +4,14 @@ import Field from "../../components/Field";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import ValidationError from "../../components/ValidationError";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -21,18 +22,49 @@ function RegisterForm({ onRegister }) {
       return;
     }
 
-    console.log("User registered:", { username, email, password });
+    const registerUser = async (username, email, password) => {
+      setLoading(true);
+      setError(null);
+      setSuccess(false);
 
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setError("");
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/auth/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username,
+              email,
+              password,
+            }),
+          }
+        );
 
-    if (onRegister) {
-      onRegister();
-    } else {
-      navigate("/login");
-    }
+        if (!response.ok) {
+          throw new Error("Registration failed, please try again");
+        }
+
+        const data = await response.json();
+        console.log("User registered successfully:", data);
+        setSuccess(true);
+        
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setError("");
+    
+        onRegister();
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    registerUser(username, email, password);
   };
 
   return (
@@ -58,12 +90,13 @@ function RegisterForm({ onRegister }) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <ValidationError error={error} />
+        {success && <p className="success-message">Registration successful!</p>}
         <div>
-          <Button primary type="submit">
-            Register
+          <Button primary type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
           </Button>
-          <Button icon={faArrowLeft} onClick={() => navigate("/")}>
-            Back to Home page
+          <Button onClick={() => navigate("/login")}>
+            Go to Login
           </Button>
         </div>
       </form>

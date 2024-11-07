@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styles from "./index.module.css";
 
-function Button({ children, primary, icon, type, onClick }) {
+function Button({ children, primary, icon, type, onClick, disabled }) {
   return (
     <button
       className={`${styles.button} ${
@@ -11,6 +11,7 @@ function Button({ children, primary, icon, type, onClick }) {
       }`}
       type={type}
       onClick={onClick}
+      disabled={disabled}
     >
       {icon && (
         <FontAwesomeIcon
