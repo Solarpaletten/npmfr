@@ -4,7 +4,6 @@ import Field from "../../components/Field";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import ValidationError from "../../components/ValidationError";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState("");
@@ -13,7 +12,6 @@ function RegisterForm({ onRegister }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -27,6 +25,7 @@ function RegisterForm({ onRegister }) {
     const registerUser = async (username, email, password) => {
       setLoading(true);
       setError(null);
+      setSuccess(false);
 
       try {
         const response = await fetch(
@@ -45,7 +44,7 @@ function RegisterForm({ onRegister }) {
         );
 
         if (!response.ok) {
-          throw new Error("Registration failed");
+          throw new Error("Registration failed, please try again");
         }
 
         const data = await response.json();
@@ -91,12 +90,13 @@ function RegisterForm({ onRegister }) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <ValidationError error={error} />
+        {success && <p className="success-message">Registration successful!</p>}
         <div>
-          <Button primary type="submit">
+          <Button primary type="submit" disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </Button>
-          <Button icon={faArrowLeft} onClick={() => navigate("/")}>
-            Back to Home page
+          <Button onClick={() => navigate("/login")}>
+            Go to Login
           </Button>
         </div>
       </form>
