@@ -1,56 +1,15 @@
-<!-- src/admin-panel/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <!-- Исправляем пути -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="app">
-        <header class="header">
-            <div class="logo">
-                <h1>Admin Panel</h1>
-            </div>
-            <div id="userInfo" class="user-info" style="display: none;">
-                <span>Welcome</span>
-                <button onclick="handleLogout()" class="logout-btn">Logout</button>
-            </div>
-        </header>
-
-        <nav class="nav-tabs">
-            <button onclick="showSection('stats')" class="tab-btn active">Statistics</button>
-            <button onclick="showSection('clients')" class="tab-btn">Clients</button>
-            <button onclick="showSection('warehouse')" class="tab-btn">Warehouse</button>
-        </nav>
-
-        <main class="main-content">
-            <section id="stats" class="section active">
-                <h2>Statistics</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Clients</h3>
-                        <div id="totalClients" class="stat-value">0</div>
-                    </div>
-                    <!-- Добавьте другие карточки статистики -->
-                </div>
-            </section>
-
-            <section id="clients" class="section">
-                <h2>Clients</h2>
-                <div id="clientsList"></div>
-            </section>
-
-            <section id="warehouse" class="section">
-                <h2>Warehouse</h2>
-                <div id="warehouseList"></div>
-            </section>
-        </main>
-    </div>
-    
-    <!-- Исправляем путь к скрипту -->
-    <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Solar - лучший сайт для управления клиентами"
+    />
+    <title>Solar</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
+<!-- The frontend/public/index.html file is a static HTML file that includes a link to the main CSS file and a script tag that loads the main JavaScript file. -->
