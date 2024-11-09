@@ -128,7 +128,9 @@ Alert.displayName = "Alert";
 AlertDescription.displayName = "AlertDescription";
 EOL
 
-echo "Базовая структура создана. Теперь выполните npm start"
+
+
+echo "Базовая структура создана. npm start"
 
 
 
