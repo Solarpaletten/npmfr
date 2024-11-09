@@ -1,3 +1,31 @@
+#!/bin/bash
+
+# Установка основных зависимостей
+npm install react-router-dom jwt-decode @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+
+# Создание правильной структуры компонентов
+mkdir -p src/components/ui
+
+# Перемещение UI компонентов в правильную директорию
+cat > src/components/ui/alert.jsx << 'EOF'
+import React from 'react';
+
+export const Alert = React.forwardRef(({ className, children, ...props }, ref) => (
+  <div ref={ref} role="alert" className={`rounded-lg border p-4 ${className}`} {...props}>
+    {children}
+  </div>
+));
+
+export const AlertDescription = React.forwardRef(({ className, ...props }, ref) => (
+  <div ref={ref} className={`text-sm ${className}`} {...props} />
+));
+
+Alert.displayName = "Alert";
+AlertDescription.displayName = "AlertDescription";
+EOF
+
+# Обновляем импорты в Clients/index.jsx
+cat > src/pages/Clients/index.jsx << 'EOF'
 import React, { useEffect, useState } from 'react';
 import { useClients } from './hooks/useClients';
 import ClientTable from './components/ClientTable';
@@ -92,3 +120,6 @@ const ClientsPage = () => {
 };
 
 export default ClientsPage;
+EOF
+
+echo "Зависимости установлены и компоненты обновлены!"

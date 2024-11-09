@@ -1,115 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { jwtDecode } from "jwt-decode";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
-import Home from "./pages/Home/index.jsx";
-import RegisterForm from "./pages/RegisterForm/index.jsx";
-import LoginForm from "./pages/LoginForm/index.jsx";
-import Dashboard from "./pages/Dashboard/index.jsx";
-import Clients from "./pages/Clients/index.jsx";
-import Warehouse from "./pages/Warehouse/index.jsx";
-import "./App.css";
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ClientsPage from './pages/Clients';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleLogin = useCallback(
-    (path) => {
-      console.log("User logged in");
-      setIsLoggedIn(true);
-      navigate(path);
-    },
-    [navigate]
-  );
-
-  const handleLogout = useCallback(() => {
-    console.log("Invalid token");
-    console.log("User logged out");
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/login");
-  }, [navigate]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        const currentTime = Date.now() / 1000;
-
-        if (decodedToken.exp < currentTime) {
-          handleLogout();
-        } else {
-          handleLogin(location.pathname);
-        }
-      } catch (error) {
-        handleLogout();
-      }
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [isLoggedIn, location.pathname, handleLogin, handleLogout]);
-
-  const handleRegister = () => {
-    console.log("User registered");
-    navigate("/login");
-  };
-
-  const ProtectedRoute = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to="/login" />;
-  };
-
-  return (
-    <div className="app-container">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/register"
-          element={<RegisterForm onRegister={handleRegister} />}
-        />
-        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route
-          path="/clients"
-          element={
-            <ProtectedRoute>
-              <Clients onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/warehouse"
-          element={
-            <ProtectedRoute>
-              <Warehouse onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </div>
-  );
-}
-
-export default function RootApp() {
   return (
     <Router>
-      <App />
+      <div className="min-h-screen bg-gray-100">
+        <Routes>
+          <Route path="/" element={<ClientsPage />} /> {/* Изменили путь с /clients на / */}
+        </Routes>
+      </div>
     </Router>
   );
 }
+
+export default App;
