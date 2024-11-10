@@ -34,7 +34,7 @@ function Header({ onLogout }) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <span>Leanid UG SWAPOIL</span>
+        <span>Leanid Kanoplich</span>
         <div className={styles.user_avatar}>
           <img src={User} alt="user" />
         </div>
