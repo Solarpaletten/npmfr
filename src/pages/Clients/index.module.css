@@ -44,3 +44,39 @@
   display: flex;
   gap: 10px;
 }
+
+/* Новые стили для панели инструментов */
+.toolGroup {
+  display: flex;
+  gap: 4px;
+  background: #f7931e;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Стиль для выделенной строки */
+.selectedRow {
+  background-color: rgba(247, 147, 30, 0.1);
+}
+
+/* Стили для кнопок в панели инструментов */
+.toolGroup button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.toolGroup button:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.toolGroup button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
