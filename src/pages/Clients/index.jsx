@@ -7,19 +7,24 @@ import { Alert, AlertDescription } from '../../components/ui/alert';
 const ClientsPage = () => {
   const {
     clients,
+    loading,
+    error,
     fetchClients,
     createClient,
     updateClient,
     deleteClient,
-    copyClient
+    copyClient,
   } = useClients();
 
   const [selectedClients, setSelectedClients] = useState([]);
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
+    console.log('Fetching clients...'); // Для отладки
     fetchClients();
   }, [fetchClients]);
+
+  console.log('Current state:', { clients, loading, error }); // Для отладки
 
   const showNotification = (message) => {
     setNotification(message);
@@ -42,8 +47,8 @@ const ClientsPage = () => {
   const handleCopy = async () => {
     try {
       await Promise.all(
-        selectedClients.map(id => {
-          const client = clients.find(c => c.id === id);
+        selectedClients.map((id) => {
+          const client = clients.find((c) => c.id === id);
           return copyClient({
             ...client,
             name: `${client.name} (копия)`,
@@ -67,16 +72,24 @@ const ClientsPage = () => {
     }
   };
 
+  if (loading) {
+    return <div className="p-4">Загрузка клиентов...</div>;
+  }
+
+  if (error) {
+    return <div className="p-4 text-red-600">Ошибка загрузки клиентов: {error.toString()}</div>;
+  }
+
   return (
     <div className="p-4">
-      <ClientToolbar 
+      <ClientToolbar
         onCreateClient={handleCreate}
         onCopy={handleCopy}
         onDelete={handleDelete}
         selectedCount={selectedClients.length}
       />
-      <ClientTable 
-        clients={clients}
+      <ClientTable
+        clients={clients || []}
         selectedClients={selectedClients}
         onSelectClients={setSelectedClients}
         onUpdateClient={updateClient}

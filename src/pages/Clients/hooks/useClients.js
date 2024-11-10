@@ -1,3 +1,4 @@
+// src/pages/Clients/hooks/useClients.js
 import { useState, useCallback } from 'react';
 import { clientsApi } from '../api/clientsApi';
 
@@ -6,10 +7,10 @@ export const useClients = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Загрузка клиентов
   const fetchClients = useCallback(async () => {
     try {
       setLoading(true);
+      setError(null);
       const data = await clientsApi.getAll();
       setClients(data);
     } catch (err) {
@@ -19,10 +20,10 @@ export const useClients = () => {
     }
   }, []);
 
-  // Создание клиента
   const createClient = useCallback(async (clientData) => {
     try {
       setLoading(true);
+      setError(null);
       const newClient = await clientsApi.create(clientData);
       setClients((prev) => [...prev, newClient]);
       return newClient;
@@ -34,10 +35,10 @@ export const useClients = () => {
     }
   }, []);
 
-  // Обновление клиента
   const updateClient = useCallback(async (id, clientData) => {
     try {
       setLoading(true);
+      setError(null);
       const updated = await clientsApi.update(id, clientData);
       setClients((prev) => prev.map((client) => (client.id === id ? updated : client)));
       return updated;
@@ -49,12 +50,27 @@ export const useClients = () => {
     }
   }, []);
 
-  // Удаление клиента
-  const deleteClient = useCallback(async (id) => {
+  const deleteClient = useCallback(async (ids) => {
     try {
       setLoading(true);
-      await clientsApi.delete(id);
-      setClients((prev) => prev.filter((client) => client.id !== id));
+      setError(null);
+      await Promise.all(ids.map((id) => clientsApi.delete(id)));
+      setClients((prev) => prev.filter((client) => !ids.includes(client.id)));
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const copyClient = useCallback(async (clientData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const newClient = await clientsApi.create(clientData);
+      setClients((prev) => [...prev, newClient]);
+      return newClient;
     } catch (err) {
       setError(err.message);
       throw err;
@@ -71,5 +87,6 @@ export const useClients = () => {
     createClient,
     updateClient,
     deleteClient,
+    copyClient,
   };
 };

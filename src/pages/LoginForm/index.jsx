@@ -8,45 +8,46 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import api from "../../utils/api";
 
 function LoginForm({ onLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      setError("All fields are required!");
+      setError('All fields are required!');
       return;
     }
 
-    const loginUser = async (email, password) => {
+    try {
       setLoading(true);
       setError(null);
 
-      try {
-        const { token } = await api.post("/auth/login", {
-          email,
-          password,
-        });
+      const { token } = await api.post('/auth/login', {
+        email,
+        password,
+      });
 
-        localStorage.setItem("token", token);
+      // Сохраняем токен
+      localStorage.setItem('token', token);
+      console.log('Token saved:', token); // Для отладки
 
-        setEmail("");
-        setPassword("");
-        setError("");
+      // Очищаем форму
+      setEmail('');
+      setPassword('');
+      setError('');
 
-        onLogin("/dashboard");
-      } catch (error) {
-        setError("Login failed, please check your credentials");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loginUser(email, password);
+      // Перенаправляем на главную
+      navigate('/');
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Login failed, please check your credentials');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,9 +69,9 @@ function LoginForm({ onLogin }) {
         <ValidationError error={error} />
         <div>
           <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "Logining..." : "Login"}
+            {loading ? 'Logging in...' : 'Login'}
           </Button>
-          <Button icon={faArrowLeft} onClick={() => navigate("/")}>
+          <Button icon={faArrowLeft} onClick={() => navigate('/')}>
             Back to Home page
           </Button>
         </div>
