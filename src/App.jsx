@@ -8,12 +8,13 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
-import Home from "./pages/Home/index.jsx";
-import RegisterForm from "./pages/RegisterForm/index.jsx";
-import LoginForm from "./pages/LoginForm/index.jsx";
-import Dashboard from "./pages/Dashboard/index.jsx";
-import Clients from "./pages/Clients/index.jsx";
-import Warehouse from "./pages/Warehouse/index.jsx";
+import Home from "./pages/Home";
+import RegisterForm from "./pages/RegisterForm";
+import LoginForm from "./pages/LoginForm";
+import Dashboard from "./pages/Dashboard";
+import Clients from "./pages/Clients";
+import Warehouse from "./pages/Warehouse";
+
 import "./App.css";
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
     console.log("Invalid token");
     console.log("User logged out");
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+
     setIsLoggedIn(false);
     navigate("/login");
   }, [navigate]);

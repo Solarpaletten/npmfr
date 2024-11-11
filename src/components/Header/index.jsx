@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import User from "./user.svg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import User from './user.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faGear,
   faArrowRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
-import Button from "../Button";
+} from '@fortawesome/free-solid-svg-icons';
+import Button from '../Button';
 
-import styles from "./index.module.css";
+import styles from './index.module.css';
 
 function Header({ onLogout }) {
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role');
+
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -34,20 +37,24 @@ function Header({ onLogout }) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <span>Leanid Kanoplich</span>
+        <span>
+          {username} | {role.toUpperCase()}
+        </span>
         <div className={styles.user_avatar}>
-          <img src={User} alt="user" />
+          <img src={User} alt='user' />
         </div>
         {isHovered && (
           <div className={styles.dropdown}>
             <div className={styles.dropdown_content}>
               <div className={styles.dropdown_item}>
                 <FontAwesomeIcon icon={faGear} />
-                <Link to="/settings">Settings</Link>
+                <Link to='/settings'>Settings</Link>
               </div>
               <div className={styles.dropdown_item}>
                 <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                <Button variant="link" onClick={onLogout}>Log Out</Button>
+                <Button variant='link' onClick={onLogout}>
+                  Log Out
+                </Button>
               </div>
             </div>
           </div>

@@ -27,12 +27,15 @@ function LoginForm({ onLogin }) {
       setError(null);
 
       try {
-        const { token } = await api.post("/auth/login", {
+        const { token, username, userId, role } = await api.post("/auth/login", {
           email,
           password,
         });
 
         localStorage.setItem("token", token);
+        localStorage.setItem("username", username);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("role", role);
 
         setEmail("");
         setPassword("");

@@ -13,7 +13,6 @@ function Clients({ onLogout }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
-  // Добавлено: состояние для хранения выбранных клиентов
   const [selectedClients, setSelectedClients] = useState([]);
   const [newClient, setNewClient] = useState({
     name: '',
@@ -41,7 +40,6 @@ function Clients({ onLogout }) {
     fetchClients();
   }, []);
 
-  // Модифицировано: добавлена возможность удаления нескольких клиентов
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete ${selectedClients.length} clients?`)) {
       try {
@@ -79,13 +77,11 @@ function Clients({ onLogout }) {
     }
   };
 
-  // Модифицировано: функция копирования клиента
   const handleCopy = (client) => {
     setNewClient({ ...client, name: `${client.name} (Copy)` });
     setShowEditForm(true);
   };
 
-  // Модифицировано: обновлена панель инструментов для работы с множественным выбором
   const Toolbar = () => (
     <div className={styles.toolGroup}>
       <Button onClick={() => setShowAddForm(true)}>+</Button>
@@ -106,7 +102,6 @@ function Clients({ onLogout }) {
     </div>
   );
 
-  // Добавлено: функция для выбора клиентов
   const handleSelectClient = (client) => {
     if (selectedClients.includes(client)) {
       setSelectedClients(selectedClients.filter((c) => c.id !== client.id));
@@ -115,7 +110,6 @@ function Clients({ onLogout }) {
     }
   };
 
-  // Добавлено: функция для выбора всех клиентов
   const handleSelectAllClients = () => {
     if (selectedClients.length === clients.length) {
       setSelectedClients([]);
