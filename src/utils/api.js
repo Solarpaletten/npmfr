@@ -1,7 +1,10 @@
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 const api = {
-  async request(url, method = "GET", data) {
+  async request(url, method = "GET", data, params = {}) {
+    const queryString = new URLSearchParams(params).toString();
+    const fullUrl = `${BASE_URL}/api${url}${queryString ? `?${queryString}` : ""}`;
+
     const options = {
       method,
       headers: {
@@ -15,10 +18,9 @@ const api = {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/api${url}`, options);
+      const response = await fetch(fullUrl, options);
       if (!response.ok) {
         const { error } = await response.json();
-
         throw new Error(error || "Something went wrong");
       }
 
@@ -29,8 +31,8 @@ const api = {
     }
   },
 
-  get(url) {
-    return this.request(url, "GET");
+  get(url, params) {
+    return this.request(url, "GET", undefined, params);
   },
 
   post(url, data) {

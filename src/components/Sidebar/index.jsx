@@ -29,7 +29,7 @@ const Sidebar = ({ onLogout }) => {
           <FontAwesomeIcon icon={faGear} />
           <Link to="#">Settings</Link>
         </div>
-        <Button icon={faArrowRightFromBracket} onClick={onLogout}>
+        <Button className={styles.button} icon={faArrowRightFromBracket} onClick={onLogout}>
           Log Out
         </Button>
       </div>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { jwtDecode } from "jwt-decode";
+import React, { useState, useEffect, useCallback } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,15 +7,13 @@ import {
   useNavigate,
   Navigate,
   useLocation,
-} from "react-router-dom";
-import Home from "./pages/Home";
-import RegisterForm from "./pages/RegisterForm";
-import LoginForm from "./pages/LoginForm";
-import Dashboard from "./pages/Dashboard";
-import Clients from "./pages/Clients";
-import Warehouse from "./pages/Warehouse";
+} from 'react-router-dom';
+import Home from './pages/Home';
+import RegisterForm from './pages/RegisterForm';
+import LoginForm from './pages/LoginForm';
+import routes from './constants/routes.js';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,7 +22,7 @@ function App() {
 
   const handleLogin = useCallback(
     (path) => {
-      console.log("User logged in");
+      console.log('User logged in');
       setIsLoggedIn(true);
       navigate(path);
     },
@@ -32,19 +30,19 @@ function App() {
   );
 
   const handleLogout = useCallback(() => {
-    console.log("Invalid token");
-    console.log("User logged out");
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("role");
+    console.log('Invalid token');
+    console.log('User logged out');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
 
     setIsLoggedIn(false);
-    navigate("/login");
+    navigate('/login');
   }, [navigate]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     if (token) {
       try {
@@ -65,47 +63,34 @@ function App() {
   }, [isLoggedIn, location.pathname, handleLogin, handleLogout]);
 
   const handleRegister = () => {
-    console.log("User registered");
-    navigate("/login");
+    console.log('User registered');
+    navigate('/login');
   };
 
   const ProtectedRoute = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to="/login" />;
+    return isLoggedIn ? children : <Navigate to='/login' />;
   };
 
   return (
-    <div className="app-container">
+    <div className='app-container'>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route
-          path="/register"
+          path='/register'
           element={<RegisterForm onRegister={handleRegister} />}
         />
-        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route
-          path="/clients"
-          element={
-            <ProtectedRoute>
-              <Clients onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/warehouse"
-          element={
-            <ProtectedRoute>
-              <Warehouse onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
+        <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
+        {routes.map(({ path, component: Component }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <ProtectedRoute>
+                <Component onLogout={handleLogout} />
+              </ProtectedRoute>
+            }
+          />
+        ))}
       </Routes>
     </div>
   );

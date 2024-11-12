@@ -118,4 +118,5 @@ const menuData = [
     active: false
   },
 ];
+
 export default menuData;

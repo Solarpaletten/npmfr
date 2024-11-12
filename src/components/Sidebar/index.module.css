@@ -35,7 +35,7 @@
   padding: 10px 0;
 }
 
-.menu_icon{
+.menu_icon {
   width: 14px;
 }
 
@@ -73,4 +73,9 @@
 .menu_item svg {
   color: #ffffff;
   margin: 0 10px 0 0;
+}
+
+.button {
+  width: 100%;
+  margin: 4px 0;
 }

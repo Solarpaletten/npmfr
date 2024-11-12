@@ -1,0 +1,16 @@
+.input {
+  width: 50%;
+  margin: 15px 0;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  min-width: 400px;
+  display: inline-block;
+}
+
+.input input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}

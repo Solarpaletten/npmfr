@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Page from '../../components/Page';
-import Table from '../../components/Table';
+import {Table} from '../../components/Table';
 import Button from '../../components/Button';
 import api from '../../utils/api';
 
@@ -41,9 +41,15 @@ function Clients({ onLogout }) {
   }, []);
 
   const handleDelete = async () => {
-    if (window.confirm(`Are you sure you want to delete ${selectedClients.length} clients?`)) {
+    if (
+      window.confirm(
+        `Are you sure you want to delete ${selectedClients.length} clients?`
+      )
+    ) {
       try {
-        await Promise.all(selectedClients.map((client) => api.delete(`/clients/${client.id}`)));
+        await Promise.all(
+          selectedClients.map((client) => api.delete(`/clients/${client.id}`))
+        );
         setSelectedClients([]);
         fetchClients();
       } catch (error) {
@@ -130,7 +136,7 @@ function Clients({ onLogout }) {
           <tr>
             <th>
               <input
-                type="checkbox"
+                type='checkbox'
                 className={styles.headerCheckbox}
                 onChange={handleSelectAllClients}
                 checked={selectedClients.length === clients.length}
@@ -148,12 +154,14 @@ function Clients({ onLogout }) {
           {clients.map((client) => (
             <tr
               key={client.id}
-              className={selectedClients.includes(client) ? styles.selectedRow : ''}
+              className={
+                selectedClients.includes(client) ? styles.selectedRow : ''
+              }
               onClick={() => setSelectedClient(client)}
             >
               <td>
                 <input
-                  type="checkbox"
+                  type='checkbox'
                   checked={selectedClients.includes(client)}
                   onChange={() => handleSelectClient(client)}
                 />
@@ -174,41 +182,51 @@ function Clients({ onLogout }) {
           <form onSubmit={handleAdd} className={styles.form}>
             <h2>Add New Client</h2>
             <input
-              type="text"
-              placeholder="Name"
+              type='text'
+              placeholder='Name'
               value={newClient.name}
-              onChange={(e) => setNewClient({ ...newClient, name: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, name: e.target.value })
+              }
               required
             />
             <input
-              type="email"
-              placeholder="Email"
+              type='email'
+              placeholder='Email'
               value={newClient.email}
-              onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, email: e.target.value })
+              }
               required
             />
             <input
-              type="tel"
-              placeholder="Phone"
+              type='tel'
+              placeholder='Phone'
               value={newClient.phone}
-              onChange={(e) => setNewClient({ ...newClient, phone: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, phone: e.target.value })
+              }
               required
             />
             <input
-              type="text"
-              placeholder="Code"
+              type='text'
+              placeholder='Code'
               value={newClient.code}
-              onChange={(e) => setNewClient({ ...newClient, code: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, code: e.target.value })
+              }
             />
             <input
-              type="text"
-              placeholder="VAT Code"
+              type='text'
+              placeholder='VAT Code'
               value={newClient.vat_code}
-              onChange={(e) => setNewClient({ ...newClient, vat_code: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, vat_code: e.target.value })
+              }
             />
             <div className={styles.formButtons}>
-              <Button type="submit">Save</Button>
-              <Button type="button" onClick={() => setShowAddForm(false)}>
+              <Button type='submit'>Save</Button>
+              <Button type='button' onClick={() => setShowAddForm(false)}>
                 Cancel
               </Button>
             </div>
@@ -221,46 +239,62 @@ function Clients({ onLogout }) {
           <form onSubmit={handleEdit} className={styles.form}>
             <h2>Edit Client</h2>
             <input
-              type="text"
-              placeholder="Name"
+              type='text'
+              placeholder='Name'
               value={newClient.name}
-              onChange={(e) => setNewClient({ ...newClient, name: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, name: e.target.value })
+              }
               required
             />
             <input
-              type="email"
-              placeholder="Email"
+              type='email'
+              placeholder='Email'
               value={newClient.email}
-              onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, email: e.target.value })
+              }
               required
             />
             <input
-              type="tel"
-              placeholder="Phone"
+              type='tel'
+              placeholder='Phone'
               value={newClient.phone}
-              onChange={(e) => setNewClient({ ...newClient, phone: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, phone: e.target.value })
+              }
               required
             />
             <input
-              type="text"
-              placeholder="Code"
+              type='text'
+              placeholder='Code'
               value={newClient.code}
-              onChange={(e) => setNewClient({ ...newClient, code: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, code: e.target.value })
+              }
             />
             <input
-              type="text"
-              placeholder="VAT Code"
+              type='text'
+              placeholder='VAT Code'
               value={newClient.vat_code}
-              onChange={(e) => setNewClient({ ...newClient, vat_code: e.target.value })}
+              onChange={(e) =>
+                setNewClient({ ...newClient, vat_code: e.target.value })
+              }
             />
             <div className={styles.formButtons}>
-              <Button type="submit">Save</Button>
+              <Button type='submit'>Save</Button>
               <Button
-                type="button"
+                type='button'
                 onClick={() => {
                   setShowEditForm(false);
                   setSelectedClient(null);
-                  setNewClient({ name: '', email: '', phone: '', code: '', vat_code: '' });
+                  setNewClient({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    code: '',
+                    vat_code: '',
+                  });
                 }}
               >
                 Cancel

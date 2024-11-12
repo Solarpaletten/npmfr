@@ -1,10 +1,12 @@
 .button {
-  padding: 10px 40px;
+  padding: 10px;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
-  margin: 4px 0;
-  width: 100%;
+  margin: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .default {
@@ -26,13 +28,26 @@
   padding: 0;
 }
 
+.red {
+  background-color: #b43f3f;
+  border: 1px solid #b43f3f;
+  color: #ffffff;
+}
+
+.button:hover {
+  transition: all 0.2s ease-out;
+}
+
 .default:hover {
   background-color: #f8f8f8;
-  transition: all 0.2s ease-out;
 }
 
 .primary:hover {
   background-color: #d95b0c;
   border: 1px solid #d95b0c;
-  transition: all 0.2s ease-out;
+}
+
+.red:hover {
+  background-color: #922323;
+  border: 1px solid #922323;
 }
