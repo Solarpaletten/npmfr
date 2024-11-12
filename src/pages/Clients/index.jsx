@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Page from '../../components/Page';
-import {Table} from '../../components/Table';
+import { TableOld } from '../../components/Table';
 import Button from '../../components/Button';
 import api from '../../utils/api';
 
@@ -131,7 +131,7 @@ function Clients({ onLogout }) {
         <Toolbar />
       </div>
 
-      <Table>
+      <TableOld>
         <thead>
           <tr>
             <th>
@@ -175,7 +175,7 @@ function Clients({ onLogout }) {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </TableOld>
 
       {showAddForm && (
         <div className={styles.formOverlay}>

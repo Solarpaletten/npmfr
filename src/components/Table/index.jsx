@@ -73,3 +73,7 @@ export const Cell = ({ children, align }) => {
     </div>
   );
 };
+
+export const TableOld = ({ children }) => {
+  return <table className={styles.table_old}>{children}</table>;
+};

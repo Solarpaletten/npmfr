@@ -53,3 +53,22 @@
 .left {
   justify-content: flex-start;
 }
+
+/* Old */
+.table_old {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.table_old td,
+.table_old th {
+  text-align: left;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 10px 10px;
+}
+
+.table_old th {
+  font-weight: bold;
+}
