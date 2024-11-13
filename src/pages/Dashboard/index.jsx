@@ -13,7 +13,6 @@ import columns from './columns';
 import {
   faTrashCan,
   faPenToSquare,
-  faCopy,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 

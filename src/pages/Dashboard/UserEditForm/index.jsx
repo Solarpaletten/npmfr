@@ -60,8 +60,9 @@ const UserEditForm = ({ onShowForm, requery, user }) => {
           required
         />
 
+        {/* TODO fix role from local storage */}
+        {/* TODO create select */}
         <label htmlFor='role'>Role:</label>
-
         <select
           disabled={role === 'admin' && user.id === +userId}
           name='role'
