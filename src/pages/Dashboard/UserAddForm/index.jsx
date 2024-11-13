@@ -73,8 +73,8 @@ const UserAddForm = ({ onShowForm, requery }) => {
         </select>
 
         <Alert variant='warning'>
-          Password will be setted as <b>default1234</b>. Ask user to update it
-          as soon as possible.
+          Password will be set to <b>default1234</b>. Please ask the user to
+          update it as soon as possible.
         </Alert>
       </Form>
     </Modal>
