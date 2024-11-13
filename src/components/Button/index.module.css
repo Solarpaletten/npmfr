@@ -28,7 +28,7 @@
   padding: 0;
 }
 
-.red {
+.danger {
   background-color: #c50f32;
   border: 1px solid #c50f32;
   color: #ffffff;
@@ -36,6 +36,12 @@
 
 .button:hover {
   transition: all 0.2s ease-out;
+}
+
+.button:disabled {
+  color: #5d5d64 !important;
+  border: #5d5d64 !important;
+  background-color: #dcdcdc !important;
 }
 
 .default:hover {
@@ -47,7 +53,7 @@
   border: 1px solid #d95b0c;
 }
 
-.red:hover {
+.danger:hover {
   background-color: #922323;
   border: 1px solid #922323;
 }

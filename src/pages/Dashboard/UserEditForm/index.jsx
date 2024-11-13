@@ -1,33 +1,29 @@
 import React, { useState } from 'react';
-import Alert from '../../../components/Alert';
 import { Modal, Form } from '../../../components/Modal';
 import Field from '../../../components/Field';
 import api from '../../../utils/api';
 
-const UserAddForm = ({ onShowForm, requery }) => {
-  const [newUser, setNewUser] = useState({
-    username: '',
-    email: '',
-    role: 'standard',
-  });
+const UserEditForm = ({ onShowForm, requery, user }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
+  const [currentUser, setCurrentUser] = useState(user);
+  const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
-  const handleAdd = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await api.post('/users', newUser);
+      await api.put(`/users/${user.id}`, currentUser);
 
       requery();
 
       setLoading(false);
-      setNewUser({ username: '', email: '', role: 'standard' });
       onShowForm(false);
     } catch (error) {
-      setError('Failed to add user');
+      setError('Failed to edit user');
       setLoading(false);
     }
   };
@@ -35,27 +31,31 @@ const UserAddForm = ({ onShowForm, requery }) => {
   return (
     <Modal>
       <Form
-        onSubmit={handleAdd}
+        onSubmit={handleEdit}
         onClose={() => onShowForm(false)}
         loading={loading}
         error={error}
         buttonPositiveName={'Save'}
         buttonNegativeName={'Cancel'}
       >
-        <h2>Add New User</h2>
+        <h2>Edit User</h2>
         <Field
           type='text'
           placeholder='User name'
-          value={newUser.username}
-          onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+          value={currentUser.username}
+          onChange={(e) =>
+            setCurrentUser({ ...currentUser, username: e.target.value })
+          }
           disabled={loading}
           required
         />
         <Field
           type='email'
           placeholder='Email'
-          value={newUser.email}
-          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+          value={currentUser.email}
+          onChange={(e) =>
+            setCurrentUser({ ...currentUser, email: e.target.value })
+          }
           disabled={loading}
           required
         />
@@ -63,21 +63,23 @@ const UserAddForm = ({ onShowForm, requery }) => {
         <label htmlFor='role'>Role:</label>
 
         <select
+          disabled={role === 'admin' && user.id === +userId}
           name='role'
           id='role'
-          onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+          onChange={(e) =>
+            setCurrentUser({ ...currentUser, role: e.target.value })
+          }
         >
-          <option value='standard'>Standard</option>
-          <option value='admin'>Admin</option>
+          <option value='standard' selected={user.role === 'standard'}>
+            Standard
+          </option>
+          <option value='admin' selected={user.role === 'admin'}>
+            Admin
+          </option>
         </select>
-
-        <Alert variant='warning'>
-          Password will be setted as <b>default1234</b>. Ask user to update it
-          as soon as possible.
-        </Alert>
       </Form>
     </Modal>
   );
 };
 
-export default UserAddForm;
+export default UserEditForm;

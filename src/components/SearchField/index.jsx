@@ -6,7 +6,7 @@ const SearchField = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className={styles.input}>
       <input
-        type='text'
+        type='search'
         placeholder='Search...'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Page from '../../components/Page';
 import SearchField from '../../components/SearchField';
 import { Table, Row, Cell } from '../../components/Table';
 import { Cards, Card } from '../../components/Cards';
 import Button from '../../components/Button';
 import UserAddForm from './UserAddForm';
+import UserDeleteForm from './UserDeleteForm';
+import UserEditForm from './UserEditForm';
 import api from '../../utils/api';
 import columns from './columns';
 import {
@@ -29,7 +32,9 @@ function Dashboard({ onLogout }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sort, setSort] = useState({ sort: 'username', order: 'ASC' });
 
+  const [selectedUser, setSelectedUser] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
@@ -38,7 +43,7 @@ function Dashboard({ onLogout }) {
 
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [users]);
 
   const fetchUsers = async ({ searchTerm, sort, order }) => {
     setUsersLoading(true);
@@ -74,20 +79,6 @@ function Dashboard({ onLogout }) {
     }
   };
 
-  const handleDelete = async (user) => {
-    if (
-      window.confirm(`Are you sure you want to delete ${user.username} user?`)
-    ) {
-      try {
-        await api.delete(`/users/${user.id}`);
-
-        fetchUsers({ searchTerm, ...sort });
-      } catch (error) {
-        setError('Failed to delete user');
-      }
-    }
-  };
-
   return (
     <Page
       loading={statsLoading && usersLoading}
@@ -104,11 +95,7 @@ function Dashboard({ onLogout }) {
 
       <div className={styles.toolbar}>
         <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <Button
-          // variant='primary'
-          icon={faPlus}
-          onClick={() => setShowAddForm(true)}
-        >
+        <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
           Add new user
         </Button>
       </div>
@@ -126,12 +113,22 @@ function Dashboard({ onLogout }) {
             <Cell>{user.email || '-'}</Cell>
             <Cell>{user.role.toUpperCase() || '-'}</Cell>
             <Cell align='right'>
-              <Button icon={faPenToSquare}>Edit</Button>
-              <Button icon={faCopy}>Copy</Button>
               <Button
-                variant='red'
+                icon={faPenToSquare}
+                onClick={() => {
+                  setShowEditForm(true);
+                  setSelectedUser(user);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant='danger'
                 icon={faTrashCan}
-                onClick={() => handleDelete(user)}
+                onClick={() => {
+                  setShowDeleteForm(true);
+                  setSelectedUser(user);
+                }}
               >
                 Delete
               </Button>
@@ -140,11 +137,32 @@ function Dashboard({ onLogout }) {
         ))}
       </Table>
 
-      <UserAddForm
-        visible={showAddForm}
-        onClose={setShowAddForm}
-        requery={() => fetchUsers({ searchTerm, ...sort })}
-      />
+      {showAddForm &&
+        createPortal(
+          <UserAddForm
+            onShowForm={setShowAddForm}
+            requery={() => fetchUsers({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
+      {showDeleteForm &&
+        createPortal(
+          <UserDeleteForm
+            user={selectedUser}
+            onShowForm={setShowDeleteForm}
+            requery={() => fetchUsers({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
+      {showEditForm &&
+        createPortal(
+          <UserEditForm
+            user={selectedUser}
+            onShowForm={setShowEditForm}
+            requery={() => fetchUsers({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
     </Page>
   );
 }
