@@ -19,6 +19,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  // TODO
+  const role = localStorage.getItem('role');
 
   const handleLogin = useCallback(
     (path) => {
@@ -80,17 +82,22 @@ function App() {
           element={<RegisterForm onRegister={handleRegister} />}
         />
         <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
-        {routes.map(({ path, component: Component }) => (
-          <Route
-            key={path}
-            path={path}
-            element={
-              <ProtectedRoute>
-                <Component onLogout={handleLogout} />
-              </ProtectedRoute>
-            }
-          />
-        ))}
+        {routes.map(({ path, component: Component }) => {
+          if (path === '/dashboard' && role === 'standard') {
+            return null;
+          }
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <ProtectedRoute>
+                  <Component onLogout={handleLogout} />
+                </ProtectedRoute>
+              }
+            />
+          );
+        })}
       </Routes>
     </div>
   );

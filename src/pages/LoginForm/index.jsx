@@ -46,7 +46,7 @@ function LoginForm({ onLogin }) {
         setPassword('');
         setError('');
 
-        onLogin('/dashboard');
+        onLogin(role === 'admin' ? '/dashboard' : '/clients');
       } catch (error) {
         setError('Login failed, please check your credentials');
       } finally {

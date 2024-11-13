@@ -60,7 +60,6 @@ const UserAddForm = ({ onShowForm, requery }) => {
           required
         />
 
-        {/* TODO fix role from local storage */}
         {/* TODO create select */}
         <label htmlFor='role'>Role:</label>
         <select

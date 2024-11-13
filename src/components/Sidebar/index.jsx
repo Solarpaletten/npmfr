@@ -14,15 +14,21 @@ import Logo from './Solar_3.svg';
 import styles from './index.module.css';
 
 const Sidebar = ({ onLogout }) => {
+  // TODO
+  const role = localStorage.getItem('role');
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo_container}>
         <img src={Logo} alt='Solar Logo' className={styles.logo} />
       </div>
       <div className={styles.menu}>
-        {menuData.map((item, index) => (
-          <MenuItem key={index} item={item} />
-        ))}
+        {menuData.map((item, index) => {
+          if (item.path === '/dashboard' && role === 'standard') {
+            return null;
+          }
+          return <MenuItem key={index} item={item} />;
+        })}
       </div>
       <div className={styles.bottom}>
         <div className={styles.menu_item}>
