@@ -1,0 +1,48 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #25305e80;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  position: absolute;
+  width: 400px;
+  top: 250px;
+  padding: 40px 60px 60px;
+  left: calc(50% - 200px);
+}
+
+.form {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+  align-content: center;
+}
+
+.buttons button {
+  width: 50%;
+}
+
+.buttons button:first-child {
+  margin-left: 0;
+}
+
+.buttons button:last-child {
+  margin-right: 0;
+}

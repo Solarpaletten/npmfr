@@ -1,8 +1,8 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Button';
 
-import styles from "./index.module.css";
+import styles from './index.module.css';
 
 function Home() {
   const navigate = useNavigate();
@@ -12,10 +12,18 @@ function Home() {
       <h1>Welcome to the Home Page</h1>
       <p>This is the initial home page of the application.</p>
       <div>
-        <Button variant="primary" onClick={() => navigate("/register")}>
+        <Button
+          className={styles.button}
+          variant='primary'
+          onClick={() => navigate('/register')}
+        >
           Register
         </Button>
-        <Button variant="primary" onClick={() => navigate("/login")}>
+        <Button
+          className={styles.button}
+          variant='primary'
+          onClick={() => navigate('/login')}
+        >
           Login
         </Button>
       </div>

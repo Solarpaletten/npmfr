@@ -66,16 +66,16 @@
 }
 
 .dropdown_item:hover {
-  background: #f8f8f8;
+  background: #fbfbfb;
 }
 
 .dropdown_item a {
   text-decoration: none;
-  color: #173b45;
+  color: #25305e;
 }
 
 .dropdown_item svg {
   font-size: 14px;
   margin: 0 10px 0 0;
-  color: #173b45;
+  color: #25305e;
 }

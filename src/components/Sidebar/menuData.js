@@ -18,6 +18,12 @@ import {
 
 const menuData = [
   { 
+    label: "Dashboard", 
+    path: "/dashboard", 
+    icon: faTableColumns,
+    active: false
+  },
+  { 
     label: "Clients", 
     path: "/clients", 
     icon: faPeopleLine,
@@ -55,14 +61,8 @@ const menuData = [
     ],
   },
   { 
-    label: "Dashboard", 
-    path: "/dashboard", 
-    icon: faTableColumns,
-    active: false
-  },
-  { 
     label: "General ledger", 
-    path: "#", 
+    path: "/general-ledger", 
     icon: faBook,
     active: false
   },
@@ -77,45 +77,46 @@ const menuData = [
   },
   { 
     label: "Reports", 
-    path: "#", 
+    path: "/reports", 
     icon: faSheetPlastic,
     active: false
   },
   { 
     label: "Personnel", 
-    path: "#", 
+    path: "/personnel", 
     icon: faUsers,
     active: false
   },
   { 
     label: "Production", 
-    path: "#", 
+    path: "/production", 
     icon: faBox,
     active: false
   },
   { 
     label: "Assets", 
-    path: "#", 
+    path: "/assets", 
     icon: faSackDollar,
     active: false
   },
   { 
     label: "Documents", 
-    path: "#", 
+    path: "/documents", 
     icon: faFolderOpen,
     active: false
   },
   { 
     label: "Salary", 
-    path: "#", 
+    path: "/salary", 
     icon: faHandHoldingDollar,
     active: false
   },
   { 
     label: "Declaration", 
-    path: "#", 
+    path: "/declaration", 
     icon: faReceipt,
     active: false
   },
 ];
+
 export default menuData;

@@ -1,145 +1,167 @@
-import React, { useState, useEffect } from "react";
-import Page from "../../components/Page";
-import api from "../../utils/api";
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import Page from '../../components/Page';
+import SearchField from '../../components/SearchField';
+import { Table, Row, Cell } from '../../components/Table';
+import { Cards, Card } from '../../components/Cards';
+import Button from '../../components/Button';
+import UserAddForm from './UserAddForm';
+import UserDeleteForm from './UserDeleteForm';
+import UserEditForm from './UserEditForm';
+import api from '../../utils/api';
+import columns from './columns';
+import {
+  faTrashCan,
+  faPenToSquare,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 
-import styles from "./index.module.css";
+import styles from './index.module.css';
 
 function Dashboard({ onLogout }) {
+  const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({
-    summary: {
-      customers: { total: 0, revenue: 0 },
-      suppliers: { total: 0, spending: 0 },
-    },
-    topCustomers: [],
-    topSuppliers: [],
+    total_users: '0',
+    admin_users: '0',
+    standard_users: '0',
   });
-  const [loading, setLoading] = useState(true);
+  const [usersLoading, setUsersLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sort, setSort] = useState({ sort: 'username', order: 'ASC' });
+
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  useEffect(() => {
+    fetchUsers({ searchTerm, ...sort });
+  }, [searchTerm, sort]);
 
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [users]);
 
-  const fetchDashboardData = async () => {
+  const fetchUsers = async ({ searchTerm, sort, order }) => {
+    setUsersLoading(true);
+    setError(null);
+
     try {
-      const data = await api.get("/dashboard/stats");
+      const data = await api.get('/users', {
+        search: searchTerm,
+        sort,
+        order,
+      });
 
-      setStats(data);
+      setUsers(data);
     } catch (error) {
-      setError("Failed to fetch dashboard data");
+      setError('Failed to fetch users');
     } finally {
-      setLoading(false);
+      setUsersLoading(false);
     }
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
+  const fetchDashboardData = async () => {
+    setStatsLoading(true);
+    setError(null);
+
+    try {
+      const data = await api.get('/dashboard');
+
+      setStats(data);
+    } catch (error) {
+      setError('Failed to fetch dashboard data');
+    } finally {
+      setStatsLoading(false);
+    }
   };
 
   return (
-    <Page loading={loading} error={error} onLogout={onLogout}>
-      <div className={styles.container}>
-        <h1>Dashboard</h1>
+    <Page
+      loading={statsLoading && usersLoading}
+      error={error}
+      onLogout={onLogout}
+    >
+      <h1>Dashboard</h1>
 
-        <div className={styles.summaryGrid}>
-          <div className={styles.summarySection}>
-            <h2>Customers</h2>
-            <div className={styles.statsGrid}>
-              <div className={styles.statCard}>
-                <h3>Total Customers</h3>
-                <div className={styles.statValue}>
-                  {stats.summary.customers.total}
-                </div>
-              </div>
-              <div className={styles.statCard}>
-                <h3>Total Revenue</h3>
-                <div className={styles.statValue}>
-                  {formatCurrency(stats.summary.customers.revenue)}
-                </div>
-              </div>
-            </div>
-          </div>
+      <Cards columns={3}>
+        <Card title={'Total Users'} value={stats.total_users}></Card>
+        <Card title={'Admin Users'} value={stats.admin_users}></Card>
+        <Card title={'Standard Users'} value={stats.standard_users}></Card>
+      </Cards>
 
-          <div className={styles.summarySection}>
-            <h2>Suppliers</h2>
-            <div className={styles.statsGrid}>
-              <div className={styles.statCard}>
-                <h3>Total Suppliers</h3>
-                <div className={styles.statValue}>
-                  {stats.summary.suppliers.total}
-                </div>
-              </div>
-              <div className={styles.statCard}>
-                <h3>Total Spending</h3>
-                <div className={styles.statValue}>
-                  {formatCurrency(stats.summary.suppliers.spending)}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.topLists}>
-          <div className={styles.topSection}>
-            <h2>Top 3 Customers</h2>
-            <div className={styles.table}>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>VAT Code</th>
-                    <th>Transactions</th>
-                    <th>Total Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stats.topCustomers.map((customer) => (
-                    <tr key={customer.id}>
-                      <td>{customer.name}</td>
-                      <td>{customer.code || "-"}</td>
-                      <td>{customer.vatCode || "-"}</td>
-                      <td>{customer.transactions}</td>
-                      <td>{formatCurrency(customer.amount)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className={styles.topSection}>
-            <h2>Top 3 Suppliers</h2>
-            <div className={styles.table}>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>VAT Code</th>
-                    <th>Transactions</th>
-                    <th>Total Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stats.topSuppliers.map((supplier) => (
-                    <tr key={supplier.id}>
-                      <td>{supplier.name}</td>
-                      <td>{supplier.code || "-"}</td>
-                      <td>{supplier.vatCode || "-"}</td>
-                      <td>{supplier.transactions}</td>
-                      <td>{formatCurrency(supplier.amount)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      <div className={styles.toolbar}>
+        <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
+          Add new user
+        </Button>
       </div>
+
+      <Table
+        columns={columns}
+        initialOrder={sort}
+        sort={setSort}
+        loading={usersLoading}
+      >
+        {users.map((user) => (
+          <Row key={user.id}>
+            <Cell>{new Date(user.created_at).toLocaleDateString()}</Cell>
+            <Cell>{user.username || '-'}</Cell>
+            <Cell>{user.email || '-'}</Cell>
+            <Cell>{user.role.toUpperCase() || '-'}</Cell>
+            <Cell align='right'>
+              <Button
+                icon={faPenToSquare}
+                onClick={() => {
+                  setShowEditForm(true);
+                  setSelectedUser(user);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant='danger'
+                icon={faTrashCan}
+                onClick={() => {
+                  setShowDeleteForm(true);
+                  setSelectedUser(user);
+                }}
+              >
+                Delete
+              </Button>
+            </Cell>
+          </Row>
+        ))}
+      </Table>
+
+      {showAddForm &&
+        createPortal(
+          <UserAddForm
+            onShowForm={setShowAddForm}
+            requery={() => fetchUsers({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
+      {showDeleteForm &&
+        createPortal(
+          <UserDeleteForm
+            user={selectedUser}
+            onShowForm={setShowDeleteForm}
+            requery={() => fetchUsers({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
+      {showEditForm &&
+        createPortal(
+          <UserEditForm
+            user={selectedUser}
+            onShowForm={setShowEditForm}
+            requery={() => fetchUsers({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
     </Page>
   );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
-import Table from "../../../../components/Table";
-import Button from "../../../../components/Button";
-import styles from "./index.module.css";
+import {Table} from '../../../../components/Table';
+import Button from '../../../../components/Button';
+
+import styles from './index.module.css';
 
 function ProductList({ products, onAddStock }) {
   return (
