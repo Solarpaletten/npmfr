@@ -2,7 +2,7 @@
   max-width: 240px;
   min-width: 240px;
   box-sizing: border-box;
-  background-color: #173b45;
+  background-color: #25305e;
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
@@ -18,7 +18,7 @@
 }
 
 .sub_menu {
-  background-color: #617c835e;
+  background-color: #ffffff17;
   border-radius: 5px;
 }
 
@@ -51,7 +51,7 @@
 .menu_item:hover svg,
 .sub_menu_title:hover,
 .active {
-  color: #b9d0d6;
+  color: #a8d0e6;
 }
 
 .logo {
@@ -59,10 +59,10 @@
 }
 
 .bottom {
-  border-top: 1px solid #617c83;
+  border-top: 1px solid #ffffff17;
   position: absolute;
   bottom: 20px;
-  background-color: #173b45;
+  background-color: #25305e;
   width: calc(100% - 40px);
 }
 

@@ -4,6 +4,7 @@ import SearchField from '../../components/SearchField';
 import { Table, Row, Cell } from '../../components/Table';
 import { Cards, Card } from '../../components/Cards';
 import Button from '../../components/Button';
+import UserAddForm from './UserAddForm';
 import api from '../../utils/api';
 import columns from './columns';
 import {
@@ -28,6 +29,9 @@ function Dashboard({ onLogout }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sort, setSort] = useState({ sort: 'username', order: 'ASC' });
 
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+
   useEffect(() => {
     fetchUsers({ searchTerm, ...sort });
   }, [searchTerm, sort]);
@@ -46,6 +50,7 @@ function Dashboard({ onLogout }) {
         sort,
         order,
       });
+
       setUsers(data);
     } catch (error) {
       setError('Failed to fetch users');
@@ -69,6 +74,20 @@ function Dashboard({ onLogout }) {
     }
   };
 
+  const handleDelete = async (user) => {
+    if (
+      window.confirm(`Are you sure you want to delete ${user.username} user?`)
+    ) {
+      try {
+        await api.delete(`/users/${user.id}`);
+
+        fetchUsers({ searchTerm, ...sort });
+      } catch (error) {
+        setError('Failed to delete user');
+      }
+    }
+  };
+
   return (
     <Page
       loading={statsLoading && usersLoading}
@@ -85,7 +104,11 @@ function Dashboard({ onLogout }) {
 
       <div className={styles.toolbar}>
         <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <Button variant='primary' icon={faPlus}>
+        <Button
+          // variant='primary'
+          icon={faPlus}
+          onClick={() => setShowAddForm(true)}
+        >
           Add new user
         </Button>
       </div>
@@ -105,13 +128,23 @@ function Dashboard({ onLogout }) {
             <Cell align='right'>
               <Button icon={faPenToSquare}>Edit</Button>
               <Button icon={faCopy}>Copy</Button>
-              <Button variant='red' icon={faTrashCan}>
+              <Button
+                variant='red'
+                icon={faTrashCan}
+                onClick={() => handleDelete(user)}
+              >
                 Delete
               </Button>
             </Cell>
           </Row>
         ))}
       </Table>
+
+      <UserAddForm
+        visible={showAddForm}
+        onClose={setShowAddForm}
+        requery={() => fetchUsers({ searchTerm, ...sort })}
+      />
     </Page>
   );
 }

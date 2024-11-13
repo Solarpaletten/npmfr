@@ -13,11 +13,12 @@
 }
 
 .row:hover > .cell {
-  background-color: #fbfbfd;
+  background-color: #fbfbfb;
 }
 
 .header_cell {
   font-weight: bold;
+  color: #25305e;
 }
 
 .header_cell,
@@ -31,7 +32,7 @@
 
 .sort {
   margin-right: 6px;
-  color: #51757f;
+  color: #dcdcdc;
 }
 
 .active {

@@ -10,9 +10,9 @@
 }
 
 .default {
-  background-color: #ffffffe6;
-  border: 1px solid #dcdcdc;
-  color: #173b45;
+  background-color: #f6f7ff;
+  border: 1px solid #e5eaff;
+  color: #414d7e;
 }
 
 .primary {
@@ -29,8 +29,8 @@
 }
 
 .red {
-  background-color: #b43f3f;
-  border: 1px solid #b43f3f;
+  background-color: #c50f32;
+  border: 1px solid #c50f32;
   color: #ffffff;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .default:hover {
-  background-color: #f8f8f8;
+  background-color: #ffffff;
 }
 
 .primary:hover {

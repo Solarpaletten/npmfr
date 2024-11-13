@@ -12,7 +12,7 @@
 }
 
 .statCard h3 {
-  color: #51757f;
+  color: #767676;
   font-size: 14px;
   margin: 0 0 10px;
   font-weight: normal;
@@ -21,5 +21,5 @@
 .statValue {
   font-size: 24px;
   font-weight: bold;
-  color: #173B45;
+  color: #414d7e;
 }
