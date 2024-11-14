@@ -4,7 +4,7 @@ import ProductList from "./components/ProductList";
 import Incoming from "./components/Incoming";
 import Sales from "./components/Sales";
 import Button from "../../components/Button";
-import api from "../../utils/api";
+import { useAuthenticatedApi } from "../../utils/api";
 
 import styles from "./index.module.css";
 
@@ -14,6 +14,8 @@ function Warehouse({ onLogout }) {
   const [products, setProducts] = useState([]);
   const [showIncomingForm, setShowIncomingForm] = useState(false);
   const [showSalesForm, setShowSalesForm] = useState(false);
+
+  const api = useAuthenticatedApi();
 
   useEffect(() => {
     fetchProducts();

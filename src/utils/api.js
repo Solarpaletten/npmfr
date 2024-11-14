@@ -1,15 +1,19 @@
+import { useUser } from "../contexts/UserContext";
+
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 const api = {
-  async request(url, method = "GET", data, params = {}) {
+  async request(url, method = "GET", data, params = {}, token = "") {
     const queryString = new URLSearchParams(params).toString();
-    const fullUrl = `${BASE_URL}/api${url}${queryString ? `?${queryString}` : ""}`;
+    const fullUrl = `${BASE_URL}/api${url}${
+      queryString ? `?${queryString}` : ""
+    }`;
 
     const options = {
       method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        Authorization: token ? `Bearer ${token}` : "",
       },
     };
 
@@ -31,25 +35,36 @@ const api = {
     }
   },
 
-  get(url, params) {
-    return this.request(url, "GET", undefined, params);
+  get(url, params, token) {
+    return this.request(url, "GET", undefined, params, token);
   },
 
-  post(url, data) {
-    return this.request(url, "POST", data);
+  post(url, data, token) {
+    return this.request(url, "POST", data, {}, token);
   },
 
-  patch(url, data) {
-    return this.request(url, "PATCH", data);
+  patch(url, data, token) {
+    return this.request(url, "PATCH", data, {}, token);
   },
 
-  put(url, data) {
-    return this.request(url, "PUT", data);
+  put(url, data, token) {
+    return this.request(url, "PUT", data, {}, token);
   },
 
-  delete(url) {
-    return this.request(url, "DELETE");
+  delete(url, token) {
+    return this.request(url, "DELETE", undefined, {}, token);
   },
 };
 
-export default api;
+export const useAuthenticatedApi = () => {
+  const { user } = useUser();
+  const token = user?.token || "";
+
+  return {
+    get: (url, params) => api.get(url, params, token),
+    post: (url, data) => api.post(url, data, token),
+    patch: (url, data) => api.patch(url, data, token),
+    put: (url, data) => api.put(url, data, token),
+    delete: (url) => api.delete(url, token),
+  };
+};
