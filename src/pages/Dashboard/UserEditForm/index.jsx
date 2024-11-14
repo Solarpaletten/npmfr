@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form } from "../../../components/Modal";
 import Field from "../../../components/Field";
+import Select from "../../../components/Select";
 import { useUser } from "../../../contexts/UserContext";
 import { useAuthenticatedApi } from "../../../utils/api";
 
@@ -62,20 +63,21 @@ const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
           required
         />
 
-        {/* TODO create select */}
-        <label htmlFor="role">Role:</label>
-        <select
-          defaultValue={currentUser.role}
-          disabled={user.role === "admin" && currentUser.id === user.userId}
-          name="role"
-          id="role"
+        <Select
+          label="Role"
+          value={currentUser.role}
           onChange={(e) =>
             setCurrentUser({ ...currentUser, role: e.target.value })
           }
-        >
-          <option value="standard">Standard</option>
-          <option value="admin">Admin</option>
-        </select>
+          options={[
+            { value: "standard", label: "Standard" },
+            { value: "admin", label: "Admin" },
+          ]}
+          name="role"
+          id="role"
+          required
+          disabled={user.role === "admin" && currentUser.id === user.userId}
+        />
       </Form>
     </Modal>
   );
