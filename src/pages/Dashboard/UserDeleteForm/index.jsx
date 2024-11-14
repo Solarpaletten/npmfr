@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Alert from '../../../components/Alert';
 import { Modal, Form } from '../../../components/Modal';
-import Field from '../../../components/Field';
 import api from '../../../utils/api';
 
 const UserDeleteForm = ({ onShowForm, requery, user }) => {
