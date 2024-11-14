@@ -25,8 +25,8 @@ function Dashboard({ onLogout }) {
     admin_users: "0",
     standard_users: "0",
   });
-  const [usersLoading, setUsersLoading] = useState(true);
-  const [statsLoading, setStatsLoading] = useState(true);
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [statsLoading, setStatsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState({ sort: "username", order: "ASC" });
@@ -112,7 +112,7 @@ function Dashboard({ onLogout }) {
             <Cell>{new Date(user.created_at).toLocaleDateString()}</Cell>
             <Cell>{user.username || "-"}</Cell>
             <Cell>{user.email || "-"}</Cell>
-            <Cell>{user.role.toUpperCase() || "-"}</Cell>
+            <Cell>{user.role || "-"}</Cell>
             <Cell align="right">
               <Button
                 icon={faPenToSquare}

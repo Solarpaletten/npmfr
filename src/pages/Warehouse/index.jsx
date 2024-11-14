@@ -8,7 +8,7 @@ import { useAuthenticatedApi } from "../../utils/api";
 
 import styles from "./index.module.css";
 
-function Warehouse({ onLogout }) {
+function Warehouse() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
@@ -62,7 +62,7 @@ function Warehouse({ onLogout }) {
   };
 
   return (
-    <Page loading={loading} error={error} onLogout={onLogout}>
+    <Page loading={loading} error={error}>
       <div className={styles.header}>
         <h1>Warehouse</h1>
         <div className={styles.actions}>

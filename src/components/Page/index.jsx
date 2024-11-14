@@ -6,7 +6,7 @@ import Error from "../../components/Error";
 
 import styles from "./index.module.css";
 
-function Page({ loading, error, onLogout, children }) {
+function Page({ loading, error, children }) {
   const showContent = () => {
     if (loading) {
       return <Loader />;
@@ -21,9 +21,9 @@ function Page({ loading, error, onLogout, children }) {
 
   return (
     <div className={styles.page}>
-      <Sidebar onLogout={onLogout} />
+      <Sidebar />
       <main>
-        <Header onLogout={onLogout} />
+        <Header />
         {showContent()}
       </main>
     </div>

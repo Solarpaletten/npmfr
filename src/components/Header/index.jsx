@@ -44,7 +44,7 @@ function Header() {
         onMouseLeave={handleMouseLeave}
       >
         <span>
-          {user?.username} | {user?.role.toUpperCase()}
+          {user?.username} | {user?.role}
         </span>
         <div className={styles.user_avatar}>
           <img src={User} alt="user" />
