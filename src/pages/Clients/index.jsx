@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Page from '../../components/Page';
-import { TableOld } from '../../components/Table';
-import Button from '../../components/Button';
-import api from '../../utils/api';
+import React, { useState, useEffect } from "react";
+import Page from "../../components/Page";
+import { TableOld } from "../../components/Table";
+import Button from "../../components/Button";
+import { useAuthenticatedApi } from "../../utils/api";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
 function Clients({ onLogout }) {
   const [clients, setClients] = useState([]);
@@ -15,22 +15,23 @@ function Clients({ onLogout }) {
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedClients, setSelectedClients] = useState([]);
   const [newClient, setNewClient] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    code: '',
-    vat_code: '',
+    name: "",
+    email: "",
+    phone: "",
+    code: "",
+    vat_code: "",
   });
+  const api = useAuthenticatedApi();
 
   const fetchClients = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await api.get('/clients');
+      const data = await api.get("/clients");
       setClients(data);
     } catch (error) {
-      setError('Failed to fetch clients');
+      setError("Failed to fetch clients");
     } finally {
       setLoading(false);
     }
@@ -53,7 +54,7 @@ function Clients({ onLogout }) {
         setSelectedClients([]);
         fetchClients();
       } catch (error) {
-        setError('Failed to delete clients');
+        setError("Failed to delete clients");
       }
     }
   };
@@ -61,12 +62,12 @@ function Clients({ onLogout }) {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/clients', newClient);
+      await api.post("/clients", newClient);
       fetchClients();
       setShowAddForm(false);
-      setNewClient({ name: '', email: '', phone: '', code: '', vat_code: '' });
+      setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
     } catch (error) {
-      setError('Failed to add client');
+      setError("Failed to add client");
     }
   };
 
@@ -77,9 +78,9 @@ function Clients({ onLogout }) {
       fetchClients();
       setShowEditForm(false);
       setSelectedClient(null);
-      setNewClient({ name: '', email: '', phone: '', code: '', vat_code: '' });
+      setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
     } catch (error) {
-      setError('Failed to edit client');
+      setError("Failed to edit client");
     }
   };
 
@@ -136,7 +137,7 @@ function Clients({ onLogout }) {
           <tr>
             <th>
               <input
-                type='checkbox'
+                type="checkbox"
                 className={styles.headerCheckbox}
                 onChange={handleSelectAllClients}
                 checked={selectedClients.length === clients.length}
@@ -155,23 +156,23 @@ function Clients({ onLogout }) {
             <tr
               key={client.id}
               className={
-                selectedClients.includes(client) ? styles.selectedRow : ''
+                selectedClients.includes(client) ? styles.selectedRow : ""
               }
               onClick={() => setSelectedClient(client)}
             >
               <td>
                 <input
-                  type='checkbox'
+                  type="checkbox"
                   checked={selectedClients.includes(client)}
                   onChange={() => handleSelectClient(client)}
                 />
               </td>
               <td>{new Date(client.created_at).toLocaleDateString()}</td>
-              <td>{client.name || '-'}</td>
-              <td>{client.code || '-'}</td>
-              <td>{client.vat_code || '-'}</td>
-              <td>{client.phone || '-'}</td>
-              <td>{client.email || '-'}</td>
+              <td>{client.name || "-"}</td>
+              <td>{client.code || "-"}</td>
+              <td>{client.vat_code || "-"}</td>
+              <td>{client.phone || "-"}</td>
+              <td>{client.email || "-"}</td>
             </tr>
           ))}
         </tbody>
@@ -182,8 +183,8 @@ function Clients({ onLogout }) {
           <form onSubmit={handleAdd} className={styles.form}>
             <h2>Add New Client</h2>
             <input
-              type='text'
-              placeholder='Name'
+              type="text"
+              placeholder="Name"
               value={newClient.name}
               onChange={(e) =>
                 setNewClient({ ...newClient, name: e.target.value })
@@ -191,8 +192,8 @@ function Clients({ onLogout }) {
               required
             />
             <input
-              type='email'
-              placeholder='Email'
+              type="email"
+              placeholder="Email"
               value={newClient.email}
               onChange={(e) =>
                 setNewClient({ ...newClient, email: e.target.value })
@@ -200,8 +201,8 @@ function Clients({ onLogout }) {
               required
             />
             <input
-              type='tel'
-              placeholder='Phone'
+              type="tel"
+              placeholder="Phone"
               value={newClient.phone}
               onChange={(e) =>
                 setNewClient({ ...newClient, phone: e.target.value })
@@ -209,24 +210,24 @@ function Clients({ onLogout }) {
               required
             />
             <input
-              type='text'
-              placeholder='Code'
+              type="text"
+              placeholder="Code"
               value={newClient.code}
               onChange={(e) =>
                 setNewClient({ ...newClient, code: e.target.value })
               }
             />
             <input
-              type='text'
-              placeholder='VAT Code'
+              type="text"
+              placeholder="VAT Code"
               value={newClient.vat_code}
               onChange={(e) =>
                 setNewClient({ ...newClient, vat_code: e.target.value })
               }
             />
             <div className={styles.formButtons}>
-              <Button type='submit'>Save</Button>
-              <Button type='button' onClick={() => setShowAddForm(false)}>
+              <Button type="submit">Save</Button>
+              <Button type="button" onClick={() => setShowAddForm(false)}>
                 Cancel
               </Button>
             </div>
@@ -239,8 +240,8 @@ function Clients({ onLogout }) {
           <form onSubmit={handleEdit} className={styles.form}>
             <h2>Edit Client</h2>
             <input
-              type='text'
-              placeholder='Name'
+              type="text"
+              placeholder="Name"
               value={newClient.name}
               onChange={(e) =>
                 setNewClient({ ...newClient, name: e.target.value })
@@ -248,8 +249,8 @@ function Clients({ onLogout }) {
               required
             />
             <input
-              type='email'
-              placeholder='Email'
+              type="email"
+              placeholder="Email"
               value={newClient.email}
               onChange={(e) =>
                 setNewClient({ ...newClient, email: e.target.value })
@@ -257,8 +258,8 @@ function Clients({ onLogout }) {
               required
             />
             <input
-              type='tel'
-              placeholder='Phone'
+              type="tel"
+              placeholder="Phone"
               value={newClient.phone}
               onChange={(e) =>
                 setNewClient({ ...newClient, phone: e.target.value })
@@ -266,34 +267,34 @@ function Clients({ onLogout }) {
               required
             />
             <input
-              type='text'
-              placeholder='Code'
+              type="text"
+              placeholder="Code"
               value={newClient.code}
               onChange={(e) =>
                 setNewClient({ ...newClient, code: e.target.value })
               }
             />
             <input
-              type='text'
-              placeholder='VAT Code'
+              type="text"
+              placeholder="VAT Code"
               value={newClient.vat_code}
               onChange={(e) =>
                 setNewClient({ ...newClient, vat_code: e.target.value })
               }
             />
             <div className={styles.formButtons}>
-              <Button type='submit'>Save</Button>
+              <Button type="submit">Save</Button>
               <Button
-                type='button'
+                type="button"
                 onClick={() => {
                   setShowEditForm(false);
                   setSelectedClient(null);
                   setNewClient({
-                    name: '',
-                    email: '',
-                    phone: '',
-                    code: '',
-                    vat_code: '',
+                    name: "",
+                    email: "",
+                    phone: "",
+                    code: "",
+                    vat_code: "",
                   });
                 }}
               >

@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import User from './user.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import User from "./user.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGear,
   faArrowRightFromBracket,
-} from '@fortawesome/free-solid-svg-icons';
-import Button from '../Button';
+} from "@fortawesome/free-solid-svg-icons";
+import Button from "../Button";
+import { useUser } from "../../contexts/UserContext";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
-function Header({ onLogout }) {
-  const username = localStorage.getItem('username');
-  const role = localStorage.getItem('role');
+function Header() {
+  const { user, logoutUser } = useUser();
+  const navigate = useNavigate();
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -22,6 +23,11 @@ function Header({ onLogout }) {
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+  };
+
+  const onLogout = () => {
+    logoutUser();
+    navigate("/login");
   };
 
   return (
@@ -38,10 +44,10 @@ function Header({ onLogout }) {
         onMouseLeave={handleMouseLeave}
       >
         <span>
-          {username} | {role.toUpperCase()}
+          {user?.username} | {user?.role.toUpperCase()}
         </span>
         <div className={styles.user_avatar}>
-          <img src={User} alt='user' />
+          <img src={User} alt="user" />
         </div>
         {/* TODO fix items so user can click on any area */}
         {isHovered && (
@@ -49,11 +55,11 @@ function Header({ onLogout }) {
             <div className={styles.dropdown_content}>
               <div className={styles.dropdown_item}>
                 <FontAwesomeIcon icon={faGear} />
-                <Link to='/settings'>Settings</Link>
+                <Link to="/settings">Settings</Link>
               </div>
               <div className={styles.dropdown_item}>
                 <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                <Button variant='link' onClick={onLogout}>
+                <Button variant="link" onClick={onLogout}>
                   Log Out
                 </Button>
               </div>

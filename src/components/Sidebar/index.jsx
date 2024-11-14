@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGear,
   faAngleDown,
   faAngleUp,
   faArrowRightFromBracket,
-} from '@fortawesome/free-solid-svg-icons';
-import Button from '../Button/index.jsx';
-import menuData from './menuData.js';
-import Logo from './Solar_3.svg';
+} from "@fortawesome/free-solid-svg-icons";
+import Button from "../Button/index.jsx";
+import menuData from "./menuData.js";
+import Logo from "./Solar_3.svg";
+import { useUser } from "../../contexts/UserContext";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
-const Sidebar = ({ onLogout }) => {
-  // TODO
-  const role = localStorage.getItem('role');
+const Sidebar = () => {
+  const { user, logoutUser } = useUser();
+  const navigate = useNavigate();
+
+  const onLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
 
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo_container}>
-        <img src={Logo} alt='Solar Logo' className={styles.logo} />
+        <img src={Logo} alt="Solar Logo" className={styles.logo} />
       </div>
       <div className={styles.menu}>
         {menuData.map((item, index) => {
-          if (item.path === '/dashboard' && role === 'standard') {
+          if (item.path === "/dashboard" && user?.role !== "admin") {
             return null;
           }
           return <MenuItem key={index} item={item} />;
@@ -33,7 +39,7 @@ const Sidebar = ({ onLogout }) => {
       <div className={styles.bottom}>
         <div className={styles.menu_item}>
           <FontAwesomeIcon icon={faGear} />
-          <Link to='/settings'>Settings</Link>
+          <Link to="/settings">Settings</Link>
         </div>
         <Button
           className={styles.button}
@@ -60,7 +66,7 @@ const MenuItem = ({ item }) => {
         {item.subItems ? (
           <div
             className={`${styles.sub_menu_title} ${
-              isOpen ? styles.active : ''
+              isOpen ? styles.active : ""
             }`}
             onClick={toggleMenu}
           >

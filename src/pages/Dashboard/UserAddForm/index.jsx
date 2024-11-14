@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import Alert from '../../../components/Alert';
-import { Modal, Form } from '../../../components/Modal';
-import Field from '../../../components/Field';
-import api from '../../../utils/api';
+import React, { useState } from "react";
+import Alert from "../../../components/Alert";
+import { Modal, Form } from "../../../components/Modal";
+import Field from "../../../components/Field";
+import { useAuthenticatedApi } from "../../../utils/api";
 
 const UserAddForm = ({ onShowForm, requery }) => {
   const [newUser, setNewUser] = useState({
-    username: '',
-    email: '',
-    role: 'standard',
+    username: "",
+    email: "",
+    role: "standard",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
+
+  const api = useAuthenticatedApi();
 
   const handleAdd = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await api.post('/users', newUser);
+      await api.post("/users", newUser);
 
       requery();
 
       setLoading(false);
-      setNewUser({ username: '', email: '', role: 'standard' });
+      setNewUser({ username: "", email: "", role: "standard" });
       onShowForm(false);
     } catch (error) {
-      setError('Failed to add user');
+      setError("Failed to add user");
       setLoading(false);
     }
   };
@@ -39,21 +41,21 @@ const UserAddForm = ({ onShowForm, requery }) => {
         onClose={() => onShowForm(false)}
         loading={loading}
         error={error}
-        buttonPositiveName={'Save'}
-        buttonNegativeName={'Cancel'}
+        buttonPositiveName={"Save"}
+        buttonNegativeName={"Cancel"}
       >
         <h2>Add New User</h2>
         <Field
-          type='text'
-          placeholder='User name'
+          type="text"
+          placeholder="User name"
           value={newUser.username}
           onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
           disabled={loading}
           required
         />
         <Field
-          type='email'
-          placeholder='Email'
+          type="email"
+          placeholder="Email"
           value={newUser.email}
           onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           disabled={loading}
@@ -61,17 +63,18 @@ const UserAddForm = ({ onShowForm, requery }) => {
         />
 
         {/* TODO create select */}
-        <label htmlFor='role'>Role:</label>
+        <label htmlFor="role">Role:</label>
         <select
-          name='role'
-          id='role'
+          defaultValue={"standard"}
+          name="role"
+          id="role"
           onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
         >
-          <option value='standard'>Standard</option>
-          <option value='admin'>Admin</option>
+          <option value="standard">Standard</option>
+          <option value="admin">Admin</option>
         </select>
 
-        <Alert variant='warning'>
+        <Alert variant="warning">
           Password will be set to <b>default1234</b>. Please ask the user to
           update it as soon as possible.
         </Alert>
