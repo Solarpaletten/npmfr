@@ -19,6 +19,7 @@
 .header_cell {
   font-weight: bold;
   color: #25305e;
+  text-wrap: nowrap;
 }
 
 .header_cell,

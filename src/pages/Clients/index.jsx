@@ -6,7 +6,7 @@ import { useAuthenticatedApi } from "../../utils/api";
 
 import styles from "./index.module.css";
 
-function Clients({ onLogout }) {
+function Clients() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -126,7 +126,7 @@ function Clients({ onLogout }) {
   };
 
   return (
-    <Page loading={loading} error={error} onLogout={onLogout}>
+    <Page loading={loading} error={error}>
       <div className={styles.header}>
         <h1>Clients</h1>
         <Toolbar />

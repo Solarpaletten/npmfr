@@ -35,7 +35,7 @@ const menuData = [
     active: true,
     subItems: [
       { 
-        label: "Products List", 
+        label: "Products", 
         path: "/warehouse/products", 
         icon: faBox,
         active: true

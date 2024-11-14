@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import Button from "../../../../components/Button";
+import React, { useState } from "react";
+import Button from "../../../components/Button";
+
 import styles from "./index.module.css";
 
-function Sales({ onSubmit, onClose, clients }) {
+const Sales = ({ onSubmit, onClose, clients }) => {
   const [formData, setFormData] = useState({
-    quantity: '',
-    price_per_unit: '',
-    client_id: ''
+    quantity: "",
+    price_per_unit: "",
+    client_id: "",
   });
 
   const handleSubmit = (e) => {
@@ -15,20 +16,23 @@ function Sales({ onSubmit, onClose, clients }) {
       ...formData,
       quantity: Number(formData.quantity),
       price_per_unit: Number(formData.price_per_unit),
-      client_id: Number(formData.client_id)
+      client_id: Number(formData.client_id),
     });
   };
 
-  const total = formData.quantity && formData.price_per_unit 
-    ? formData.quantity * formData.price_per_unit 
-    : 0;
+  const total =
+    formData.quantity && formData.price_per_unit
+      ? formData.quantity * formData.price_per_unit
+      : 0;
 
   return (
     <div className={styles.sales}>
       <div className={styles.form}>
         <div className={styles.header}>
           <h2>Create Sale</h2>
-          <button className={styles.closeButton} onClick={onClose}>×</button>
+          <button className={styles.closeButton} onClick={onClose}>
+            ×
+          </button>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -39,11 +43,13 @@ function Sales({ onSubmit, onClose, clients }) {
             <select
               className={styles.select}
               value={formData.client_id}
-              onChange={(e) => setFormData({...formData, client_id: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, client_id: e.target.value })
+              }
               required
             >
               <option value="">Select client</option>
-              {clients?.map(client => (
+              {clients?.map((client) => (
                 <option key={client.id} value={client.id}>
                   {client.name}
                 </option>
@@ -59,7 +65,9 @@ function Sales({ onSubmit, onClose, clients }) {
               type="number"
               className={styles.input}
               value={formData.quantity}
-              onChange={(e) => setFormData({...formData, quantity: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, quantity: e.target.value })
+              }
               required
             />
           </div>
@@ -72,7 +80,9 @@ function Sales({ onSubmit, onClose, clients }) {
               type="number"
               className={styles.input}
               value={formData.price_per_unit}
-              onChange={(e) => setFormData({...formData, price_per_unit: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, price_per_unit: e.target.value })
+              }
               required
             />
           </div>
@@ -85,13 +95,15 @@ function Sales({ onSubmit, onClose, clients }) {
           </div>
 
           <div className={styles.buttonGroup}>
-            <Button type="button" onClick={onClose}>Cancel</Button>
+            <Button type="button" onClick={onClose}>
+              Cancel
+            </Button>
             <Button type="submit">Create Sale</Button>
           </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default Sales;
