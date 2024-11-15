@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #25305e80;
+  background-color: var(--blue-transparent);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,8 +15,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #ffffff;
-  border: 1px solid #dcdcdc;
+  background-color: var(--white-0);
+  border: 1px solid var(--grey-2);
   border-radius: 12px;
   position: absolute;
   width: 400px;

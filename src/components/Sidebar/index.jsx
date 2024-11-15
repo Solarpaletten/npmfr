@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGear,
-  faAngleDown,
-  faAngleUp,
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "../Button/index.jsx";
+import Button from "../Button";
+import Item from "./Item";
 import menuData from "./menuData.js";
 import Logo from "./Solar_3.svg";
 import { useUser } from "../../contexts/UserContext";
@@ -25,7 +24,7 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.logo_container}>
+      <div>
         <img src={Logo} alt="Solar Logo" className={styles.logo} />
       </div>
       <div className={styles.menu}>
@@ -33,7 +32,7 @@ const Sidebar = () => {
           if (item.path === "/dashboard" && user?.role !== "admin") {
             return null;
           }
-          return <MenuItem key={index} item={item} />;
+          return <Item key={index} item={item} />;
         })}
       </div>
       <div className={styles.bottom}>
@@ -50,52 +49,6 @@ const Sidebar = () => {
         </Button>
       </div>
     </aside>
-  );
-};
-
-const MenuItem = ({ item }) => {
-  const [isOpen, setIsOpen] = useState(item.open || false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <>
-      <div className={styles.menu_item}>
-        {item.subItems ? (
-          <div
-            className={`${styles.sub_menu_title} ${
-              isOpen ? styles.active : ""
-            }`}
-            onClick={toggleMenu}
-          >
-            <div>
-              <FontAwesomeIcon icon={item.icon} className={styles.menu_icon} />
-              {item.label}
-            </div>
-            {isOpen ? (
-              <FontAwesomeIcon icon={faAngleUp} />
-            ) : (
-              <FontAwesomeIcon icon={faAngleDown} />
-            )}
-          </div>
-        ) : (
-          <Link to={item.path}>
-            <FontAwesomeIcon icon={item.icon} className={styles.menu_icon} />
-            {item.label}
-          </Link>
-        )}
-      </div>
-
-      {isOpen && item.subItems && (
-        <div className={styles.sub_menu}>
-          {item.subItems.map((subItem, index) => (
-            <MenuItem key={index} item={subItem} />
-          ))}
-        </div>
-      )}
-    </>
   );
 };
 
