@@ -75,7 +75,9 @@ const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
           name="role"
           id="role"
           required
-          disabled={user.role === "admin" && currentUser.id === user.userId}
+          disabled={
+            loading || (user.role === "admin" && currentUser.id === user.userId)
+          }
         />
       </Form>
     </Modal>
