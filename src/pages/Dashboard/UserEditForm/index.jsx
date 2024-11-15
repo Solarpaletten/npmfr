@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Form } from "../../../components/Modal";
 import Field from "../../../components/Field";
-import Select from "../../../components/Select";
 import { useUser } from "../../../contexts/UserContext";
 import { useAuthenticatedApi } from "../../../utils/api";
 
 const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(selectedUser);
   const { user } = useUser();
@@ -62,23 +62,20 @@ const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
           required
         />
 
-        <Select
-          label="Role"
-          value={currentUser.role}
+        {/* TODO create select */}
+        <label htmlFor="role">Role:</label>
+        <select
+          defaultValue={currentUser.role}
+          disabled={user.role === "admin" && currentUser.id === user.userId}
+          name="role"
+          id="role"
           onChange={(e) =>
             setCurrentUser({ ...currentUser, role: e.target.value })
           }
-          options={[
-            { value: "standard", label: "Standard" },
-            { value: "admin", label: "Admin" },
-          ]}
-          name="role"
-          id="role"
-          required
-          disabled={
-            loading || (user.role === "admin" && currentUser.id === user.userId)
-          }
-        />
+        >
+          <option value="standard">Standard</option>
+          <option value="admin">Admin</option>
+        </select>
       </Form>
     </Modal>
   );

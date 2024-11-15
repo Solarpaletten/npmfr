@@ -13,19 +13,19 @@
 }
 
 .row:hover > .cell {
-  background-color: var(--grey-3);
+  background-color: #fbfbfb;
 }
 
 .header_cell {
   font-weight: bold;
-  color: var(--blue-0);
+  color: #25305e;
   text-wrap: nowrap;
 }
 
 .header_cell,
 .cell {
   padding: 10px;
-  border-bottom: 1px solid var(--grey-2);
+  border-bottom: 1px solid #dcdcdc;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -33,15 +33,19 @@
 
 .sort {
   margin-right: 6px;
-  color: var(--grey-2);
+  color: #dcdcdc;
 }
 
 .active {
-  color: var(--orange-1);
+  color: #ff8225;
 }
 
 .loading_row {
   grid-column: 1 / -1;
+}
+
+.action_column {
+  min-width: 285px !important;
 }
 
 .right {
@@ -56,14 +60,14 @@
 .table_old {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--white-0);
+  background-color: #ffffff;
   border-radius: 5px;
 }
 
 .table_old td,
 .table_old th {
   text-align: left;
-  border-bottom: 1px solid var(--grey-2);
+  border-bottom: 1px solid #dcdcdc;
   padding: 10px 10px;
 }
 

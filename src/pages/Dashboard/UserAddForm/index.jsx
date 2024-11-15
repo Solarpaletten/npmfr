@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Alert from "../../../components/Alert";
 import { Modal, Form } from "../../../components/Modal";
 import Field from "../../../components/Field";
-import Select from "../../../components/Select";
 import { useAuthenticatedApi } from "../../../utils/api";
 
 const UserAddForm = ({ onShowForm, requery }) => {
@@ -12,6 +11,7 @@ const UserAddForm = ({ onShowForm, requery }) => {
     role: "standard",
   });
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
 
   const api = useAuthenticatedApi();
@@ -61,19 +61,18 @@ const UserAddForm = ({ onShowForm, requery }) => {
           disabled={loading}
           required
         />
-        <Select
-          label="Role"
-          value={newUser.role}
-          onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-          options={[
-            { value: "standard", label: "Standard" },
-            { value: "admin", label: "Admin" },
-          ]}
+
+        {/* TODO create select */}
+        <label htmlFor="role">Role:</label>
+        <select
+          defaultValue={"standard"}
           name="role"
           id="role"
-          required
-        />
-        {/* {showNotification("success", "kkkkkkkk")} */}
+          onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+        >
+          <option value="standard">Standard</option>
+          <option value="admin">Admin</option>
+        </select>
 
         <Alert variant="warning">
           Password will be set to <b>default1234</b>. Please ask the user to

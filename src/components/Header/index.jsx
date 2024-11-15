@@ -49,6 +49,7 @@ function Header() {
         <div className={styles.user_avatar}>
           <img src={User} alt="user" />
         </div>
+        {/* TODO fix items so user can click on any area */}
         {isHovered && (
           <div className={styles.dropdown}>
             <div className={styles.dropdown_content}>

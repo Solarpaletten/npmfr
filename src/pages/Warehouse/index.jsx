@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Page from "../../components/Page";
-import Products from "./components/Products";
+import ProductList from "./components/ProductList";
 import Incoming from "./components/Incoming";
 import Sales from "./components/Sales";
 import Button from "../../components/Button";
@@ -71,7 +71,7 @@ function Warehouse() {
         </div>
       </div>
 
-      <Products products={products} onAddStock={handleAddStock} />
+      <ProductList products={products} onAddStock={handleAddStock} />
 
       {showIncomingForm && (
         <Incoming
