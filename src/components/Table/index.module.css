@@ -44,10 +44,6 @@
   grid-column: 1 / -1;
 }
 
-.action_column {
-  min-width: 285px !important;
-}
-
 .right {
   justify-content: flex-end;
 }

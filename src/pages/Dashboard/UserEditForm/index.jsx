@@ -7,7 +7,6 @@ import { useAuthenticatedApi } from "../../../utils/api";
 
 const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(selectedUser);
   const { user } = useUser();

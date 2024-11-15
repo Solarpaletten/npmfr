@@ -12,7 +12,6 @@ const UserAddForm = ({ onShowForm, requery }) => {
     role: "standard",
   });
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
 
   const api = useAuthenticatedApi();
@@ -74,6 +73,7 @@ const UserAddForm = ({ onShowForm, requery }) => {
           id="role"
           required
         />
+        {/* {showNotification("success", "kkkkkkkk")} */}
 
         <Alert variant="warning">
           Password will be set to <b>default1234</b>. Please ask the user to
