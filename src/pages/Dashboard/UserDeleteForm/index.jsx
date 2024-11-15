@@ -4,6 +4,7 @@ import { useAuthenticatedApi } from "../../../utils/api";
 
 const UserDeleteForm = ({ onShowForm, requery, selectedUser }) => {
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null); // TODO
   const [error, setError] = useState(null);
 
   const api = useAuthenticatedApi();

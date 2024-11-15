@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  color: var(--grey-0);
+  color: #5d5d64;
   font-size: 14px;
 }
 
@@ -12,9 +12,6 @@
   justify-content: center;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  color: var(--blue-0);
+h1, h2, h3, h4 {
+  color: #25305e;
 }
