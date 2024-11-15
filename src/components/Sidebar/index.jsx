@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGear,
@@ -28,16 +28,16 @@ const Sidebar = () => {
       <div className={styles.logo_container}>
         <img src={Logo} alt="Solar Logo" className={styles.logo} />
       </div>
-      <div className={styles.menu}>
+      <div className={styles.items}>
         {menuData.map((item, index) => {
           if (item.path === "/dashboard" && user?.role !== "admin") {
             return null;
           }
-          return <MenuItem key={index} item={item} />;
+          return <Item key={index} item={item} />;
         })}
       </div>
       <div className={styles.bottom}>
-        <div className={styles.menu_item}>
+        <div className={styles.item}>
           <FontAwesomeIcon icon={faGear} />
           <Link to="/settings">Settings</Link>
         </div>
@@ -53,25 +53,28 @@ const Sidebar = () => {
   );
 };
 
-const MenuItem = ({ item }) => {
-  const [isOpen, setIsOpen] = useState(item.open || false);
+const Item = ({ item }) => {
+  const location = useLocation();
+  const isActive =
+    location.pathname === item.path ||
+    (item.subItems &&
+      item.subItems.some((sub) => location.pathname.startsWith(sub.path)));
+  const [isOpen, setIsOpen] = useState(isActive);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const itemClasses = `${styles.item} ${isActive ? styles.active : ""}`;
+  const subItemClasses = `${styles.sub_title} ${isOpen ? styles.active : ""}`;
+
   return (
     <>
-      <div className={styles.menu_item}>
+      <div className={itemClasses}>
         {item.subItems ? (
-          <div
-            className={`${styles.sub_menu_title} ${
-              isOpen ? styles.active : ""
-            }`}
-            onClick={toggleMenu}
-          >
+          <div className={subItemClasses} onClick={toggleMenu}>
             <div>
-              <FontAwesomeIcon icon={item.icon} className={styles.menu_icon} />
+              <FontAwesomeIcon icon={item.icon} />
               {item.label}
             </div>
             {isOpen ? (
@@ -82,16 +85,16 @@ const MenuItem = ({ item }) => {
           </div>
         ) : (
           <Link to={item.path}>
-            <FontAwesomeIcon icon={item.icon} className={styles.menu_icon} />
+            <FontAwesomeIcon icon={item.icon} />
             {item.label}
           </Link>
         )}
       </div>
 
       {isOpen && item.subItems && (
-        <div className={styles.sub_menu}>
+        <div className={styles.sub}>
           {item.subItems.map((subItem, index) => (
-            <MenuItem key={index} item={subItem} />
+            <Item key={index} item={subItem} />
           ))}
         </div>
       )}

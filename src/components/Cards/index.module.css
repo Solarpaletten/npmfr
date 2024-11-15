@@ -8,11 +8,11 @@
 .statCard {
   border-radius: 6px;
   padding: 20px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--grey-2);
 }
 
 .statCard h3 {
-  color: #767676;
+  color: var(--grey-1);
   font-size: 14px;
   margin: 0 0 10px;
   font-weight: normal;
@@ -21,5 +21,5 @@
 .statValue {
   font-size: 24px;
   font-weight: bold;
-  color: #414d7e;
+  color: var(--blue-1);
 }

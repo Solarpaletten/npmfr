@@ -10,15 +10,15 @@
 }
 
 .default {
-  background-color: #f6f7ff;
-  border: 1px solid #e5eaff;
-  color: #414d7e;
+  background-color: var(--blue-5);
+  border: 1px solid var(--blue-4);
+  color: var(--blue-1);
 }
 
 .primary {
-  background-color: #ff8225;
-  border: 1px solid #ff8225;
-  color: #ffffff;
+  background-color: var(--orange-1);
+  border: 1px solid var(--orange-1);
+  color: var(--white-0);
 }
 
 .link {
@@ -29,9 +29,9 @@
 }
 
 .danger {
-  background-color: #c50f32;
-  border: 1px solid #c50f32;
-  color: #ffffff;
+  background-color: var(--red-1);
+  border: 1px solid var(--red-1);
+  color: var(--white-0);
 }
 
 .button:hover {
@@ -39,21 +39,22 @@
 }
 
 .button:disabled {
-  color: #5d5d64 !important;
-  border: #5d5d64 !important;
-  background-color: #dcdcdc !important;
+  color: var(--grey-0) !important;
+  border: var(--grey-0) !important;
+  background-color: var(--grey-2) !important;
+  cursor: not-allowed;
 }
 
 .default:hover {
-  background-color: #ffffff;
+  background-color: var(--white-0);
 }
 
 .primary:hover {
-  background-color: #d95b0c;
-  border: 1px solid #d95b0c;
+  background-color: var(--orange-0);
+  border: 1px solid var(--orange-0);
 }
 
 .danger:hover {
-  background-color: #922323;
-  border: 1px solid #922323;
+  background-color: var(--red-0);
+  border: 1px solid var(--red-0);
 }
