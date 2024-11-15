@@ -1,12 +1,13 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGear,
+  faAngleDown,
+  faAngleUp,
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "../Button";
-import Item from "./Item";
+import Button from "../Button/index.jsx";
 import menuData from "./menuData.js";
 import Logo from "./Solar_3.svg";
 import { useUser } from "../../contexts/UserContext";
@@ -24,10 +25,10 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      <div>
+      <div className={styles.logo_container}>
         <img src={Logo} alt="Solar Logo" className={styles.logo} />
       </div>
-      <div className={styles.menu}>
+      <div className={styles.items}>
         {menuData.map((item, index) => {
           if (item.path === "/dashboard" && user?.role !== "admin") {
             return null;
@@ -36,7 +37,7 @@ const Sidebar = () => {
         })}
       </div>
       <div className={styles.bottom}>
-        <div className={styles.menu_item}>
+        <div className={styles.item}>
           <FontAwesomeIcon icon={faGear} />
           <Link to="/settings">Settings</Link>
         </div>
@@ -49,6 +50,55 @@ const Sidebar = () => {
         </Button>
       </div>
     </aside>
+  );
+};
+
+const Item = ({ item }) => {
+  const location = useLocation();
+  const isActive =
+    location.pathname === item.path ||
+    (item.subItems &&
+      item.subItems.some((sub) => location.pathname.startsWith(sub.path)));
+  const [isOpen, setIsOpen] = useState(isActive);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const itemClasses = `${styles.item} ${isActive ? styles.active : ""}`;
+  const subItemClasses = `${styles.sub_title} ${isOpen ? styles.active : ""}`;
+
+  return (
+    <>
+      <div className={itemClasses}>
+        {item.subItems ? (
+          <div className={subItemClasses} onClick={toggleMenu}>
+            <div>
+              <FontAwesomeIcon icon={item.icon} />
+              {item.label}
+            </div>
+            {isOpen ? (
+              <FontAwesomeIcon icon={faAngleUp} />
+            ) : (
+              <FontAwesomeIcon icon={faAngleDown} />
+            )}
+          </div>
+        ) : (
+          <Link to={item.path}>
+            <FontAwesomeIcon icon={item.icon} />
+            {item.label}
+          </Link>
+        )}
+      </div>
+
+      {isOpen && item.subItems && (
+        <div className={styles.sub}>
+          {item.subItems.map((subItem, index) => (
+            <Item key={index} item={subItem} />
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 
