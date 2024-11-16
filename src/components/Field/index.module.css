@@ -1,7 +1,7 @@
 .input {
   width: 100%;
   margin-bottom: 15px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--grey-2);
   border-radius: 4px;
 }
 
@@ -11,4 +11,9 @@
   border: none;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.input input:disabled {
+  background-color: var(--grey-4);
+  cursor: not-allowed;
 }
