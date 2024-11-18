@@ -1,89 +1,141 @@
-import React, { useState, useEffect } from "react";
-import Page from "../../components/Page";
-import Products from "./components/Products";
-import Incoming from "./components/Incoming";
-import Sales from "./components/Sales";
-import Button from "../../components/Button";
-import { useAuthenticatedApi } from "../../utils/api";
+// pages/Warehouse/index.js
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Tabs, Input } from 'antd';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import Incoming from './components/Incoming';
+import Sales from './components/Sales';
+import { useAuthenticatedApi } from '../../utils/api';
+import styles from './index.module.css';
 
-import styles from "./index.module.css";
+const { TabPane } = Tabs;
 
 function Warehouse() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [showIncomingForm, setShowIncomingForm] = useState(false);
-  const [showSalesForm, setShowSalesForm] = useState(false);
-
   const api = useAuthenticatedApi();
+  const [activeTab, setActiveTab] = useState('incoming');
+  const [incomingData, setIncomingData] = useState([]);
+  const [salesData, setSalesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showIncomingModal, setShowIncomingModal] = useState(false);
+  const [showSalesModal, setShowSalesModal] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  // Загрузка данных
+  const fetchData = async () => {
     setLoading(true);
-
     try {
-      const data = await api.get("/warehouse");
-
-      setProducts(data);
+      const [incomingRes, salesRes] = await Promise.all([
+        api.get('/warehouse/incoming'),
+        api.get('/warehouse/sales'),
+      ]);
+      setIncomingData(incomingRes.data);
+      setSalesData(salesRes.data);
     } catch (error) {
-      setError("Failed to fetch products");
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleIncoming = async (data) => {
-    try {
-      await api.post("/warehouse/incoming", data);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-      fetchProducts();
-      setShowIncomingForm(false);
-    } catch (error) {
-      setError("Failed to add stock");
-    }
-  };
+  // Колонки для таблицы поступлений
+  const incomingColumns = [
+    { title: 'Код товара', dataIndex: 'product_code', key: 'product_code' },
+    { title: 'Название', dataIndex: 'product_name', key: 'product_name' },
+    { title: 'Количество', dataIndex: 'quantity', key: 'quantity' },
+    { title: 'Цена за ед.', dataIndex: 'price_per_unit', key: 'price_per_unit' },
+    { title: 'Сумма', dataIndex: 'total_amount', key: 'total_amount' },
+    { title: 'Поставщик', dataIndex: 'supplier', key: 'supplier' },
+    { title: 'Дата', dataIndex: 'document_date', key: 'document_date' },
+    { title: '№ накладной', dataIndex: 'invoice_number', key: 'invoice_number' },
+  ];
 
-  const handleSale = async (data) => {
-    try {
-      await api.post("/warehouse/sales", data);
+  // Колонки для таблицы продаж
+  const salesColumns = [
+    { title: 'Код товара', dataIndex: 'product_code', key: 'product_code' },
+    { title: 'Количество', dataIndex: 'quantity', key: 'quantity' },
+    { title: 'Цена продажи', dataIndex: 'price_per_unit', key: 'price_per_unit' },
+    { title: 'Клиент', dataIndex: 'client', key: 'client' },
+    { title: 'Дата', dataIndex: 'document_date', key: 'document_date' },
+    { title: '№ накладной', dataIndex: 'invoice_number', key: 'invoice_number' },
+    { title: 'Тип оплаты', dataIndex: 'payment_type', key: 'payment_type' },
+  ];
 
-      fetchProducts();
-      setShowSalesForm(false);
-    } catch (error) {
-      setError("Failed to create sale");
-    }
-  };
+  // Фильтрация данных
+  const filteredIncomingData = incomingData.filter((item) =>
+    Object.values(item).some((value) =>
+      value?.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  );
 
-  const handleAddStock = (productId) => {
-    setShowIncomingForm(true);
-  };
+  const filteredSalesData = salesData.filter((item) =>
+    Object.values(item).some((value) =>
+      value?.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  );
 
   return (
-    <Page loading={loading} error={error}>
+    <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Warehouse</h1>
-        <div className={styles.actions}>
-          <Button onClick={() => setShowIncomingForm(true)}>Add Stock</Button>
-          <Button onClick={() => setShowSalesForm(true)}>Create Sale</Button>
-        </div>
+        <Input
+          placeholder="Поиск..."
+          prefix={<SearchOutlined />}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          className={styles.searchInput}
+        />
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() =>
+            activeTab === 'incoming' ? setShowIncomingModal(true) : setShowSalesModal(true)
+          }
+        >
+          {activeTab === 'incoming' ? 'Новое поступление' : 'Новая продажа'}
+        </Button>
       </div>
 
-      <Products products={products} onAddStock={handleAddStock} />
+      <Tabs activeKey={activeTab} onChange={setActiveTab}>
+        <TabPane tab="Поступления" key="incoming">
+          <Table
+            columns={incomingColumns}
+            dataSource={filteredIncomingData}
+            loading={loading}
+            rowKey="id"
+            scroll={{ x: true }}
+          />
+        </TabPane>
+        <TabPane tab="Продажи" key="sales">
+          <Table
+            columns={salesColumns}
+            dataSource={filteredSalesData}
+            loading={loading}
+            rowKey="id"
+            scroll={{ x: true }}
+          />
+        </TabPane>
+      </Tabs>
 
-      {showIncomingForm && (
+      {showIncomingModal && (
         <Incoming
-          onSubmit={handleIncoming}
-          onClose={() => setShowIncomingForm(false)}
+          onClose={() => {
+            setShowIncomingModal(false);
+            fetchData();
+          }}
         />
       )}
 
-      {showSalesForm && (
-        <Sales onSubmit={handleSale} onClose={() => setShowSalesForm(false)} />
+      {showSalesModal && (
+        <Sales
+          onClose={() => {
+            setShowSalesModal(false);
+            fetchData();
+          }}
+        />
       )}
-    </Page>
+    </div>
   );
 }
 
