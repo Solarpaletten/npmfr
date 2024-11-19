@@ -7,7 +7,7 @@ import { useAuthenticatedApi } from "../../../utils/api";
 
 import styles from "./index.module.css";
 
-const Incoming = ({ onClose }) => {
+const Purchases = ({ onClose }) => {
   const api = useAuthenticatedApi();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -58,7 +58,7 @@ const Incoming = ({ onClose }) => {
     setError(null);
 
     try {
-      await api.post("/warehouse/incoming", formData);
+      await api.post("/warehouse/purchases", formData);
       onClose();
     } catch (err) {
       setError(err.message);
@@ -203,4 +203,4 @@ const Incoming = ({ onClose }) => {
   );
 };
 
-export default Incoming;
+export default Purchases;

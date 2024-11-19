@@ -2,7 +2,7 @@ import {
   faPeopleLine,        // Clients
   faWarehouse,         // Warehouse
   faBox,               // Products
-  faArrowDown,         // Incoming
+  faArrowDown,         // Purchases
   faArrowUp,           // Sales
   faBoxesStacked,      // Stock
   faTableColumns,      // Dashboard
@@ -41,8 +41,8 @@ const menuData = [
         active: true
       },
       { 
-        label: "Incoming Goods", 
-        path: "/warehouse/incoming", 
+        label: "Purchases", 
+        path: "/warehouse/purchases", 
         icon: faArrowDown,
         active: true
       },
