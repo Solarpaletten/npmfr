@@ -1,36 +1,34 @@
-// pages/Warehouse/index.js
-import React, { useState, useEffect } from 'react';
-import { Table, Button, Tabs, Input } from 'antd';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import Incoming from './components/Incoming';
-import Sales from './components/Sales';
-import { useAuthenticatedApi } from '../../utils/api';
-import styles from './index.module.css';
+import React, { useState, useEffect } from "react";
+import { Table, Button, Tabs, Input } from "antd";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import Incoming from "./Incoming";
+import Sales from "./Sales";
+import { useAuthenticatedApi } from "../../utils/api";
+import styles from "./index.module.css";
 
 const { TabPane } = Tabs;
 
 function Warehouse() {
   const api = useAuthenticatedApi();
-  const [activeTab, setActiveTab] = useState('incoming');
+  const [activeTab, setActiveTab] = useState("incoming");
   const [incomingData, setIncomingData] = useState([]);
   const [salesData, setSalesData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showIncomingModal, setShowIncomingModal] = useState(false);
   const [showSalesModal, setShowSalesModal] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
-  // Загрузка данных
   const fetchData = async () => {
     setLoading(true);
     try {
       const [incomingRes, salesRes] = await Promise.all([
-        api.get('/warehouse/incoming'),
-        api.get('/warehouse/sales'),
+        api.get("/warehouse/incoming"),
+        api.get("/warehouse/sales"),
       ]);
       setIncomingData(incomingRes.data);
       setSalesData(salesRes.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
@@ -42,28 +40,42 @@ function Warehouse() {
 
   // Колонки для таблицы поступлений
   const incomingColumns = [
-    { title: 'Код товара', dataIndex: 'product_code', key: 'product_code' },
-    { title: 'Название', dataIndex: 'product_name', key: 'product_name' },
-    { title: 'Количество', dataIndex: 'quantity', key: 'quantity' },
-    { title: 'Цена за ед.', dataIndex: 'price_per_unit', key: 'price_per_unit' },
-    { title: 'Сумма', dataIndex: 'total_amount', key: 'total_amount' },
-    { title: 'Поставщик', dataIndex: 'supplier', key: 'supplier' },
-    { title: 'Дата', dataIndex: 'document_date', key: 'document_date' },
-    { title: '№ накладной', dataIndex: 'invoice_number', key: 'invoice_number' },
+    { title: "Код товара", dataIndex: "product_code", key: "product_code" },
+    { title: "Название", dataIndex: "product_name", key: "product_name" },
+    { title: "Количество", dataIndex: "quantity", key: "quantity" },
+    {
+      title: "Цена за ед.",
+      dataIndex: "price_per_unit",
+      key: "price_per_unit",
+    },
+    { title: "Сумма", dataIndex: "total_amount", key: "total_amount" },
+    { title: "Поставщик", dataIndex: "supplier", key: "supplier" },
+    { title: "Дата", dataIndex: "document_date", key: "document_date" },
+    {
+      title: "№ накладной",
+      dataIndex: "invoice_number",
+      key: "invoice_number",
+    },
   ];
 
-  // Колонки для таблицы продаж
   const salesColumns = [
-    { title: 'Код товара', dataIndex: 'product_code', key: 'product_code' },
-    { title: 'Количество', dataIndex: 'quantity', key: 'quantity' },
-    { title: 'Цена продажи', dataIndex: 'price_per_unit', key: 'price_per_unit' },
-    { title: 'Клиент', dataIndex: 'client', key: 'client' },
-    { title: 'Дата', dataIndex: 'document_date', key: 'document_date' },
-    { title: '№ накладной', dataIndex: 'invoice_number', key: 'invoice_number' },
-    { title: 'Тип оплаты', dataIndex: 'payment_type', key: 'payment_type' },
+    { title: "Код товара", dataIndex: "product_code", key: "product_code" },
+    { title: "Количество", dataIndex: "quantity", key: "quantity" },
+    {
+      title: "Цена продажи",
+      dataIndex: "price_per_unit",
+      key: "price_per_unit",
+    },
+    { title: "Клиент", dataIndex: "client", key: "client" },
+    { title: "Дата", dataIndex: "document_date", key: "document_date" },
+    {
+      title: "№ накладной",
+      dataIndex: "invoice_number",
+      key: "invoice_number",
+    },
+    { title: "Тип оплаты", dataIndex: "payment_type", key: "payment_type" },
   ];
 
-  // Фильтрация данных
   const filteredIncomingData = incomingData.filter((item) =>
     Object.values(item).some((value) =>
       value?.toString().toLowerCase().includes(searchText.toLowerCase())
@@ -90,10 +102,12 @@ function Warehouse() {
           type="primary"
           icon={<PlusOutlined />}
           onClick={() =>
-            activeTab === 'incoming' ? setShowIncomingModal(true) : setShowSalesModal(true)
+            activeTab === "incoming"
+              ? setShowIncomingModal(true)
+              : setShowSalesModal(true)
           }
         >
-          {activeTab === 'incoming' ? 'Новое поступление' : 'Новая продажа'}
+          {activeTab === "incoming" ? "Новое поступление" : "Новая продажа"}
         </Button>
       </div>
 

@@ -1,31 +1,29 @@
-// pages/Warehouse/components/Incoming/index.jsx
-import React, { useState } from 'react';
-import { Modal, Form } from '../../../../components/Modal';
-import Field from '../../../../components/Field';
-import Select from '../../../../components/Select';
-import ValidationError from '../../../../components/ValidationError';
-import { useAuthenticatedApi } from '../../../../utils/api';
+import React, { useState } from "react";
+import { Modal, Form } from "../../../components/Modal";
+import Field from "../../../components/Field";
+import Select from "../../../components/Select";
+import ValidationError from "../../../components/ValidationError";
+import { useAuthenticatedApi } from "../../../utils/api";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
-function Incoming({ onClose }) {
+function Sales({ onClose }) {
   const api = useAuthenticatedApi();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
-    product_code: '', // Код товара (VP 00100)
-    product_name: '', // Название товара
-    quantity: '', // Количество (10.000)
-    price_per_unit: '', // Цена за единицу (500.0000)
-    total_amount: '', // Общая сумма (5000.00)
-    supplier: '', // Поставщик (Leanid Kanoplich)
-    currency: 'EUR', // Валюта (EUR)
-    document_date: new Date().toISOString().split('T')[0], // Дата документа
-    invoice_number: '', // Номер накладной
-    operation_type: 'purchase', // Тип операции (Покупка)
-    vat_rate: '0', // Ставка НДС
-    vat_amount: '0', // Сумма НДС
+    product_code: "", // Код товара
+    quantity: "", // Количество
+    price_per_unit: "", // Цена продажи
+    client: "", // Клиент
+    document_date: new Date().toISOString().split("T")[0], // Дата документа
+    invoice_number: "", // Номер накладной
+    currency: "EUR", // Валюта
+    vat_rate: "0", // Ставка НДС
+    vat_amount: "0", // Сумма НДС
+    payment_type: "cash", // Тип оплаты
+    warehouse: "main", // Склад
   });
 
   const handleChange = (e) => {
@@ -33,17 +31,18 @@ function Incoming({ onClose }) {
     setFormData((prev) => {
       const newData = { ...prev, [name]: value };
 
-      // Автоматический расчет общей суммы и НДС
-      if (name === 'quantity' || name === 'price_per_unit' || name === 'vat_rate') {
+      // Автоматический расчет НДС и общей суммы
+      if (
+        name === "quantity" ||
+        name === "price_per_unit" ||
+        name === "vat_rate"
+      ) {
         const quantity = parseFloat(newData.quantity) || 0;
         const pricePerUnit = parseFloat(newData.price_per_unit) || 0;
         const vatRate = parseFloat(newData.vat_rate) || 0;
 
         const subtotal = quantity * pricePerUnit;
-        const vatAmount = subtotal * (vatRate / 100);
-
-        newData.total_amount = subtotal.toFixed(2);
-        newData.vat_amount = vatAmount.toFixed(2);
+        newData.vat_amount = (subtotal * (vatRate / 100)).toFixed(2);
       }
 
       return newData;
@@ -56,7 +55,7 @@ function Incoming({ onClose }) {
     setError(null);
 
     try {
-      await api.post('/warehouse/incoming', formData);
+      await api.post("/warehouse/sales", formData);
       onClose();
     } catch (err) {
       setError(err.message);
@@ -65,6 +64,13 @@ function Incoming({ onClose }) {
     }
   };
 
+  // Расчет итоговых сумм
+  const subtotal =
+    (parseFloat(formData.quantity) || 0) *
+    (parseFloat(formData.price_per_unit) || 0);
+  const vatAmount = parseFloat(formData.vat_amount) || 0;
+  const total = subtotal + vatAmount;
+
   return (
     <Modal>
       <Form
@@ -72,7 +78,7 @@ function Incoming({ onClose }) {
         onClose={onClose}
         loading={loading}
         error={error}
-        buttonPositiveName="Создать поступление"
+        buttonPositiveName="Создать продажу"
         buttonNegativeName="Отмена"
       >
         <div className={styles.formGrid}>
@@ -98,33 +104,37 @@ function Incoming({ onClose }) {
             />
 
             <Select
-              name="operation_type"
-              value={formData.operation_type}
+              name="warehouse"
+              value={formData.warehouse}
               onChange={handleChange}
-              label="Тип операции"
-              options={[{ value: 'purchase', label: 'Покупка' }]}
+              label="Склад"
+              options={[{ value: "main", label: "Основной склад" }]}
               required
             />
           </div>
 
-          {/* Информация о поставщике */}
+          {/* Информация о клиенте */}
           <div className={styles.section}>
-            <h3>Информация о поставщике</h3>
+            <h3>Информация о клиенте</h3>
             <Field
               type="text"
-              name="supplier"
-              value={formData.supplier}
+              name="client"
+              value={formData.client}
               onChange={handleChange}
-              label="Поставщик"
+              label="Клиент"
               required
             />
 
             <Select
-              name="currency"
-              value={formData.currency}
+              name="payment_type"
+              value={formData.payment_type}
               onChange={handleChange}
-              label="Валюта"
-              options={[{ value: 'EUR', label: 'EUR' }]}
+              label="Тип оплаты"
+              options={[
+                { value: "cash", label: "Наличные" },
+                { value: "card", label: "Карта" },
+                { value: "transfer", label: "Перевод" },
+              ]}
               required
             />
           </div>
@@ -138,15 +148,6 @@ function Incoming({ onClose }) {
               value={formData.product_code}
               onChange={handleChange}
               label="Код товара"
-              required
-            />
-
-            <Field
-              type="text"
-              name="product_name"
-              value={formData.product_name}
-              onChange={handleChange}
-              label="Название товара"
               required
             />
 
@@ -166,14 +167,23 @@ function Incoming({ onClose }) {
               name="price_per_unit"
               value={formData.price_per_unit}
               onChange={handleChange}
-              label="Цена за единицу"
+              label="Цена продажи"
               required
             />
           </div>
 
           {/* Информация о НДС */}
           <div className={styles.section}>
-            <h3>Информация о НДС</h3>
+            <h3>Дополнительная информация</h3>
+            <Select
+              name="currency"
+              value={formData.currency}
+              onChange={handleChange}
+              label="Валюта"
+              options={[{ value: "EUR", label: "EUR" }]}
+              required
+            />
+
             <Field
               type="number"
               name="vat_rate"
@@ -184,12 +194,9 @@ function Incoming({ onClose }) {
 
             {/* Отображение расчетных полей */}
             <div className={styles.calculations}>
-              <div>Сумма без НДС: {formData.total_amount}</div>
-              <div>НДС: {formData.vat_amount}</div>
-              <div className={styles.total}>
-                Итого:{' '}
-                {(parseFloat(formData.total_amount) + parseFloat(formData.vat_amount)).toFixed(2)}
-              </div>
+              <div>Сумма без НДС: {subtotal.toFixed(2)}</div>
+              <div>НДС: {vatAmount.toFixed(2)}</div>
+              <div className={styles.total}>Итого: {total.toFixed(2)}</div>
             </div>
           </div>
         </div>
@@ -200,4 +207,4 @@ function Incoming({ onClose }) {
   );
 }
 
-export default Incoming;
+export default Sales;
