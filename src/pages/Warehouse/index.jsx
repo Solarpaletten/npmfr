@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Tabs, Input } from "antd";
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import Incoming from "./Incoming";
 import Sales from "./Sales";
 import { useAuthenticatedApi } from "../../utils/api";

@@ -7,7 +7,7 @@ import { useAuthenticatedApi } from "../../../utils/api";
 
 import styles from "./index.module.css";
 
-function Incoming({ onClose }) {
+const Incoming = ({ onClose }) => {
   const api = useAuthenticatedApi();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -201,6 +201,6 @@ function Incoming({ onClose }) {
       </Form>
     </Modal>
   );
-}
+};
 
 export default Incoming;
