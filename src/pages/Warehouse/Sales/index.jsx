@@ -6,7 +6,7 @@ import Select from '../../../components/Select';
 import ValidationError from '../../../components/ValidationError';
 import { useAuthenticatedApi } from '../../../utils/api';
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
 function Sales({ onClose }) {
   const api = useAuthenticatedApi();
@@ -14,17 +14,17 @@ function Sales({ onClose }) {
   const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
-    product_code: '', // Код товара
-    quantity: '', // Количество
-    price_per_unit: '', // Цена продажи
-    client: '', // Клиент
-    document_date: new Date().toISOString().split('T')[0], // Дата документа
-    invoice_number: '', // Номер накладной
-    currency: 'EUR', // Валюта
-    vat_rate: '0', // Ставка НДС
-    vat_amount: '0', // Сумма НДС
-    payment_type: 'cash', // Тип оплаты
-    warehouse: 'main', // Склад
+    product_code: "", // Код товара
+    quantity: "", // Количество
+    price_per_unit: "", // Цена продажи
+    client: "", // Клиент
+    document_date: new Date().toISOString().split("T")[0], // Дата документа
+    invoice_number: "", // Номер накладной
+    currency: "EUR", // Валюта
+    vat_rate: "0", // Ставка НДС
+    vat_amount: "0", // Сумма НДС
+    payment_type: "cash", // Тип оплаты
+    warehouse: "main", // Склад
   });
 
   const handleChange = (e) => {
@@ -33,7 +33,11 @@ function Sales({ onClose }) {
       const newData = { ...prev, [name]: value };
 
       // Автоматический расчет НДС и общей суммы
-      if (name === 'quantity' || name === 'price_per_unit' || name === 'vat_rate') {
+      if (
+        name === "quantity" ||
+        name === "price_per_unit" ||
+        name === "vat_rate"
+      ) {
         const quantity = parseFloat(newData.quantity) || 0;
         const pricePerUnit = parseFloat(newData.price_per_unit) || 0;
         const vatRate = parseFloat(newData.vat_rate) || 0;
@@ -52,7 +56,7 @@ function Sales({ onClose }) {
     setError(null);
 
     try {
-      await api.post('/warehouse/sales', formData);
+      await api.post("/warehouse/sales", formData);
       onClose();
     } catch (err) {
       setError(err.message);
@@ -63,7 +67,8 @@ function Sales({ onClose }) {
 
   // Расчет итоговых сумм
   const subtotal =
-    (parseFloat(formData.quantity) || 0) * (parseFloat(formData.price_per_unit) || 0);
+    (parseFloat(formData.quantity) || 0) *
+    (parseFloat(formData.price_per_unit) || 0);
   const vatAmount = parseFloat(formData.vat_amount) || 0;
   const total = subtotal + vatAmount;
 
@@ -104,7 +109,7 @@ function Sales({ onClose }) {
               value={formData.warehouse}
               onChange={handleChange}
               label="Склад"
-              options={[{ value: 'main', label: 'Основной склад' }]}
+              options={[{ value: "main", label: "Основной склад" }]}
               required
             />
           </div>
@@ -127,9 +132,9 @@ function Sales({ onClose }) {
               onChange={handleChange}
               label="Тип оплаты"
               options={[
-                { value: 'cash', label: 'Наличные' },
-                { value: 'card', label: 'Карта' },
-                { value: 'transfer', label: 'Перевод' },
+                { value: "cash", label: "Наличные" },
+                { value: "card", label: "Карта" },
+                { value: "transfer", label: "Перевод" },
               ]}
               required
             />
@@ -176,7 +181,7 @@ function Sales({ onClose }) {
               value={formData.currency}
               onChange={handleChange}
               label="Валюта"
-              options={[{ value: 'EUR', label: 'EUR' }]}
+              options={[{ value: "EUR", label: "EUR" }]}
               required
             />
 
