@@ -4,9 +4,7 @@ import Sales from "./Sales";
 import { useAuthenticatedApi } from "../../utils/api";
 import styles from "./index.module.css";
 
-const { TabPane } = Tabs;
-
-function Warehouse() {
+const Warehouse = () => {
   const api = useAuthenticatedApi();
   const [activeTab, setActiveTab] = useState("incoming");
   const [incomingData, setIncomingData] = useState([]);
@@ -149,6 +147,6 @@ function Warehouse() {
       )}
     </div>
   );
-}
+};
 
 export default Warehouse;
