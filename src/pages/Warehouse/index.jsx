@@ -81,6 +81,6 @@ function Warehouse() {
       )}
     </Page>
   );
-}
+};
 
 export default Warehouse;
