@@ -1,22 +1,50 @@
 /* pages/Warehouse/index.module.css */
+
+/* Основной контейнер для всей страницы, занимает 100% высоты */
 .container {
-  padding: 24px;
+ display: flex;          /* Включаем flexbox для расположения элементов */
+ flex: 1;               /* Занимает все доступное пространство */
+ height: 100vh;         /* Высота на весь экран */
+ overflow: hidden;      /* Скрываем прокрутку на основном контейнере */
+} 
+
+/* Контейнер для отображения списка, располагается справа от сайдбара */
+.listView {
+ padding: 20px;         /* Внутренние отступы */
+ height: 100%;          /* Высота 100% */
+ flex: 1;               /* Занимает все доступное пространство */
+ background: white;     /* Белый фон */
 }
 
+/* Верхняя панель с кнопками/действиями */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+ display: flex;          /* Flexbox для выравнивания элементов */
+ justify-content: flex-end;  /* Выравнивание элементов по правому краю */
+ margin-bottom: 20px;    /* Отступ снизу */
 }
 
-.searchInput {
-  width: 300px;
+/* Стили для таблицы покупок */
+.purchasesTable {
+ width: 100%;           /* Ширина на всю доступную область */
+ border-collapse: collapse;  /* Убираем двойные границы между ячейками */
 }
 
-:global(.ant-table-wrapper) {
-  background: white;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* Стили для ячеек заголовка и данных таблицы */
+.purchasesTable th,
+.purchasesTable td {
+ padding: 12px;         /* Внутренние отступы в ячейках */
+ border: 1px solid #e0e0e0;  /* Серые границы ячеек */
+ text-align: left;      /* Выравнивание текста по левому краю */
+}
+
+/* Стили для заголовков таблицы */
+.purchasesTable th {
+ background: #f8f9fa;   /* Светло-серый фон для заголовков */
+ font-weight: 500;      /* Полужирный шрифт */
+}
+
+/* Стили при наведении на строки таблицы */
+.purchasesTable tr:hover {
+ background: #f5f5f5;   /* Светло-серый фон при наведении */
+ cursor: pointer;       /* Курсор-указатель */
 }
