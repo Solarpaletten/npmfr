@@ -23,6 +23,10 @@ const Incoming = ({ onSubmit, onClose }) => {
     onSubmit(formData);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.toolbar}>
