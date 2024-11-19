@@ -11,7 +11,7 @@ import Salary from "../pages/Salary";
 import Reports from "../pages/Reports";
 import Settings from "../pages/Settings";
 import Products from "../pages/Warehouse/Products";
-import Incoming from "../pages/Warehouse/Incoming";
+import Purchases from "../pages/Warehouse/Purchases";
 import Sales from "../pages/Warehouse/Sales";
 import Stock from "../pages/Warehouse/Stock";
 
@@ -19,7 +19,7 @@ const routes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/clients", component: Clients },
   { path: "/warehouse/products", component: Products },
-  { path: "/warehouse/incoming", component: Incoming },
+  { path: "/warehouse/purchases", component: Purchases },
   { path: "/warehouse/sales", component: Sales },
   { path: "/warehouse/stock", component: Stock },
   { path: "/general-ledger", component: GeneralLedger },

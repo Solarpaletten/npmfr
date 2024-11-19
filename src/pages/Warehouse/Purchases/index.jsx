@@ -120,4 +120,4 @@ const Incoming = ({ onSubmit, onClose }) => {
   );
 };
 
-export default Incoming;
+export default Purchases;
