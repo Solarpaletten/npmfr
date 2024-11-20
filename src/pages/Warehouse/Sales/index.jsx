@@ -1,10 +1,10 @@
 // pages/Warehouse/components/Sales/index.jsx
 import React, { useState } from 'react';
-import { Modal, Form } from '../../../../components/Modal';
-import Field from '../../../../components/Field';
-import Select from '../../../../components/Select';
-import ValidationError from '../../../../components/ValidationError';
-import { useAuthenticatedApi } from '../../../../utils/api';
+import { Modal, Form } from '../../../components/Modal';
+import Field from '../../../components/Field';
+import Select from '../../../components/Select';
+import ValidationError from '../../../components/ValidationError';
+import { useAuthenticatedApi } from '../../../utils/api';
 
 import styles from './index.module.css';
 

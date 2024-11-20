@@ -1,6 +1,6 @@
 // pages/Warehouse/components/Incoming/index.jsx
 import React, { useState } from 'react';
-import Button from '../../../../components/Button';
+import Button from '../../../components/Button';
 import styles from './index.module.css';
 
 const Incoming = ({ onSubmit, onClose }) => {
