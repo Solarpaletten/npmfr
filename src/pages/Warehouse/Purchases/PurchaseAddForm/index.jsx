@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Page from "../../../../components/Page";
 import { Modal, Form } from "../../../../components/Modal";
 import Field from "../../../../components/Field";
 import Select from "../../../../components/Select";
+import Button from "../../../../components/Button";
 import { useAuthenticatedApi } from "../../../../utils/api";
 
-const PurchaseAddForm = ({ onShowForm, requery }) => {
+import styles from "./index.module.css";
+
+const PurchaseAddForm = () => {
   const [formData, setFormData] = useState({
     product_code: "", // Код товара (VP 00100)
     product_name: "", // Название товара
@@ -22,6 +27,7 @@ const PurchaseAddForm = ({ onShowForm, requery }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const api = useAuthenticatedApi();
 
@@ -57,10 +63,8 @@ const PurchaseAddForm = ({ onShowForm, requery }) => {
 
     try {
       await api.post("/warehouse/purchases", formData);
-      
-      requery();
-      // setFormData({ username: "", email: "", role: "standard" });
-      onShowForm(false);
+
+      navigate("/warehouse/purchases");
     } catch (err) {
       setError("Failed to create purchase");
       setLoading(false);
@@ -68,141 +72,245 @@ const PurchaseAddForm = ({ onShowForm, requery }) => {
   };
 
   return (
-    <Modal>
-      <Form
-        onSubmit={handleSubmit}
-        onClose={() => onShowForm(false)}
-        loading={loading}
-        error={error}
-        buttonPositiveName="Create purchase"
-        buttonNegativeName="Cancel"
-      >
-        <div>
-          <h3>Основная информация</h3>
-          <Field
-            type="date"
-            name="document_date"
-            value={formData.document_date}
-            onChange={handleChange}
-            placeholder="Дата документа"
-            disabled={loading}
-            required
-          />
-
-          <Field
-            type="text"
-            name="invoice_number"
-            value={formData.invoice_number}
-            onChange={handleChange}
-            placeholder="Номер накладной"
-            disabled={loading}
-            required
-          />
-
-          <Select
-            name="operation_type"
-            value={formData.operation_type}
-            onChange={handleChange}
-            label="Тип операции"
-            options={[{ value: "purchase", label: "Покупка" }]}
-            disabled={loading}
-            required
-          />
+    <Page>
+      <div>
+        <div className={styles.toolbar}>
+          <Button onClick={handleSubmit}>Сохранить</Button>
+          <Button onClick={() => navigate("/warehouse/purchases")}>
+            Закрыть
+          </Button>
+          <Button>Распечатать</Button>
         </div>
 
-        <div>
-          <h3>Информация о поставщике</h3>
-          <Field
-            type="text"
-            name="supplier"
-            value={formData.supplier}
-            onChange={handleChange}
-            placeholder="Поставщик"
-            disabled={loading}
-            required
-          />
+        <div className={styles.content}>
+          <div className={styles.tabs}>
+            <div className={styles.tab}>Информация о счете</div>
+            <div className={styles.tab}>Накладные расходы</div>
+          </div>
 
-          <Select
-            name="currency"
-            value={formData.currency}
-            onChange={handleChange}
-            label="Валюта"
-            options={[{ value: "EUR", label: "EUR" }]}
-            disabled={loading}
-            required
-          />
-        </div>
+          <div className={styles.formGrid}>
+            <div className={styles.leftColumn}>
+              <div className={styles.field}>
+                <label>Склад *</label>
+                <input
+                  value={formData.warehouse}
+                  onChange={(e) =>
+                    setFormData({ ...formData, warehouse: e.target.value })
+                  }
+                  required
+                />
+              </div>
 
-        <div>
-          <h3>Информация о товаре</h3>
-          <Field
-            type="text"
-            name="product_code"
-            value={formData.product_code}
-            onChange={handleChange}
-            placeholder="Код товара"
-            disabled={loading}
-            required
-          />
+              <div className={styles.field}>
+                <label>Поставщик *</label>
+                <input
+                  value={formData.supplier}
+                  onChange={(e) =>
+                    setFormData({ ...formData, supplier: e.target.value })
+                  }
+                  required
+                />
+              </div>
 
-          <Field
-            type="text"
-            name="product_name"
-            value={formData.product_name}
-            onChange={handleChange}
-            placeholder="Название товара"
-            disabled={loading}
-            required
-          />
+              <div className={styles.field}>
+                <label>Дата документа *</label>
+                <input
+                  type="date"
+                  value={formData.document_date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, document_date: e.target.value })
+                  }
+                  required
+                />
+              </div>
 
-          <Field
-            type="number"
-            step="0.001"
-            name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
-            placeholder="Количество"
-            disabled={loading}
-            required
-          />
+              <div className={styles.field}>
+                <label>Серия</label>
+                <input
+                  value={formData.series}
+                  onChange={(e) =>
+                    setFormData({ ...formData, series: e.target.value })
+                  }
+                />
+              </div>
+            </div>
 
-          <Field
-            type="number"
-            step="0.0001"
-            name="price_per_unit"
-            value={formData.price_per_unit}
-            onChange={handleChange}
-            placeholder="Цена за единицу"
-            disabled={loading}
-            required
-          />
-        </div>
+            <div className={styles.rightColumn}>
+              <div className={styles.summary}>
+                <div className={styles.field}>
+                  <label>НДС %</label>
+                  <input
+                    type="number"
+                    value={formData.vat_rate}
+                    onChange={(e) =>
+                      setFormData({ ...formData, vat_rate: e.target.value })
+                    }
+                  />
+                </div>
 
-        <div>
-          <h3>Информация о НДС</h3>
-          <Field
-            type="number"
-            name="vat_rate"
-            value={formData.vat_rate}
-            onChange={handleChange}
-            placeholder="Ставка НДС %"
-            disabled={loading}
-          />
-
-          <div>
-            <div>Сумма без НДС: {formData.total_amount}</div>
-            <div>НДС: {formData.vat_amount}</div>
-            <div>
-              Итого:{" "}
-              {(
-                parseFloat(formData.total_amount) +
-                parseFloat(formData.vat_amount)
-              ).toFixed(2)}
+                <div className={styles.totals}>
+                  <div>Сумма без НДС: 0.00</div>
+                  <div>НДС: 0.00</div>
+                  <div>Всего с НДС: 0.00</div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div className={styles.positions}>
+            <h3>Позиции покупки</h3>
+            <table className={styles.positionsTable}>
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Товар</th>
+                  <th>Код</th>
+                  <th>Единицы</th>
+                  <th>Количество</th>
+                  <th>Цена без НДС</th>
+                  <th>Сумма без НДС</th>
+                  <th>НДС</th>
+                </tr>
+              </thead>
+              <tbody>{/* Позиции */}</tbody>
+            </table>
+          </div>
         </div>
-      </Form>
-    </Modal>
+      </div>
+    </Page>
+    // <Form
+    //   onSubmit={handleSubmit}
+    //   onClose={() => onShowForm(false)}
+    //   loading={loading}
+    //   error={error}
+    //   buttonPositiveName="Create purchase"
+    //   buttonNegativeName="Cancel"
+    // >
+    //   <div>
+    //     <h3>Основная информация</h3>
+    //     <Field
+    //       type="date"
+    //       name="document_date"
+    //       value={formData.document_date}
+    //       onChange={handleChange}
+    //       placeholder="Дата документа"
+    //       disabled={loading}
+    //       required
+    //     />
+
+    //     <Field
+    //       type="text"
+    //       name="invoice_number"
+    //       value={formData.invoice_number}
+    //       onChange={handleChange}
+    //       placeholder="Номер накладной"
+    //       disabled={loading}
+    //       required
+    //     />
+
+    //     <Select
+    //       name="operation_type"
+    //       value={formData.operation_type}
+    //       onChange={handleChange}
+    //       label="Тип операции"
+    //       options={[{ value: "purchase", label: "Покупка" }]}
+    //       disabled={loading}
+    //       required
+    //     />
+    //   </div>
+
+    //   <div>
+    //     <h3>Информация о поставщике</h3>
+    //     <Field
+    //       type="text"
+    //       name="supplier"
+    //       value={formData.supplier}
+    //       onChange={handleChange}
+    //       placeholder="Поставщик"
+    //       disabled={loading}
+    //       required
+    //     />
+
+    //     <Select
+    //       name="currency"
+    //       value={formData.currency}
+    //       onChange={handleChange}
+    //       label="Валюта"
+    //       options={[{ value: "EUR", label: "EUR" }]}
+    //       disabled={loading}
+    //       required
+    //     />
+    //   </div>
+
+    //   <div>
+    //     <h3>Информация о товаре</h3>
+    //     <Field
+    //       type="text"
+    //       name="product_code"
+    //       value={formData.product_code}
+    //       onChange={handleChange}
+    //       placeholder="Код товара"
+    //       disabled={loading}
+    //       required
+    //     />
+
+    //     <Field
+    //       type="text"
+    //       name="product_name"
+    //       value={formData.product_name}
+    //       onChange={handleChange}
+    //       placeholder="Название товара"
+    //       disabled={loading}
+    //       required
+    //     />
+
+    //     <Field
+    //       type="number"
+    //       step="0.001"
+    //       name="quantity"
+    //       value={formData.quantity}
+    //       onChange={handleChange}
+    //       placeholder="Количество"
+    //       disabled={loading}
+    //       required
+    //     />
+
+    //     <Field
+    //       type="number"
+    //       step="0.0001"
+    //       name="price_per_unit"
+    //       value={formData.price_per_unit}
+    //       onChange={handleChange}
+    //       placeholder="Цена за единицу"
+    //       disabled={loading}
+    //       required
+    //     />
+    //   </div>
+
+    //   <div>
+    //     <h3>Информация о НДС</h3>
+    //     <Field
+    //       type="number"
+    //       name="vat_rate"
+    //       value={formData.vat_rate}
+    //       onChange={handleChange}
+    //       placeholder="Ставка НДС %"
+    //       disabled={loading}
+    //     />
+
+    //     <div>
+    //       <div>Сумма без НДС: {formData.total_amount}</div>
+    //       <div>НДС: {formData.vat_amount}</div>
+    //       <div>
+    //         Итого:{" "}
+    //         {(
+    //           parseFloat(formData.total_amount) +
+    //           parseFloat(formData.vat_amount)
+    //         ).toFixed(2)}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </Form>
   );
 };
 

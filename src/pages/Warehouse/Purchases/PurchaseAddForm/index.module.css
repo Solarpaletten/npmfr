@@ -1,0 +1,100 @@
+/* Основной контейнер для формы поступления */
+.incoming {
+  flex: 1;               /* Занимает все доступное пространство */
+  height: 100vh;         /* Высота на весь экран */
+  background: white;     /* Белый фон */
+  overflow-y: auto;      /* Вертикальная прокрутка при необходимости */
+ }
+ 
+ /* Верхняя панель инструментов с кнопками */
+ .toolbar {
+  display: flex;         /* Flexbox для кнопок */
+  gap: 10px;            /* Отступ между кнопками */
+  padding: 10px;        /* Внутренние отступы */
+  border-bottom: 1px solid #e0e0e0;  /* Разделительная линия снизу */
+ }
+ 
+ /* Вкладки (Информация о счете, Накладные расходы) */
+ .tabs {
+  display: flex;         /* Flexbox для вкладок */
+  border-bottom: 1px solid #e0e0e0;  /* Разделительная линия снизу */
+ }
+ 
+ .tab {
+  padding: 15px 20px;    /* Внутренние отступы */
+  cursor: pointer;       /* Курсор-указатель */
+ }
+ 
+ .activeTab {
+  border-bottom: 2px solid #2196f3;  /* Синяя линия для активной вкладки */
+ }
+ 
+ /* Основное содержимое формы */
+ .content {
+  padding: 20px;         /* Внутренние отступы */
+  display: grid;         /* Grid для разделения на колонки */
+  grid-template-columns: 1fr 1fr;  /* Две равные колонки */
+  gap: 20px;            /* Отступ между колонками */
+ }
+ 
+ /* Поля формы */
+ .field {
+  margin-bottom: 15px;   /* Отступ между полями */
+ }
+ 
+ .field label {
+  display: block;        /* Метка на новой строке */
+  margin-bottom: 5px;    /* Отступ до поля ввода */
+  font-weight: 500;      /* Полужирный шрифт */
+ }
+ 
+ .field input,
+ .field select {
+  width: 100%;          /* Ширина на всю доступную область */
+  padding: 8px;         /* Внутренние отступы */
+  border: 1px solid #e0e0e0;  /* Серая граница */
+  border-radius: 4px;   /* Скругленные углы */
+ }
+ 
+ /* Таблица позиций покупки */
+ .positions {
+  margin-top: 20px;     /* Отступ сверху */
+ }
+ 
+ .positionsTable {
+  width: 100%;          /* Ширина на всю область */
+  border-collapse: collapse;  /* Убираем двойные границы */
+ }
+ 
+ .positionsTable th,
+ .positionsTable td {
+  padding: 12px;        /* Внутренние отступы */
+  border: 1px solid #e0e0e0;  /* Серые границы */
+  text-align: left;     /* Выравнивание по левому краю */
+ }
+ 
+ .positionsTable th {
+  background: #f8f9fa;  /* Светло-серый фон для заголовков */
+  font-weight: 500;     /* Полужирный шрифт */
+ }
+ 
+ /* Блок с итогами (НДС и суммы) */
+ .summary {
+  background: #f8f9fa;  /* Светло-серый фон */
+  padding: 15px;        /* Внутренние отступы */
+  border-radius: 4px;   /* Скругленные углы */
+  margin-top: 20px;     /* Отступ сверху */
+ }
+ 
+ .summary .row {
+  display: flex;        /* Flexbox для строк */
+  justify-content: space-between;  /* Разнесение по краям */
+  margin-bottom: 10px;  /* Отступ между строками */
+ }
+ 
+ /* Обязательные поля */
+ .required {
+  color: #dc2626;       /* Красный цвет для звездочки */
+  margin-left: 4px;     /* Отступ слева */
+ }
+ 
