@@ -11,8 +11,8 @@ import Salary from "../pages/Salary";
 import Reports from "../pages/Reports";
 import Settings from "../pages/Settings";
 import Products from "../pages/Warehouse/Products";
-import Purchases from "../pages/Warehouse/Purchases1";
-import Sales from "../pages/Warehouse/Sales1";
+import Purchases from "../pages/Warehouse/Purchases";
+import Sales from "../pages/Warehouse/Sales";
 import Stock from "../pages/Warehouse/Stock";
 
 const routes = [

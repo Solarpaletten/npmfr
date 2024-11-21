@@ -1,10 +1,19 @@
-// pages/Warehouse/components/Sales/index.jsx
-import React, { useState } from 'react';
-import { Modal, Form } from '../../../components/Modal';
-import Field from '../../../components/Field';
-import Select from '../../../components/Select';
-import ValidationError from '../../../components/ValidationError';
-import { useAuthenticatedApi } from '../../../utils/api';
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import Page from "../../../components/Page";
+import SearchField from "../../../components/SearchField";
+import { Table, Row, Cell } from "../../../components/Table";
+import Button from "../../../components/Button";
+import SaleAddForm from "./SaleAddForm";
+// import SaleDeleteForm from "./SaleDeleteForm";
+// import SaleEditForm from "./SaleEditForm";
+import { useAuthenticatedApi } from "../../../utils/api";
+import columns from "./columns";
+import {
+  faTrashCan,
+  faPenToSquare,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./index.module.css";
 
@@ -57,21 +66,21 @@ const Sales = () => {
         sort={setSort}
         loading={loading}
       >
-        {sales.map((purchase) => (
-          <Row key={purchase.id}>
-            <Cell>{purchase.product_code || "-"}</Cell>
-            <Cell>{purchase.quantity || "-"}</Cell>
-            <Cell>{purchase.price_per_unit || "-"}</Cell>
-            <Cell>{purchase.client || "-"}</Cell>
-            <Cell>{new Date(purchase.document_date).toLocaleDateString()}</Cell>
-            <Cell>{purchase.invoice_number || "-"}</Cell>
-            <Cell>{purchase.payment_type || "-"}</Cell>
+        {sales.map((sale) => (
+          <Row key={sale.id}>
+            <Cell>{sale.product_code || "-"}</Cell>
+            <Cell>{sale.quantity || "-"}</Cell>
+            <Cell>{sale.price_per_unit || "-"}</Cell>
+            <Cell>{sale.client || "-"}</Cell>
+            <Cell>{new Date(sale.document_date).toLocaleDateString()}</Cell>
+            <Cell>{sale.invoice_number || "-"}</Cell>
+            <Cell>{sale.payment_type || "-"}</Cell>
             <Cell align="right">
               <Button
                 icon={faPenToSquare}
                 onClick={() => {
                   setShowEditForm(true);
-                  setSelectedPurchase(purchase);
+                  setSelectedPurchase(sale);
                 }}
               >
                 Edit
@@ -81,7 +90,7 @@ const Sales = () => {
                 icon={faTrashCan}
                 onClick={() => {
                   setShowDeleteForm(true);
-                  setSelectedPurchase(purchase);
+                  setSelectedPurchase(sale);
                 }}
               >
                 Delete
