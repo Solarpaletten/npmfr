@@ -35,21 +35,15 @@ const menuData = [
     active: true,
     subItems: [
       { 
-        label: "Products", 
-        path: "/warehouse/products", 
-        icon: faBox,
+        label: "Sales", 
+        path: "/warehouse/sales", 
+        icon: faArrowUp,
         active: true
       },
       { 
         label: "Purchases", 
         path: "/warehouse/purchases", 
         icon: faArrowDown,
-        active: true
-      },
-      { 
-        label: "Sales", 
-        path: "/warehouse/sales", 
-        icon: faArrowUp,
         active: true
       },
       { 

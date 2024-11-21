@@ -13,7 +13,7 @@ const PurchaseDeleteForm = ({ onShowForm, requery, selectedPurchase }) => {
     setLoading(true);
 
     try {
-      await api.delete(`/purchases/${selectedPurchase.id}`);
+      await api.delete(`/warehouse/purchases/${selectedPurchase.id}`);
 
       requery();
 
