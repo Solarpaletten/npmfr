@@ -1,11 +1,14 @@
 const columns = [
-  { key: "product_code", isSortable: false, label: "Product code" },
-  { key: "quantity", isSortable: false, label: "Quantity" },
-  { key: "price_per_unit", isSortable: false, label: "Price per unit" },
+  { key: "sale_date", isSortable: false, label: "Sale date" },
   { key: "client", isSortable: false, label: "Client" },
-  { key: "document_date", isSortable: false, label: "Document date" },
+  { key: "warehouse", isSortable: false, label: "Warehouse" },
+  { key: "buyer", isSortable: false, label: "Buyer/Payer" },
   { key: "invoice_number", isSortable: false, label: "Invoice number" },
-  { key: "payment_type", isSortable: false, label: "Payment type" },
+  { key: "operation_type", isSortable: false, label: "Operation type" },
+  { key: "vat_rate", isSortable: false, label: "VAT rate" },
+  { key: "total_amount", isSortable: false, label: "Total amount" },
+  { key: "currency", isSortable: false, label: "Currency" },
+  { key: "action", isSortable: false, label: "" },
 ];
 
 export default columns;

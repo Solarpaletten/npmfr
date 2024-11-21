@@ -54,7 +54,11 @@ const Sales = () => {
       <h1>Sales</h1>
 
       <div className={styles.toolbar}>
-        <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <SearchField
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          disabled
+        />
         <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
           Create invoice
         </Button>
@@ -68,13 +72,15 @@ const Sales = () => {
       >
         {sales.map((sale) => (
           <Row key={sale.id}>
-            <Cell>{sale.product_code || "-"}</Cell>
-            <Cell>{sale.quantity || "-"}</Cell>
-            <Cell>{sale.price_per_unit || "-"}</Cell>
+            <Cell>{new Date(sale.sale_date).toLocaleDateString()}</Cell>
             <Cell>{sale.client || "-"}</Cell>
-            <Cell>{new Date(sale.document_date).toLocaleDateString()}</Cell>
+            <Cell>{sale.warehouse || "-"}</Cell>
+            <Cell>{sale.buyer || "-"}</Cell>
             <Cell>{sale.invoice_number || "-"}</Cell>
-            <Cell>{sale.payment_type || "-"}</Cell>
+            <Cell>{sale.operation_type || "-"}</Cell>
+            <Cell>{sale.vat_rate || "-"}</Cell>
+            <Cell>{sale.total_amount || "-"}</Cell>{" "}
+            <Cell>{sale.currency || "-"}</Cell>
             <Cell align="right">
               <Button
                 icon={faPenToSquare}

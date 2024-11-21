@@ -14,3 +14,8 @@
   border-radius: 4px;
   font-size: 14px;
 }
+
+.input input:disabled {
+  background-color: var(--grey-4);
+  cursor: not-allowed;
+}
