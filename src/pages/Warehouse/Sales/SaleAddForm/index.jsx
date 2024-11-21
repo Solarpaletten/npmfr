@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Form } from "../../../../components/Modal";
+import { useNavigate } from "react-router-dom";
+import Page from "../../../../components/Page";
+import { Form } from "../../../../components/Modal";
 import Field from "../../../../components/Field";
 import Select from "../../../../components/Select";
 import { useAuthenticatedApi } from "../../../../utils/api";
 
-const SaleAddForm = ({ onShowForm, requery }) => {
+const SaleAddForm = () => {
   const [formData, setFormData] = useState({
     product_code: "",
     quantity: "",
@@ -26,6 +28,7 @@ const SaleAddForm = ({ onShowForm, requery }) => {
   // price_per_unit
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const api = useAuthenticatedApi();
 
@@ -60,9 +63,7 @@ const SaleAddForm = ({ onShowForm, requery }) => {
     try {
       await api.post("/warehouse/sales", formData);
 
-      requery();
-      // setFormData({ username: "", email: "", role: "standard" });
-      onShowForm(false);
+      navigate("/warehouse/sales")
     } catch (err) {
       setError("Failed to create invoice");
       setLoading(false);
@@ -76,10 +77,10 @@ const SaleAddForm = ({ onShowForm, requery }) => {
   const total = subtotal + vatAmount;
 
   return (
-    <Modal>
+    <Page>
       <Form
         onSubmit={handleSubmit}
-        onClose={() => onShowForm(false)}
+        onClose={() => navigate("/warehouse/sales")}
         loading={loading}
         error={error}
         buttonPositiveName="Create invoice"
@@ -209,7 +210,7 @@ const SaleAddForm = ({ onShowForm, requery }) => {
           </div>
         </div>
       </Form>
-    </Modal>
+    </Page>
   );
 };
 

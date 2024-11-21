@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import Page from "../../../components/Page";
 import SearchField from "../../../components/SearchField";
 import { Table, Row, Cell } from "../../../components/Table";
 import Button from "../../../components/Button";
-import SaleAddForm from "./SaleAddForm";
-// import SaleDeleteForm from "./SaleDeleteForm";
-// import SaleEditForm from "./SaleEditForm";
+import SaleDeleteForm from "./SaleDeleteForm";
 import { useAuthenticatedApi } from "../../../utils/api";
 import columns from "./columns";
 import {
@@ -25,10 +24,10 @@ const Sales = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState({ sort: "", order: "ASC" });
 
-  const [selectedPurchase, setSelectedPurchase] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedSale, setSelectedSale] = useState(null);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -59,7 +58,10 @@ const Sales = () => {
           setSearchTerm={setSearchTerm}
           disabled
         />
-        <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
+        <Button
+          icon={faPlus}
+          onClick={() => navigate("/warehouse/sales/create")}
+        >
           Create invoice
         </Button>
       </div>
@@ -72,7 +74,7 @@ const Sales = () => {
       >
         {sales.map((sale) => (
           <Row key={sale.id}>
-            <Cell>{new Date(sale.sale_date).toLocaleDateString()}</Cell>
+            <Cell>{new Date(sale.sale_date).toLocaleDateString()} {sale.id}</Cell>
             <Cell>{sale.client || "-"}</Cell>
             <Cell>{sale.warehouse || "-"}</Cell>
             <Cell>{sale.buyer || "-"}</Cell>
@@ -84,10 +86,7 @@ const Sales = () => {
             <Cell align="right">
               <Button
                 icon={faPenToSquare}
-                onClick={() => {
-                  setShowEditForm(true);
-                  setSelectedPurchase(sale);
-                }}
+                onClick={() => navigate(`/warehouse/sales/edit/${sale.id}`)}
               >
                 Edit
               </Button>
@@ -96,7 +95,7 @@ const Sales = () => {
                 icon={faTrashCan}
                 onClick={() => {
                   setShowDeleteForm(true);
-                  setSelectedPurchase(sale);
+                  setSelectedSale(sale);
                 }}
               >
                 Delete
@@ -106,10 +105,11 @@ const Sales = () => {
         ))}
       </Table>
 
-      {showAddForm &&
+      {showDeleteForm &&
         createPortal(
-          <SaleAddForm
-            onShowForm={setShowAddForm}
+          <SaleDeleteForm
+            selectedSale={selectedSale}
+            onShowForm={setShowDeleteForm}
             requery={() => fetchData({ searchTerm, ...sort })}
           />,
           document.body
