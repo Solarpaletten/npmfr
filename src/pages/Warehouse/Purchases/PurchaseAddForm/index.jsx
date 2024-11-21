@@ -1,30 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../../components/Page";
-import { Modal, Form } from "../../../../components/Modal";
+import { Form } from "../../../../components/Modal";
 import Field from "../../../../components/Field";
 import Select from "../../../../components/Select";
 import Button from "../../../../components/Button";
 import { useAuthenticatedApi } from "../../../../utils/api";
 
 import styles from "./index.module.css";
+// operation_type: "purchase", // Тип операции (Покупка)
 
 const PurchaseAddForm = () => {
   const [formData, setFormData] = useState({
-    product_code: "", // Код товара (VP 00100)
-    product_name: "", // Название товара
-    quantity: "", // Количество (10.000)
-    price_per_unit: "", // Цена за единицу (500.0000)
     total_amount: "", // Общая сумма (5000.00)
     supplier: "", // Поставщик (Leanid Kanoplich)
     currency: "EUR", // Валюта (EUR)
     document_date: new Date().toISOString().split("T")[0], // Дата документа
     invoice_number: "", // Номер накладной
-    operation_type: "purchase", // Тип операции (Покупка)
+
     vat_rate: "0", // Ставка НДС
     vat_amount: "0", // Сумма НДС
   });
-
+  // for table to add products
+  // product_id
+  // quantity
+  // product_name
+  // product_code
+  // price_per_unit
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();

@@ -20,12 +20,7 @@ const SaleAddForm = () => {
     payment_type: "cash", // Тип оплаты
     warehouse: "main", // Склад
   });
-  // for table to add products
-  // product_id
-  // quantity
-  // product_name
-  // product_code
-  // price_per_unit
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
