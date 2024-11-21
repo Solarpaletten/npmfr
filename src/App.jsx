@@ -12,6 +12,8 @@ import RegisterForm from "./pages/RegisterForm";
 import LoginForm from "./pages/LoginForm";
 import routes from "./constants/routes.js";
 import { UserProvider, useUser } from "./contexts/UserContext";
+import { ClientProvider } from "./contexts/ClientContext";
+import { WarehouseProvider } from "./contexts/WarehouseContext";
 
 import "./App.css";
 
@@ -73,9 +75,13 @@ function App() {
 export default function RootApp() {
   return (
     <UserProvider>
-      <Router>
-        <App />
-      </Router>
+      <ClientProvider>
+        <WarehouseProvider>
+          <Router>
+            <App />
+          </Router>
+        </WarehouseProvider>
+      </ClientProvider>
     </UserProvider>
   );
 }
