@@ -14,6 +14,7 @@ import routes from "./constants/routes.js";
 import { UserProvider, useUser } from "./contexts/UserContext";
 import { ClientProvider } from "./contexts/ClientContext";
 import { WarehouseProvider } from "./contexts/WarehouseContext";
+import { ProductProvider } from "./contexts/ProductContext";
 
 import "./App.css";
 
@@ -77,9 +78,11 @@ export default function RootApp() {
     <UserProvider>
       <ClientProvider>
         <WarehouseProvider>
-          <Router>
-            <App />
-          </Router>
+          <ProductProvider>
+            <Router>
+              <App />
+            </Router>
+          </ProductProvider>
         </WarehouseProvider>
       </ClientProvider>
     </UserProvider>

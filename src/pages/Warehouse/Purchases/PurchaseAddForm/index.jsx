@@ -5,34 +5,29 @@ import { Form } from "../../../../components/Modal";
 import Field from "../../../../components/Field";
 import Select from "../../../../components/Select";
 import Button from "../../../../components/Button";
+import ProductCalculatorTable from "../ProductCalculatorTable";
 import { useClients } from "../../../../contexts/ClientContext";
 import { useWarehouse } from "../../../../contexts/WarehouseContext";
-
 import { useAuthenticatedApi } from "../../../../utils/api";
 
-import styles from "./index.module.css";
-// operation_type: "purchase", // Тип операции (Покупка)
-
 const PurchaseAddForm = () => {
-  const { clients } = useClients(); // Access clients data
-  const { warehouses } = useWarehouse(); // Access clients data
+  const { clients, loading: clientsLoading } = useClients();
+  const { warehouses, loading: warehousesLoading } = useWarehouse();
 
   const [formData, setFormData] = useState({
-    total_amount: "", // Общая сумма (5000.00)
-    supplier: "", // Поставщик (Leanid Kanoplich)
-    currency: "EUR", // Валюта (EUR)
-    document_date: new Date().toISOString().split("T")[0], // Дата документа
-    invoice_number: "", // Номер накладной
-
-    vat_rate: "0", // Ставка НДС
-    vat_amount: "0", // Сумма НДС
+    invoice_type: "purchase",
+    invoice_number: "",
+    purchase_date: new Date().toISOString().split("T")[0],
+    warehouse_id: "",
+    supplier_id: "",
+    client_id: "", // TODO add info about client with user
+    currency: "EUR",
+    total_amount: (0).toFixed(2),
+    vat_amount: (0).toFixed(2),
+    vat_rate: (0).toFixed(2),
+    products: [],
   });
-  // for table to add products
-  // product_id
-  // quantity
-  // product_name
-  // product_code
-  // price_per_unit
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -41,27 +36,11 @@ const PurchaseAddForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => {
-      const newData = { ...prev, [name]: value };
 
-      if (
-        name === "quantity" ||
-        name === "price_per_unit" ||
-        name === "vat_rate"
-      ) {
-        const quantity = parseFloat(newData.quantity) || 0;
-        const pricePerUnit = parseFloat(newData.price_per_unit) || 0;
-        const vatRate = parseFloat(newData.vat_rate) || 0;
-
-        const subtotal = quantity * pricePerUnit;
-        const vatAmount = subtotal * (vatRate / 100);
-
-        newData.total_amount = subtotal.toFixed(2);
-        newData.vat_amount = vatAmount.toFixed(2);
-      }
-
-      return newData;
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -69,6 +48,7 @@ const PurchaseAddForm = () => {
     setLoading(true);
     setError(null);
 
+    console.log(formData);
     try {
       await api.post("/warehouse/purchases", formData);
 
@@ -90,116 +70,112 @@ const PurchaseAddForm = () => {
         buttonNegativeName="Cancel"
       >
         <h2>Create purchase</h2>
+
+        <Button>Распечатать</Button>
+
+        <Select
+          label="Invoice type"
+          name="invoice_type"
+          value={formData.invoice_type}
+          onChange={handleChange}
+          options={[
+            {
+              value: "",
+              label: "-- select option --",
+            },
+            {
+              value: "purchase",
+              label: "Purchase",
+            },
+          ]}
+          disabled={loading}
+          required
+        />
+        <Field
+          type="text"
+          placeholder="Series/number"
+          name="invoice_number"
+          value={formData.invoice_number}
+          onChange={handleChange}
+          disabled={loading}
+          required
+        />
+        <Field
+          type="date"
+          name="purchase_date"
+          value={formData.purchase_date}
+          onChange={handleChange}
+          placeholder="Purchase date"
+          disabled={loading}
+          required
+        />
+
+        <Select
+          label="Warehouse"
+          name="warehouse_id"
+          value={formData.warehouse_id}
+          onChange={handleChange}
+          options={[
+            {
+              value: "",
+              label: "-- select option --",
+            },
+            ...warehouses.map(({ id, name }) => ({
+              value: id,
+              label: name,
+            })),
+          ]}
+          disabled={loading || warehousesLoading}
+          required
+        />
+
+        <Select
+          label="Supplier/Partner"
+          name="supplier_id"
+          value={formData.supplier_id}
+          onChange={handleChange}
+          options={[
+            {
+              value: "",
+              label: "-- select option --",
+            },
+            ...clients.map(({ id, name }) => ({
+              value: id,
+              label: name,
+            })),
+          ]}
+          disabled={loading || clientsLoading}
+          required
+        />
+
         <div>
-          <div className={styles.toolbar}>
-            <Button>Распечатать</Button>
-          </div>
-
-          <div className={styles.content}>
-            <div className={styles.formGrid}>
-              <div className={styles.leftColumn}>
-                <Select
-                  label="Invoice type"
-                  name="invoice_type"
-                  value={formData.warehouse}
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "purchase",
-                      label: "Purchase",
-                    },
-                  ]}
-                  disabled={loading}
-                  required
-                />
-                <Field
-                  type="text"
-                  placeholder="Series/number"
-                  name="invoice_number"
-                  value={formData.invoice_number}
-                  onChange={handleChange}
-                  disabled={loading}
-                  required
-                />
-                <Field
-                  type="date"
-                  name="purchase_date"
-                  value={formData.client}
-                  onChange={handleChange}
-                  placeholder="Purchase date"
-                  disabled={loading}
-                  required
-                />
-
-                <Select
-                  label="Warehouse"
-                  name="warehouse_id"
-                  value={formData.warehouse}
-                  onChange={handleChange}
-                  options={warehouses.map(({ id, name }) => ({
-                    value: id,
-                    label: name,
-                  }))}
-                  disabled={loading}
-                  required
-                />
-
-                <Select
-                  label="Supplier/Partner"
-                  name="supplier_id"
-                  value={formData.supplier}
-                  onChange={handleChange}
-                  options={clients.map(({ id, name }) => ({
-                    value: id,
-                    label: name,
-                  }))}
-                  disabled={loading}
-                  required
-                />
-              </div>
-
-              <div className={styles.rightColumn}>
-                <div className={styles.summary}>
-                  <div className={styles.field}>
-                    <label>НДС %</label>
-                    <input
-                      type="number"
-                      value={formData.vat_rate}
-                      onChange={(e) =>
-                        setFormData({ ...formData, vat_rate: e.target.value })
-                      }
-                    />
-                  </div>
-
-                  <div className={styles.totals}>
-                    <div>Сумма без НДС: 0.00</div>
-                    <div>НДС: 0.00</div>
-                    <div>Всего с НДС: 0.00</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.positions}>
-              <h3>Позиции покупки</h3>
-              <table className={styles.positionsTable}>
-                <thead>
-                  <tr>
-                    <th>№</th>
-                    <th>Товар</th>
-                    <th>Код</th>
-                    <th>Единицы</th>
-                    <th>Количество</th>
-                    <th>Цена без НДС</th>
-                    <th>Сумма без НДС</th>
-                    <th>НДС</th>
-                  </tr>
-                </thead>
-                <tbody>{/* Позиции */}</tbody>
-              </table>
-            </div>
-          </div>
+          <b>Buyer/Payer: </b>
+          {"TODO Name of the current company"}
         </div>
+
+        <Select
+          label="Currency"
+          name="currency"
+          value={formData.currency}
+          onChange={handleChange}
+          options={[
+            {
+              value: "USD",
+              label: "USD",
+            },
+            {
+              value: "EUR",
+              label: "EUR",
+            },
+          ]}
+          disabled={loading}
+          required
+        />
+        <ProductCalculatorTable
+          data={formData}
+          setData={setFormData}
+          loading={loading}
+        />
       </Form>
     </Page>
   );

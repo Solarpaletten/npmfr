@@ -10,19 +10,19 @@ export const WarehouseProvider = ({ children }) => {
   const { get } = useAuthenticatedApi();
 
   useEffect(() => {
-    const fetchWarehouse = async () => {
+    const fetchWarehouses = async () => {
       try {
         const data = await get("/warehouses");
         setWarehouses(data);
       } catch (error) {
-        setError("Failed to fetch warehouse");
-        console.error("Error fetching warehouse:", error);
+        setError("Failed to fetch warehouses");
+        console.error("Error fetching warehouses:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchWarehouse();
+    fetchWarehouses();
   }, []);
 
   return (
