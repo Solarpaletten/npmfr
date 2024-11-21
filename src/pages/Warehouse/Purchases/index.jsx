@@ -73,13 +73,16 @@ const Purchases = () => {
       >
         {purchases.map((purchase) => (
           <Row key={purchase.id}>
-            <Cell>{purchase.product_code || "-"}</Cell>
-            <Cell>{purchase.quantity || "-"}</Cell>
-            <Cell>{purchase.price_per_unit || "-"}</Cell>
+            <Cell>{new Date(purchase.purchase_date).toLocaleDateString()}</Cell>
             <Cell>{purchase.client || "-"}</Cell>
-            <Cell>{new Date(purchase.document_date).toLocaleDateString()}</Cell>
+            <Cell>{purchase.warehouse || "-"}</Cell>
+            <Cell>{purchase.supplier || "-"}</Cell>
             <Cell>{purchase.invoice_number || "-"}</Cell>
-            <Cell>{purchase.payment_type || "-"}</Cell>
+            <Cell>{purchase.invoice_type || "-"}</Cell>
+            <Cell>{purchase.vat_rate || "-"}</Cell>
+            <Cell>{purchase.vat_amount || "-"}</Cell>
+            <Cell>{purchase.total_amount || "-"}</Cell>{" "}
+            <Cell>{purchase.currency || "-"}</Cell>
             <Cell align="right">
               <Button
                 icon={faPenToSquare}

@@ -74,13 +74,14 @@ const Sales = () => {
       >
         {sales.map((sale) => (
           <Row key={sale.id}>
-            <Cell>{new Date(sale.sale_date).toLocaleDateString()} {sale.id}</Cell>
+            <Cell>{new Date(sale.sale_date).toLocaleDateString()}</Cell>
             <Cell>{sale.client || "-"}</Cell>
             <Cell>{sale.warehouse || "-"}</Cell>
             <Cell>{sale.buyer || "-"}</Cell>
             <Cell>{sale.invoice_number || "-"}</Cell>
-            <Cell>{sale.operation_type || "-"}</Cell>
+            <Cell>{sale.invoice_type || "-"}</Cell>
             <Cell>{sale.vat_rate || "-"}</Cell>
+            <Cell>{sale.vat_amount || "-"}</Cell>
             <Cell>{sale.total_amount || "-"}</Cell>{" "}
             <Cell>{sale.currency || "-"}</Cell>
             <Cell align="right">
