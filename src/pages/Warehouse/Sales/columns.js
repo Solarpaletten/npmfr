@@ -8,6 +8,7 @@ const columns = [
   { key: "vat_rate", isSortable: false, label: "VAT rate" },
   { key: "total_amount", isSortable: false, label: "Total amount" },
   { key: "currency", isSortable: false, label: "Currency" },
+  { key: "action", isSortable: false, label: "" },
 ];
 
 export default columns;
