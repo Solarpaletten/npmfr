@@ -18,6 +18,12 @@ const SaleAddForm = ({ onShowForm, requery }) => {
     payment_type: "cash", // Тип оплаты
     warehouse: "main", // Склад
   });
+  // for table to add products
+  // product_id
+  // quantity
+  // product_name
+  // product_code
+  // price_per_unit
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -79,7 +85,7 @@ const SaleAddForm = ({ onShowForm, requery }) => {
         buttonPositiveName="Create invoice"
         buttonNegativeName="Cancel"
       >
-        <h2>Add purchase</h2>
+        <h2>Create invoice</h2>
         <div>
           <h3>Основная информация</h3>
           <Field
