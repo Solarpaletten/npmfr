@@ -13,6 +13,7 @@ import { useAuthenticatedApi } from "../../../../utils/api";
 const SaleAddForm = () => {
   const { clients, loading: clientsLoading } = useClients();
   const { warehouses, loading: warehousesLoading } = useWarehouse();
+  const mainCompany = clients?.find((client) => client.is_main);
 
   const [formData, setFormData] = useState({
     invoice_type: "sale",
@@ -20,7 +21,7 @@ const SaleAddForm = () => {
     sale_date: new Date().toISOString().split("T")[0],
     warehouse_id: "",
     buyer_id: "",
-    client_id: "", // TODO add info about client with user
+    client_id: mainCompany?.id.toString(),
     currency: "EUR",
     total_amount: (0).toFixed(2),
     vat_amount: (0).toFixed(2),
@@ -47,7 +48,7 @@ const SaleAddForm = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+    console.log(formData);
     try {
       await api.post("/warehouse/sales", formData);
 
@@ -148,7 +149,8 @@ const SaleAddForm = () => {
         />
 
         <div>
-          <b>Seller/Sender: </b>{"TODO Name of the current company"}
+          <b>Seller/Sender: </b>
+          <b>{clientsLoading ? "-" : mainCompany?.name}</b>
         </div>
 
         <Select
@@ -169,6 +171,7 @@ const SaleAddForm = () => {
           disabled={loading}
           required
         />
+
         <SaleCalculatorTable
           data={formData}
           setData={setFormData}
