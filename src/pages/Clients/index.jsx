@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Page from "../../components/Page";
 import { TableOld } from "../../components/Table";
 import Button from "../../components/Button";
 import { useAuthenticatedApi } from "../../utils/api";
+import { useClients } from "../../contexts/ClientContext";
 
 import styles from "./index.module.css";
 
-function Clients() {
-  const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Clients = () => {
+  const {
+    clients,
+    refetch,
+    loading: clientsLoading,
+    error: clientsError,
+  } = useClients();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -21,25 +27,8 @@ function Clients() {
     code: "",
     vat_code: "",
   });
+
   const api = useAuthenticatedApi();
-
-  const fetchClients = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await api.get("/clients");
-      setClients(data);
-    } catch (error) {
-      setError("Failed to fetch clients");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
 
   const handleDelete = async () => {
     if (
@@ -52,7 +41,7 @@ function Clients() {
           selectedClients.map((client) => api.delete(`/clients/${client.id}`))
         );
         setSelectedClients([]);
-        fetchClients();
+        refetch();
       } catch (error) {
         setError("Failed to delete clients");
       }
@@ -63,7 +52,7 @@ function Clients() {
     e.preventDefault();
     try {
       await api.post("/clients", newClient);
-      fetchClients();
+      refetch();
       setShowAddForm(false);
       setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
     } catch (error) {
@@ -75,7 +64,7 @@ function Clients() {
     e.preventDefault();
     try {
       await api.put(`/clients/${selectedClient.id}`, newClient);
-      fetchClients();
+      refetch();
       setShowEditForm(false);
       setSelectedClient(null);
       setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
@@ -126,7 +115,7 @@ function Clients() {
   };
 
   return (
-    <Page loading={loading} error={error}>
+    <Page loading={loading || clientsLoading} error={error || clientsError}>
       <div className={styles.header}>
         <h1>Clients</h1>
         <Toolbar />
@@ -306,6 +295,6 @@ function Clients() {
       )}
     </Page>
   );
-}
+};
 
 export default Clients;
