@@ -13,6 +13,7 @@ import { useAuthenticatedApi } from "../../../../utils/api";
 const PurchaseAddForm = () => {
   const { clients, loading: clientsLoading } = useClients();
   const { warehouses, loading: warehousesLoading } = useWarehouse();
+  const mainCompany = clients?.find((client) => client.is_main);
 
   const [formData, setFormData] = useState({
     invoice_type: "purchase",
@@ -20,7 +21,7 @@ const PurchaseAddForm = () => {
     purchase_date: new Date().toISOString().split("T")[0],
     warehouse_id: "",
     supplier_id: "",
-    client_id: "", // TODO add info about client with user
+    client_id: mainCompany?.id.toString(),
     currency: "EUR",
     total_amount: (0).toFixed(2),
     vat_amount: (0).toFixed(2),
@@ -48,7 +49,6 @@ const PurchaseAddForm = () => {
     setLoading(true);
     setError(null);
 
-    console.log(formData);
     try {
       await api.post("/warehouse/purchases", formData);
 
@@ -150,7 +150,7 @@ const PurchaseAddForm = () => {
 
         <div>
           <b>Buyer/Payer: </b>
-          {"TODO Name of the current company"}
+          <b>{clientsLoading ? "-" : mainCompany?.name}</b>
         </div>
 
         <Select
@@ -171,6 +171,7 @@ const PurchaseAddForm = () => {
           disabled={loading}
           required
         />
+
         <ProductCalculatorTable
           data={formData}
           setData={setFormData}

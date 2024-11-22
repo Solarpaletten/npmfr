@@ -8,14 +8,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "../Button";
 import { useUser } from "../../contexts/UserContext";
+import { useClients } from "../../contexts/ClientContext";
 
 import styles from "./index.module.css";
 
 function Header() {
   const { user, logoutUser } = useUser();
-  const navigate = useNavigate();
-
+  const { clients, loading } = useClients();
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -30,6 +31,8 @@ function Header() {
     navigate("/login");
   };
 
+  const mainCompany = clients?.find((client) => client.is_main);
+
   return (
     <div className={styles.header}>
       <div className={styles.header_center}>
@@ -43,9 +46,14 @@ function Header() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <span>
-          {user?.username} | {user?.role}
-        </span>
+        <div className={styles.header_info}>
+          <div>
+            {user?.username}
+            <br />
+            <b>{loading ? "-" : mainCompany?.name}</b>
+          </div>
+          <div>{user?.role}</div>
+        </div>
         <div className={styles.user_avatar}>
           <img src={User} alt="user" />
         </div>
