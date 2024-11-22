@@ -1,32 +1,42 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useAuthenticatedApi } from "../utils/api";
+import { useUser } from "./UserContext";
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { get } = useAuthenticatedApi();
+  const { user } = useUser();
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await get("/products");
+      setProducts(data);
+    } catch (error) {
+      setError("Failed to fetch products");
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await get("/products");
-        setProducts(data);
-      } catch (error) {
-        setError("Failed to fetch products");
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+    if (user?.token) {
+      fetchProducts();
+    } else {
+      setProducts([]);
+    }
+  }, [user]);
 
   return (
-    <ProductContext.Provider value={{ products, loading, error }}>
+    <ProductContext.Provider
+      value={{ products, loading, error, refetch: fetchProducts }}
+    >
       {children}
     </ProductContext.Provider>
   );
