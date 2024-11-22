@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* pages/Warehouse/index.module.css */
 
 /* Основной контейнер для всей страницы, занимает 100% высоты */
@@ -48,3 +49,26 @@
  background: #f5f5f5;   /* Светло-серый фон при наведении */
  cursor: pointer;       /* Курсор-указатель */
 }
+=======
+.container {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.searchInput {
+  width: 300px;
+}
+
+:global(.ant-table-wrapper) {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+>>>>>>> edc33a12889fc0a28643ebd6f95c37df5a7069f5
