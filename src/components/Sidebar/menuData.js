@@ -1,115 +1,175 @@
 import {
-  faPeopleLine,        // Clients
-  faWarehouse,         // Warehouse
-  faBox,               // Products
-  faArrowDown,         // Purchases
-  faArrowUp,           // Sales
-  faBoxesStacked,      // Stock
-  faTableColumns,      // Dashboard
-  faBook,              // General ledger
-  faCashRegister,      // Cashier
-  faSheetPlastic,      // Reports
-  faUsers,             // Personnel
-  faSackDollar,        // Assets
-  faFolderOpen,        // Documents
-  faHandHoldingDollar, // Salary
-  faReceipt,           // Declaration
-} from "@fortawesome/free-solid-svg-icons";
+  faPeopleLine,
+  faWarehouse,
+  faBox,
+  faArrowDown,
+  faArrowUp,
+  faBoxesStacked,
+  faTableColumns,
+  faBook,
+  faCashRegister,
+  faSheetPlastic,
+  faUsers,
+  faSackDollar,
+  faFolderOpen,
+  faHandHoldingDollar,
+  faReceipt,
+  faBook as faReference, // для справочника
+  faCreditCard, // для банков
+  faGlobe, // для локаций
+  faMoneyBillTransfer, // для валют
+} from '@fortawesome/free-solid-svg-icons';
 
 const menuData = [
-  { 
-    label: "Dashboard", 
-    path: "/dashboard", 
+  {
+    label: 'Dashboard',
+    path: '/dashboard',
     icon: faTableColumns,
-    active: false
-  },
-  { 
-    label: "Clients", 
-    path: "/clients", 
-    icon: faPeopleLine,
-    active: true
+    active: false,
   },
   {
-    label: "Warehouse",
+    label: 'Clients',
+    path: '/clients',
+    icon: faPeopleLine,
+    active: true,
+  },
+  {
+    label: 'Warehouse',
     icon: faWarehouse,
     active: true,
     subItems: [
-      { 
-        label: "Sales", 
-        path: "/warehouse/sales", 
+      {
+        label: 'Sales',
+        path: '/warehouse/sales',
         icon: faArrowUp,
-        active: true
+        active: true,
       },
-      { 
-        label: "Purchases", 
-        path: "/warehouse/purchases", 
+      {
+        label: 'Purchases',
+        path: '/warehouse/purchases',
         icon: faArrowDown,
-        active: true
+        active: true,
       },
-      { 
-        label: "Stock", 
-        path: "/warehouse/stock", 
+      {
+        label: 'Stock',
+        path: '/warehouse/stock',
         icon: faBoxesStacked,
-        active: true
-      }
+        active: true,
+      },
     ],
   },
-  { 
-    label: "General ledger", 
-    path: "/general-ledger", 
+  {
+    label: 'General ledger',
+    path: '/general-ledger',
     icon: faBook,
-    active: false
+    active: false,
   },
   {
-    label: "Cashier",
+    label: 'Reference Book',
+    icon: faReference,
+    active: true,
+    subItems: [
+      {
+        label: 'Product Cards',
+        labelRu: 'Карточки товаров',
+        path: '/references/product-cards',
+        icon: faBox,
+        active: true,
+      },
+      {
+        label: 'Warehouse References',
+        labelRu: 'Склады',
+        path: '/references/warehouse',
+        icon: faWarehouse,
+        active: true,
+      },
+      {
+        label: 'Locations',
+        labelRu: 'Локации',
+        path: '/references/locations',
+        icon: faGlobe,
+        active: true,
+      },
+      {
+        label: 'Banks',
+        labelRu: 'Банки',
+        path: '/references/banks',
+        icon: faCreditCard,
+        active: true,
+      },
+      {
+        label: 'Correspondent Banks',
+        labelRu: 'Банки-корреспонденты',
+        path: '/references/correspondent-banks',
+        icon: faCreditCard,
+        active: true,
+      },
+      {
+        label: 'Currencies',
+        labelRu: 'Валюты',
+        path: '/references/currencies',
+        icon: faMoneyBillTransfer,
+        active: true,
+      },
+      {
+        label: 'Currency Rates',
+        labelRu: 'Курсы валют',
+        path: '/references/currency-rates',
+        icon: faMoneyBillTransfer,
+        active: true,
+      },
+    ],
+  },
+  {
+    label: 'Cashier',
     icon: faCashRegister,
     active: false,
     subItems: [
-      { label: "Cashier Submenu 1", path: "#" },
-      { label: "Cashier Submenu 2", path: "#" }
-    ]
+      { label: 'Cashier Submenu 1', path: '#' },
+      { label: 'Cashier Submenu 2', path: '#' },
+    ],
   },
-  { 
-    label: "Reports", 
-    path: "/reports", 
+  {
+    label: 'Reports',
+    path: '/reports',
     icon: faSheetPlastic,
-    active: false
+    active: false,
   },
-  { 
-    label: "Personnel", 
-    path: "/personnel", 
+  {
+    label: 'Personnel',
+    path: '/personnel',
     icon: faUsers,
-    active: false
+    active: false,
   },
-  { 
-    label: "Production", 
-    path: "/production", 
+  {
+    label: 'Production',
+    path: '/production',
     icon: faBox,
-    active: false
+    active: false,
   },
-  { 
-    label: "Assets", 
-    path: "/assets", 
+  {
+    label: 'Assets',
+    path: '/assets',
     icon: faSackDollar,
-    active: false
+    active: false,
   },
-  { 
-    label: "Documents", 
-    path: "/documents", 
+  {
+    label: 'Documents',
+    path: '/documents',
     icon: faFolderOpen,
-    active: false
+    active: false,
   },
-  { 
-    label: "Salary", 
-    path: "/salary", 
+  {
+    label: 'Salary',
+    path: '/salary',
     icon: faHandHoldingDollar,
-    active: false
+    active: false,
   },
-  { 
-    label: "Declaration", 
-    path: "/declaration", 
+  {
+    label: 'Declaration',
+    path: '/declaration',
     icon: faReceipt,
-    active: false
+    active: false,
   },
 ];
 
