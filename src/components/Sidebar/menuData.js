@@ -1,33 +1,35 @@
 import {
-  faPeopleLine, // Clients
-  faWarehouse, // Warehouse
-  faBox, // Reference Book  
-  faArrowDown, // Warehouse
-  faArrowUp, // Warehouse
-  faBoxesStacked, // Warehouse
-  faTableColumns, // Dashboard
-  faBook, // General ledger
-  faCashRegister, // Cashier
-  faSheetPlastic, // Reports
-  faUsers, // Personnel
-  faSackDollar, // Assets
-  faFolderOpen, // Documents
-  faHandHoldingDollar, // Salary
-  faReceipt, // Declaration
-  faCreditCard, // Reference Book
-  faGlobe, // Reference Book
-  faMoneyBillTransfer, // Bank
-  faTag, // Warehouse
-  faFileInvoiceDollar, // Warehouse
-  faRotateLeft, // Warehouse
-  faArrowRightArrowLeft, // Warehouse
-  faScaleBalanced, // Warehouse
-  faUniversity, // Bank
-  faLink, // Bank
-  faFileImport, // Bank
-  faChartLine, // Declaration
-  faBoxes, // Declaration
-} from "@fortawesome/free-solid-svg-icons"; // Font Awesome icons
+  faPeopleLine, // для Clients
+  faWarehouse, // для Warehouse
+  faBox,  // для Product Cards
+  faArrowDown, // для Purchases
+  faArrowUp, // для Sales
+  faBoxesStacked, // для Item Stock
+  faTableColumns, // для Dashboard
+  faBook, // для General ledger
+  faCashRegister, // для Cashier
+  faSheetPlastic, // для Reports
+  faUsers, // для Personnel
+  faSackDollar, // для Assets
+  faFolderOpen, // для Documents
+  faHandHoldingDollar, // для Salary
+  faReceipt, // для Declaration
+  faBook as faReference, // для Reference Book
+  faCreditCard, // для Banks
+  faGlobe, // для Locations
+  faMoneyBillTransfer, // для Currencies
+  faTag, // для Client Prices
+  faFileInvoiceDollar, // для Automatic Invoicing
+  faRotateLeft, // для Sales Returns
+  faArrowRightArrowLeft, // для Item Movement
+  faScaleBalanced, // для Consignment Balance
+  faUniversity, // для Bank
+  faLink, // для Bank Link with Cor. Acc.
+  faFileImport, // для Import Statements
+  faMoneyBillTransfer as faSepa, // для SEPA Payments
+  faChartLine, // для Statistical Declaration
+  faBoxes, // для Customs Declaration
+} from '@fortawesome/free-solid-svg-icons'; // Импорт иконок из библиотеки
 
 const filterVisibleItems = (items) => {
   return items
@@ -150,7 +152,7 @@ const menuData = [
         label: "SEPA Payments",
         labelRu: "SEPA платежи",
         path: "/bank/sepa-payments",
-        icon: faMoneyBillTransfer,
+        icon: faSepa,
         active: true,
         // visible: false,
       },
@@ -167,7 +169,7 @@ const menuData = [
   {
     label: "Reference Book",
     labelRu: "Справочники",
-    icon: faBook,
+    icon: faReference,
     active: true,
     subItems: [
       {
