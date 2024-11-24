@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import Page from "../../components/Page";
-import { TableOld } from "../../components/Table";
+import Toolbar from "../../components/Toolbar";
+import SearchField from "../../components/SearchField";
+import { Table, Row, Cell } from "../../components/Table";
 import Button from "../../components/Button";
 import { useAuthenticatedApi } from "../../utils/api";
 import { useClients } from "../../contexts/ClientContext";
+import columns from "./columns";
+import {
+  faTrashCan,
+  faPenToSquare,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./index.module.css";
 
@@ -14,6 +24,7 @@ const Clients = () => {
     loading: clientsLoading,
     error: clientsError,
   } = useClients();
+  const api = useAuthenticatedApi();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -27,26 +38,15 @@ const Clients = () => {
     code: "",
     vat_code: "",
   });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sort, setSort] = useState({ sort: "", order: "ASC" });
+  const [selectedSale, setSelectedSale] = useState(null);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
 
-  const api = useAuthenticatedApi();
+  const [selected, setSelected] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
 
-  const handleDelete = async () => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete ${selectedClients.length} clients?`
-      )
-    ) {
-      try {
-        await Promise.all(
-          selectedClients.map((client) => api.delete(`/clients/${client.id}`))
-        );
-        setSelectedClients([]);
-        refetch();
-      } catch (error) {
-        setError("Failed to delete clients");
-      }
-    }
-  };
+  const navigate = useNavigate();
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -73,99 +73,106 @@ const Clients = () => {
     }
   };
 
-  const handleCopy = (client) => {
+  useEffect(() => {
+    if (allSelected) {
+      setSelected(clients.map((client) => client.id));
+    } else {
+      setSelected([]);
+    }
+  }, [allSelected, clients]);
+
+  const handleSelectAll = () => {
+    setAllSelected((prev) => !prev);
+  };
+
+  const handleSelect = (id) => {
+    setSelected((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((item_id) => item_id !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  const handleDeleteSelected = async () => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete ${selected.length} clients?`
+      )
+    ) {
+      try {
+        await Promise.all(selected.map((s) => api.delete(`/clients/${s.id}`)));
+        setSelectedClients([]);
+        refetch();
+      } catch (error) {
+        setError("Failed to delete clients");
+      }
+    }
+  };
+
+  const handleCopySelected = (client) => {
     setNewClient({ ...client, name: `${client.name} (Copy)` });
     setShowEditForm(true);
   };
 
-  const Toolbar = () => (
-    <div className={styles.toolGroup}>
-      <Button onClick={() => setShowAddForm(true)}>+</Button>
-      {selectedClient && (
-        <>
-          <Button
-            onClick={() => {
-              setNewClient(selectedClient);
-              setShowEditForm(true);
-            }}
-          >
-            ✎
-          </Button>
-          <Button onClick={() => handleCopy(selectedClient)}>⎘</Button>
-        </>
-      )}
-      {selectedClients.length > 0 && <Button onClick={handleDelete}>🗑</Button>}
-    </div>
-  );
-
-  const handleSelectClient = (client) => {
-    if (selectedClients.includes(client)) {
-      setSelectedClients(selectedClients.filter((c) => c.id !== client.id));
-    } else {
-      setSelectedClients([...selectedClients, client]);
-    }
-  };
-
-  const handleSelectAllClients = () => {
-    if (selectedClients.length === clients.length) {
-      setSelectedClients([]);
-    } else {
-      setSelectedClients(clients);
-    }
-  };
-
   return (
     <Page loading={loading || clientsLoading} error={error || clientsError}>
-      <div className={styles.header}>
-        <h1>Clients</h1>
-        <Toolbar />
-      </div>
+      <h1>Clients</h1>
+      <Toolbar>
+        <Button icon={faPlus} onClick={() => navigate("/clients/create")}>
+          Create new client
+        </Button>
+        <button onClick={handleDeleteSelected}>Delete Selected</button>
+        <button onClick={handleCopySelected}>Copy Selected</button>
+        <SearchField
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          disabled
+        />
+      </Toolbar>
 
-      <TableOld>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                className={styles.headerCheckbox}
-                onChange={handleSelectAllClients}
-                checked={selectedClients.length === clients.length}
-              />
-            </th>
-            <th>Registration date</th>
-            <th>Name</th>
-            <th>Code</th>
-            <th>VAT code</th>
-            <th>Phone number</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clients.map((client) => (
-            <tr
-              key={client.id}
-              className={
-                selectedClients.includes(client) ? styles.selectedRow : ""
-              }
-              onClick={() => setSelectedClient(client)}
-            >
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedClients.includes(client)}
-                  onChange={() => handleSelectClient(client)}
-                />
-              </td>
-              <td>{new Date(client.created_at).toLocaleDateString()}</td>
-              <td>{client.name || "-"}</td>
-              <td>{client.code || "-"}</td>
-              <td>{client.vat_code || "-"}</td>
-              <td>{client.phone || "-"}</td>
-              <td>{client.email || "-"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </TableOld>
+      <Table
+        columns={columns}
+        initialOrder={sort}
+        sort={setSort}
+        loading={loading}
+        allSelected={allSelected}
+        toggleSelectAll={handleSelectAll}
+      >
+        {clients.map((client) => (
+          <Row
+            key={client.id}
+            onSelect={() => handleSelect(client.id)}
+            isSelected={selected.includes(client.id)}
+          >
+            <Cell>{new Date(client.created_at).toLocaleDateString()}</Cell>
+            <Cell>{client.name || "-"}</Cell>
+            <Cell>{client.code || "-"}</Cell>
+            <Cell>{client.vat_code || "-"}</Cell>
+            <Cell>{client.phone || "-"}</Cell>
+            <Cell>{client.email || "-"}</Cell>
+            <Cell align="right">
+              <Button
+                icon={faPenToSquare}
+                onClick={() => navigate(`/clients/edit/${client.id}`)}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="danger"
+                icon={faTrashCan}
+                onClick={() => {
+                  setShowDeleteForm(true);
+                  setSelectedClient(client);
+                }}
+              >
+                Delete
+              </Button>
+            </Cell>
+          </Row>
+        ))}
+      </Table>
 
       {showAddForm && (
         <div className={styles.formOverlay}>

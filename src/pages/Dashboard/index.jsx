@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Page from "../../components/Page";
+import Toolbar from "../../components/Toolbar";
 import SearchField from "../../components/SearchField";
 import { Table, Row, Cell } from "../../components/Table";
 import { Cards, Card } from "../../components/Cards";
@@ -16,9 +17,8 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./index.module.css";
-
 function Dashboard({ onLogout }) {
+  const api = useAuthenticatedApi();
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({
     total_users: "0",
@@ -36,7 +36,8 @@ function Dashboard({ onLogout }) {
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  const api = useAuthenticatedApi();
+  const [selected, setSelected] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
 
   useEffect(() => {
     fetchUsers({ searchTerm, ...sort });
@@ -80,6 +81,38 @@ function Dashboard({ onLogout }) {
     }
   };
 
+  useEffect(() => {
+    if (allSelected) {
+      setSelected(users.map((user) => user.id));
+    } else {
+      setSelected([]);
+    }
+  }, [allSelected, users]);
+
+  const handleSelectAll = () => {
+    setAllSelected((prev) => !prev);
+  };
+
+  const handleSelect = (id) => {
+    setSelected((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((item_id) => item_id !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  const handleDeleteSelected = () => {
+    // TODO Logic to delete selected products
+    console.log("Delete selected products", selected);
+  };
+
+  const handleCopySelected = () => {
+    // TODO Logic to copy selected products
+    console.log("Copy selected products", selected);
+  };
+
   return (
     <Page
       loading={statsLoading && usersLoading}
@@ -94,21 +127,27 @@ function Dashboard({ onLogout }) {
         <Card title={"Standard Users"} value={stats.standard_users}></Card>
       </Cards>
 
-      <div className={styles.toolbar}>
-        <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Toolbar>
         <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
           Add new user
         </Button>
-      </div>
+        <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </Toolbar>
 
       <Table
         columns={columns}
         initialOrder={sort}
         sort={setSort}
         loading={usersLoading}
+        allSelected={allSelected}
+        toggleSelectAll={handleSelectAll}
       >
         {users.map((user) => (
-          <Row key={user.id}>
+          <Row
+            key={user.id}
+            onSelect={() => handleSelect(user.id)}
+            isSelected={selected.includes(user.id)}
+          >
             <Cell>{new Date(user.created_at).toLocaleDateString()}</Cell>
             <Cell>{user.username || "-"}</Cell>
             <Cell>{user.email || "-"}</Cell>

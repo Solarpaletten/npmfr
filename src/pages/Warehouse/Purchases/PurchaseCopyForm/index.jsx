@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import { Modal, Form } from "../../../../components/Modal";
 import { useAuthenticatedApi } from "../../../../utils/api";
 
-const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
+const PurchaseCopyForm = ({ onShowForm, requery, selected, setSelected }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const api = useAuthenticatedApi();
 
-  const handleDelete = async (e) => {
+  const handleCopy = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       await Promise.all(
-        selected.map((s) => api.delete(`/warehouse/sales/${s.id}`))
+        selected.map((s) => {
+          return api.post("/warehouse/purchases", {
+            ...s,
+            invoice_number: `${s.invoice_number} (Copy)`,
+          });
+        })
       );
 
       requery();
@@ -22,7 +27,7 @@ const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
       setLoading(false);
       onShowForm(false);
     } catch (error) {
-      setError("Failed to delete invoice(s)");
+      setError("Failed to delete purchase(s)");
       setLoading(false);
     }
   };
@@ -30,20 +35,20 @@ const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
   return (
     <Modal>
       <Form
-        onSubmit={handleDelete}
+        onSubmit={handleCopy}
         onClose={() => onShowForm(false)}
         loading={loading}
         error={error}
-        buttonPositiveName={"Delete"}
+        buttonPositiveName={"Copy"}
         buttonNegativeName={"Cancel"}
       >
-        <h2>Delete invoice(s)</h2>
+        <h2>Copy purchase(s)</h2>
         <p>
-          Are you sure you want to delete <b>{selected.length}</b> invoice(s)?
+          Are you sure you want to copy <b>{selected.length}</b> purchase(s)?
         </p>
       </Form>
     </Modal>
   );
 };
 
-export default SaleDeleteForm;
+export default PurchaseCopyForm;

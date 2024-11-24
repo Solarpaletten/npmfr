@@ -1,17 +1,25 @@
-import React from 'react';
-import Loader from '../Loader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import Loader from "../Loader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
-export const Table = ({ children, columns, initialOrder, sort, loading }) => {
+export const Table = ({
+  children,
+  columns,
+  initialOrder,
+  sort,
+  loading,
+  allSelected,
+  toggleSelectAll,
+}) => {
   const handleSort = (key, isSortable) => {
     if (isSortable) {
       sort((prevSort) => ({
         sort: key,
         order:
-          prevSort.sort === key && prevSort.order === 'ASC' ? 'DESC' : 'ASC',
+          prevSort.sort === key && prevSort.order === "ASC" ? "DESC" : "ASC",
       }));
     }
   };
@@ -21,26 +29,31 @@ export const Table = ({ children, columns, initialOrder, sort, loading }) => {
       <div
         className={styles.table}
         style={{
-          gridTemplateColumns: `${'1fr '.repeat(columns.length).trim()}`,
+          gridTemplateColumns: `40px ${"1fr ".repeat(columns.length - 1).trim()} 1fr`,
         }}
       >
         <div className={styles.header_row}>
+          <div className={styles.header_cell}>
+            <input
+              type="checkbox"
+              checked={allSelected}
+              onChange={toggleSelectAll}
+            />
+          </div>
           {columns.map((column) => (
             <div
-              className={`${styles.header_cell} ${
-                column.key === 'action' ? styles.action_column : ''
-              }`}
+              className={styles.header_cell}
               key={column.key}
               onClick={() => handleSort(column.key, column.isSortable)}
             >
               {column.isSortable && (
                 <FontAwesomeIcon
                   className={`${styles.sort} ${
-                    initialOrder.sort === column.key ? styles.active : ''
+                    initialOrder.sort === column.key ? styles.active : ""
                   }`}
                   icon={
                     initialOrder.sort === column.key &&
-                    initialOrder.order === 'ASC'
+                    initialOrder.order === "ASC"
                       ? faArrowUp
                       : faArrowDown
                   }
@@ -52,7 +65,7 @@ export const Table = ({ children, columns, initialOrder, sort, loading }) => {
         </div>
         {loading ? (
           <div className={styles.loading_row}>
-            <Loader type='small' />
+            <Loader type="small" />
           </div>
         ) : (
           children
@@ -62,13 +75,20 @@ export const Table = ({ children, columns, initialOrder, sort, loading }) => {
   );
 };
 
-export const Row = ({ children }) => {
-  return <div className={styles.row}>{children}</div>;
+export const Row = ({ children, onSelect, isSelected }) => {
+  return (
+    <div className={styles.row}>
+      <div className={styles.cell}>
+        <input type="checkbox" checked={isSelected} onChange={onSelect} />
+      </div>
+      {children}
+    </div>
+  );
 };
 
 export const Cell = ({ children, align }) => {
   return (
-    <div className={`${styles.cell} ${align ? styles[align] : ''}`}>
+    <div className={`${styles.cell} ${align ? styles[align] : ""}`}>
       {children}
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Form } from "../../../../components/Modal";
 import { useAuthenticatedApi } from "../../../../utils/api";
 
-const PurchaseDeleteForm = ({ onShowForm, requery, selectedPurchase }) => {
+const PurchaseDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,14 +13,16 @@ const PurchaseDeleteForm = ({ onShowForm, requery, selectedPurchase }) => {
     setLoading(true);
 
     try {
-      await api.delete(`/warehouse/purchases/${selectedPurchase.id}`);
+      await Promise.all(
+        selected.map((s) => api.delete(`/warehouse/purchases/${s.id}`))
+      );
 
       requery();
-
+      setSelected();
       setLoading(false);
       onShowForm(false);
     } catch (error) {
-      setError("Failed to delete purchase");
+      setError("Failed to delete purchase(s)");
       setLoading(false);
     }
   };
@@ -35,10 +37,9 @@ const PurchaseDeleteForm = ({ onShowForm, requery, selectedPurchase }) => {
         buttonPositiveName={"Delete"}
         buttonNegativeName={"Cancel"}
       >
-        <h2>Delete purchase</h2>
+        <h2>Delete purchase(s)</h2>
         <p>
-          Are you sure you want to delete{" "}
-          <b>{selectedPurchase.invoice_number}</b> purchase?
+          Are you sure you want to delete <b>{selected.length}</b> purchase(s)?
         </p>
       </Form>
     </Modal>

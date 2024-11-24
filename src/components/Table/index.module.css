@@ -31,9 +31,6 @@
   align-items: center;
 }
 
-.action_column {
-}
-
 .sort {
   margin-right: 6px;
   color: var(--grey-2);
