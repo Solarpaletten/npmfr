@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 import Page from "../../components/Page";
-import { TableOld } from "../../components/Table";
+import Toolbar from "../../components/Toolbar";
+import SearchField from "../../components/SearchField";
+import { Table, Row, Cell } from "../../components/Table";
 import Button from "../../components/Button";
-import { useAuthenticatedApi } from "../../utils/api";
+import ClientCopyForm from "./ClientCopyForm";
+import ClientDeleteForm from "./ClientDeleteForm";
 import { useClients } from "../../contexts/ClientContext";
-
-import styles from "./index.module.css";
+import columns from "./columns";
+import {
+  faTrashCan,
+  faCopy,
+  faPenToSquare,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Clients = () => {
   const {
@@ -14,285 +24,145 @@ const Clients = () => {
     loading: clientsLoading,
     error: clientsError,
   } = useClients();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [selectedClient, setSelectedClient] = useState(null);
-  const [selectedClients, setSelectedClients] = useState([]);
-  const [newClient, setNewClient] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    code: "",
-    vat_code: "",
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sort, setSort] = useState({ sort: "", order: "ASC" });
 
-  const api = useAuthenticatedApi();
+  const [showCopyForm, setShowCopyForm] = useState(false);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
 
-  const handleDelete = async () => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete ${selectedClients.length} clients?`
-      )
-    ) {
-      try {
-        await Promise.all(
-          selectedClients.map((client) => api.delete(`/clients/${client.id}`))
-        );
-        setSelectedClients([]);
-        refetch();
-      } catch (error) {
-        setError("Failed to delete clients");
-      }
-    }
-  };
+  const [selected, setSelected] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
 
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    try {
-      await api.post("/clients", newClient);
-      refetch();
-      setShowAddForm(false);
-      setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
-    } catch (error) {
-      setError("Failed to add client");
-    }
-  };
-
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    try {
-      await api.put(`/clients/${selectedClient.id}`, newClient);
-      refetch();
-      setShowEditForm(false);
-      setSelectedClient(null);
-      setNewClient({ name: "", email: "", phone: "", code: "", vat_code: "" });
-    } catch (error) {
-      setError("Failed to edit client");
-    }
-  };
-
-  const handleCopy = (client) => {
-    setNewClient({ ...client, name: `${client.name} (Copy)` });
-    setShowEditForm(true);
-  };
-
-  const Toolbar = () => (
-    <div className={styles.toolGroup}>
-      <Button onClick={() => setShowAddForm(true)}>+</Button>
-      {selectedClient && (
-        <>
-          <Button
-            onClick={() => {
-              setNewClient(selectedClient);
-              setShowEditForm(true);
-            }}
-          >
-            ✎
-          </Button>
-          <Button onClick={() => handleCopy(selectedClient)}>⎘</Button>
-        </>
-      )}
-      {selectedClients.length > 0 && <Button onClick={handleDelete}>🗑</Button>}
-    </div>
+  const selectedClients = clients?.filter((client) =>
+    selected.includes(client.id)
   );
+  const selectedClientsQty = selectedClients?.length;
 
-  const handleSelectClient = (client) => {
-    if (selectedClients.includes(client)) {
-      setSelectedClients(selectedClients.filter((c) => c.id !== client.id));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (allSelected) {
+      setSelected(clients.map((client) => client.id));
     } else {
-      setSelectedClients([...selectedClients, client]);
+      setSelected([]);
     }
+  }, [allSelected, clients]);
+
+  const handleSelectAll = () => {
+    setAllSelected((prev) => !prev);
   };
 
-  const handleSelectAllClients = () => {
-    if (selectedClients.length === clients.length) {
-      setSelectedClients([]);
-    } else {
-      setSelectedClients(clients);
-    }
+  const handleSelect = (id) => {
+    setSelected((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((item_id) => item_id !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
   };
 
   return (
-    <Page loading={loading || clientsLoading} error={error || clientsError}>
-      <div className={styles.header}>
-        <h1>Clients</h1>
-        <Toolbar />
-      </div>
+    <Page loading={clientsLoading} error={clientsError}>
+      <h1>Clients</h1>
 
-      <TableOld>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                className={styles.headerCheckbox}
-                onChange={handleSelectAllClients}
-                checked={selectedClients.length === clients.length}
-              />
-            </th>
-            <th>Registration date</th>
-            <th>Name</th>
-            <th>Code</th>
-            <th>VAT code</th>
-            <th>Phone number</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clients.map((client) => (
-            <tr
-              key={client.id}
-              className={
-                selectedClients.includes(client) ? styles.selectedRow : ""
-              }
-              onClick={() => setSelectedClient(client)}
-            >
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedClients.includes(client)}
-                  onChange={() => handleSelectClient(client)}
-                />
-              </td>
-              <td>{new Date(client.created_at).toLocaleDateString()}</td>
-              <td>{client.name || "-"}</td>
-              <td>{client.code || "-"}</td>
-              <td>{client.vat_code || "-"}</td>
-              <td>{client.phone || "-"}</td>
-              <td>{client.email || "-"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </TableOld>
-
-      {showAddForm && (
-        <div className={styles.formOverlay}>
-          <form onSubmit={handleAdd} className={styles.form}>
-            <h2>Add New Client</h2>
-            <input
-              type="text"
-              placeholder="Name"
-              value={newClient.name}
-              onChange={(e) =>
-                setNewClient({ ...newClient, name: e.target.value })
-              }
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={newClient.email}
-              onChange={(e) =>
-                setNewClient({ ...newClient, email: e.target.value })
-              }
-              required
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={newClient.phone}
-              onChange={(e) =>
-                setNewClient({ ...newClient, phone: e.target.value })
-              }
-              required
-            />
-            <input
-              type="text"
-              placeholder="Code"
-              value={newClient.code}
-              onChange={(e) =>
-                setNewClient({ ...newClient, code: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="VAT Code"
-              value={newClient.vat_code}
-              onChange={(e) =>
-                setNewClient({ ...newClient, vat_code: e.target.value })
-              }
-            />
-            <div className={styles.formButtons}>
-              <Button type="submit">Save</Button>
-              <Button type="button" onClick={() => setShowAddForm(false)}>
-                Cancel
-              </Button>
-            </div>
-          </form>
+      <Toolbar>
+        <div>
+          <Button
+            icon={faPlus}
+            onClick={() => navigate("/clients/create")}
+            disabled={clientsLoading}
+          >
+            Add new client
+          </Button>
+          <Button
+            icon={faCopy}
+            onClick={() => {
+              setShowCopyForm(true);
+            }}
+            disabled={!selectedClientsQty || clientsLoading}
+          >
+            Copy
+            {selectedClientsQty ? ` ${selectedClientsQty} item(s)` : ""}
+          </Button>
+          <Button
+            variant="danger"
+            icon={faTrashCan}
+            onClick={() => {
+              setShowDeleteForm(true);
+            }}
+            disabled={!selectedClientsQty || clientsLoading}
+          >
+            Delete
+            {selectedClientsQty ? ` ${selectedClientsQty} item(s)` : ""}
+          </Button>
         </div>
-      )}
 
-      {showEditForm && (
-        <div className={styles.formOverlay}>
-          <form onSubmit={handleEdit} className={styles.form}>
-            <h2>Edit Client</h2>
-            <input
-              type="text"
-              placeholder="Name"
-              value={newClient.name}
-              onChange={(e) =>
-                setNewClient({ ...newClient, name: e.target.value })
-              }
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={newClient.email}
-              onChange={(e) =>
-                setNewClient({ ...newClient, email: e.target.value })
-              }
-              required
-            />
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={newClient.phone}
-              onChange={(e) =>
-                setNewClient({ ...newClient, phone: e.target.value })
-              }
-              required
-            />
-            <input
-              type="text"
-              placeholder="Code"
-              value={newClient.code}
-              onChange={(e) =>
-                setNewClient({ ...newClient, code: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="VAT Code"
-              value={newClient.vat_code}
-              onChange={(e) =>
-                setNewClient({ ...newClient, vat_code: e.target.value })
-              }
-            />
-            <div className={styles.formButtons}>
-              <Button type="submit">Save</Button>
+        <SearchField
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          disabled
+        />
+      </Toolbar>
+
+      <Table
+        columns={columns}
+        initialOrder={sort}
+        sort={setSort}
+        loading={clientsLoading}
+        allSelected={allSelected}
+        toggleSelectAll={handleSelectAll}
+      >
+        {clients.map((client) => (
+          <Row
+            key={client.id}
+            onSelect={() => handleSelect(client.id)}
+            isSelected={selected.includes(client.id)}
+          >
+            <Cell>{new Date(client.created_at).toLocaleDateString()}</Cell>
+            <Cell>{client.name || "-"}</Cell>
+            <Cell>{client.code || "-"}</Cell>
+            <Cell>{client.vat_code || "-"}</Cell>
+            <Cell>{client.phone || "-"}</Cell>
+            <Cell>{client.email || "-"}</Cell>
+            <Cell align="right">
               <Button
-                type="button"
-                onClick={() => {
-                  setShowEditForm(false);
-                  setSelectedClient(null);
-                  setNewClient({
-                    name: "",
-                    email: "",
-                    phone: "",
-                    code: "",
-                    vat_code: "",
-                  });
-                }}
+                icon={faPenToSquare}
+                onClick={() => navigate(`/clients/edit/${client.id}`)}
               >
-                Cancel
+                Edit
               </Button>
-            </div>
-          </form>
-        </div>
-      )}
+            </Cell>
+          </Row>
+        ))}
+      </Table>
+
+      {showCopyForm &&
+        createPortal(
+          <ClientCopyForm
+            selected={selectedClients}
+            setSelected={() => {
+              setSelected([]);
+              setAllSelected(false);
+            }}
+            onShowForm={setShowCopyForm}
+            requery={() => refetch({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
+      {showDeleteForm &&
+        createPortal(
+          <ClientDeleteForm
+            selected={selectedClients}
+            setSelected={() => {
+              setSelected([]);
+              setAllSelected(false);
+            }}
+            onShowForm={setShowDeleteForm}
+            requery={() => refetch({ searchTerm, ...sort })}
+          />,
+          document.body
+        )}
     </Page>
   );
 };

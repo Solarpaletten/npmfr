@@ -17,6 +17,18 @@
   overflow-y: auto;
 }
 
+.items {
+  color: var(--white-0);
+  margin: 30px 0;
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.items::-webkit-scrollbar {
+  display: none;
+}
+
 .sub {
   background-color: var(--white-transparent);
   border-radius: 5px;

@@ -37,7 +37,7 @@ const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
         onClose={() => onShowForm(false)}
         loading={loading}
         error={error}
-        buttonPositiveName={"Save"}
+        buttonPositiveName={"Save changes"}
         buttonNegativeName={"Cancel"}
       >
         <h2>Edit User</h2>

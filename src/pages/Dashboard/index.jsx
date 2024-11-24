@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Page from "../../components/Page";
+import Toolbar from "../../components/Toolbar";
 import SearchField from "../../components/SearchField";
 import { Table, Row, Cell } from "../../components/Table";
 import { Cards, Card } from "../../components/Cards";
@@ -16,9 +17,8 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./index.module.css";
-
 function Dashboard({ onLogout }) {
+  const api = useAuthenticatedApi();
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({
     total_users: "0",
@@ -35,8 +35,6 @@ function Dashboard({ onLogout }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-
-  const api = useAuthenticatedApi();
 
   useEffect(() => {
     fetchUsers({ searchTerm, ...sort });
@@ -94,18 +92,19 @@ function Dashboard({ onLogout }) {
         <Card title={"Standard Users"} value={stats.standard_users}></Card>
       </Cards>
 
-      <div className={styles.toolbar}>
-        <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Toolbar>
         <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
           Add new user
         </Button>
-      </div>
+        <SearchField searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </Toolbar>
 
       <Table
         columns={columns}
         initialOrder={sort}
         sort={setSort}
         loading={usersLoading}
+        hasCheckboxes={false}
       >
         {users.map((user) => (
           <Row key={user.id}>

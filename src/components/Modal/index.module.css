@@ -9,16 +9,16 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  overflow-y: auto; /* Enable scrolling */
+  overflow-y: auto;
 }
 
 .wrapper::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit browsers */
+  display: none;
 }
 
 .wrapper {
-  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .modal {
@@ -27,20 +27,20 @@
   border-radius: 12px;
   width: 400px;
   padding: 20px 40px 40px;
-  margin: auto; /* Ensure it stays centered when content grows */
-  position: relative; /* Allow flexibility for absolute content inside */
-  max-height: 90%; /* Prevent modal from exceeding viewport */
-  overflow-y: auto; /* Enable scrolling for long modal content */
+  margin: auto;
+  position: relative;
+  max-height: 90%;
+  overflow-y: auto;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .modal::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit browsers */
+  display: none;
 }
 
 .modal {
-  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .form {

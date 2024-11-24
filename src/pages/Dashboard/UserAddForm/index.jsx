@@ -41,7 +41,7 @@ const UserAddForm = ({ onShowForm, requery }) => {
         onClose={() => onShowForm(false)}
         loading={loading}
         error={error}
-        buttonPositiveName={"Save"}
+        buttonPositiveName={"Create user"}
         buttonNegativeName={"Cancel"}
       >
         <h2>Add New User</h2>

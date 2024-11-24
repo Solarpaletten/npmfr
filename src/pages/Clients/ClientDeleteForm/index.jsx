@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Form } from "../../../../components/Modal";
-import { useAuthenticatedApi } from "../../../../utils/api";
+import { Modal, Form } from "../../../components/Modal";
+import { useAuthenticatedApi } from "../../../utils/api";
 
-const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
+const ClientDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,7 +14,7 @@ const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
 
     try {
       await Promise.all(
-        selected.map((s) => api.delete(`/warehouse/sales/${s.id}`))
+        selected.map((s) => api.delete(`/clients/${s.id}`))
       );
 
       requery();
@@ -22,7 +22,7 @@ const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
       setLoading(false);
       onShowForm(false);
     } catch (error) {
-      setError("Failed to delete invoice(s)");
+      setError("Failed to delete client(s)");
       setLoading(false);
     }
   };
@@ -37,13 +37,13 @@ const SaleDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
         buttonPositiveName={"Delete"}
         buttonNegativeName={"Cancel"}
       >
-        <h2>Delete invoice(s)</h2>
+        <h2>Delete client(s)</h2>
         <p>
-          Are you sure you want to delete <b>{selected.length}</b> invoice(s)?
+          Are you sure you want to delete <b>{selected.length}</b> client(s)?
         </p>
       </Form>
     </Modal>
   );
 };
 
-export default SaleDeleteForm;
+export default ClientDeleteForm;
