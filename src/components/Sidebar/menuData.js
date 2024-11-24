@@ -1,33 +1,33 @@
 import {
-  faPeopleLine,
-  faWarehouse,
-  faBox,
-  faArrowDown,
-  faArrowUp,
-  faBoxesStacked,
-  faTableColumns,
-  faBook,
-  faCashRegister,
-  faSheetPlastic,
-  faUsers,
-  faSackDollar,
-  faFolderOpen,
-  faHandHoldingDollar,
-  faReceipt,
-  faCreditCard,
-  faGlobe,
-  faMoneyBillTransfer,
-  faTag,
-  faFileInvoiceDollar,
-  faRotateLeft,
-  faArrowRightArrowLeft,
-  faScaleBalanced,
-  faUniversity,
-  faLink,
-  faFileImport,
-  faChartLine,
-  faBoxes,
-} from "@fortawesome/free-solid-svg-icons";
+  faPeopleLine, // Clients
+  faWarehouse, // Warehouse
+  faBox, // Reference Book  
+  faArrowDown, // Warehouse
+  faArrowUp, // Warehouse
+  faBoxesStacked, // Warehouse
+  faTableColumns, // Dashboard
+  faBook, // General ledger
+  faCashRegister, // Cashier
+  faSheetPlastic, // Reports
+  faUsers, // Personnel
+  faSackDollar, // Assets
+  faFolderOpen, // Documents
+  faHandHoldingDollar, // Salary
+  faReceipt, // Declaration
+  faCreditCard, // Reference Book
+  faGlobe, // Reference Book
+  faMoneyBillTransfer, // Bank
+  faTag, // Warehouse
+  faFileInvoiceDollar, // Warehouse
+  faRotateLeft, // Warehouse
+  faArrowRightArrowLeft, // Warehouse
+  faScaleBalanced, // Warehouse
+  faUniversity, // Bank
+  faLink, // Bank
+  faFileImport, // Bank
+  faChartLine, // Declaration
+  faBoxes, // Declaration
+} from "@fortawesome/free-solid-svg-icons"; // Font Awesome icons
 
 const filterVisibleItems = (items) => {
   return items
@@ -144,7 +144,7 @@ const menuData = [
         path: "/bank/correspondent-links",
         icon: faLink,
         active: true,
-        visible: false,
+        // visible: false,
       },
       {
         label: "SEPA Payments",
@@ -152,7 +152,7 @@ const menuData = [
         path: "/bank/sepa-payments",
         icon: faMoneyBillTransfer,
         active: true,
-        visible: false,
+        // visible: false,
       },
     ],
   },
@@ -161,8 +161,8 @@ const menuData = [
     labelRu: "Главная книга",
     path: "/general-ledger",
     icon: faBook,
-    active: false,
-    visible: false,
+    active: true,
+    // visible: false,
   },
   {
     label: "Reference Book",
@@ -237,36 +237,36 @@ const menuData = [
     labelRu: "Отчеты",
     path: "/reports",
     icon: faSheetPlastic,
-    active: false,
-    visible: false,
+    active: true,
+    // visible: false,
   },
   {
     label: "Personnel",
     labelRu: "Персонал",
     path: "/personnel",
     icon: faUsers,
-    active: false,
+    active: true,
   },
   {
     label: "Production",
     labelRu: "Производство",
     path: "/production",
     icon: faBox,
-    active: false,
+    active: true,
   },
   {
     label: "Assets",
     labelRu: "Активы",
     path: "/assets",
     icon: faSackDollar,
-    active: false,
+    active: true,
   },
   {
     label: "Documents",
     labelRu: "Документы",
     path: "/documents",
     icon: faFolderOpen,
-    active: false,
+    active: true,
   },
   {
     label: "Salary",
@@ -280,7 +280,7 @@ const menuData = [
     labelRu: "Декларации",
     path: "/declaration",
     icon: faReceipt,
-    active: false,
+    active: true,
     subItems: [
       {
         label: "VAT Declaration",
