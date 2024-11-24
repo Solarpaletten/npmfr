@@ -17,10 +17,14 @@ import SaleAddForm from "../pages/Warehouse/Sales/SaleAddForm";
 import SaleEditForm from "../pages/Warehouse/Sales/SaleEditForm";
 import PurchaseAddForm from "../pages/Warehouse/Purchases/PurchaseAddForm";
 import PurchaseEditForm from "../pages/Warehouse/Purchases/PurchaseEditForm";
+import ClientAddForm from "../pages/Clients/ClientAddForm";
+import ClientEditForm from "../pages/Clients/ClientEditForm";
 
 const routes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/clients", component: Clients },
+  { path: "/clients/create", component: ClientAddForm },
+  { path: "/clients/edit/:id", component: ClientEditForm },
   { path: "/warehouse/purchases", component: Purchases },
   { path: "/warehouse/purchases/create", component: PurchaseAddForm },
   { path: "/warehouse/purchases/edit/:id", component: PurchaseEditForm },

@@ -36,9 +36,6 @@ function Dashboard({ onLogout }) {
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  const [selected, setSelected] = useState([]);
-  const [allSelected, setAllSelected] = useState(false);
-
   useEffect(() => {
     fetchUsers({ searchTerm, ...sort });
   }, [searchTerm, sort]);
@@ -81,38 +78,6 @@ function Dashboard({ onLogout }) {
     }
   };
 
-  useEffect(() => {
-    if (allSelected) {
-      setSelected(users.map((user) => user.id));
-    } else {
-      setSelected([]);
-    }
-  }, [allSelected, users]);
-
-  const handleSelectAll = () => {
-    setAllSelected((prev) => !prev);
-  };
-
-  const handleSelect = (id) => {
-    setSelected((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item_id) => item_id !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
-  };
-
-  const handleDeleteSelected = () => {
-    // TODO Logic to delete selected products
-    console.log("Delete selected products", selected);
-  };
-
-  const handleCopySelected = () => {
-    // TODO Logic to copy selected products
-    console.log("Copy selected products", selected);
-  };
-
   return (
     <Page
       loading={statsLoading && usersLoading}
@@ -139,15 +104,10 @@ function Dashboard({ onLogout }) {
         initialOrder={sort}
         sort={setSort}
         loading={usersLoading}
-        allSelected={allSelected}
-        toggleSelectAll={handleSelectAll}
+        hasCheckboxes={false}
       >
         {users.map((user) => (
-          <Row
-            key={user.id}
-            onSelect={() => handleSelect(user.id)}
-            isSelected={selected.includes(user.id)}
-          >
+          <Row key={user.id}>
             <Cell>{new Date(user.created_at).toLocaleDateString()}</Cell>
             <Cell>{user.username || "-"}</Cell>
             <Cell>{user.email || "-"}</Cell>
