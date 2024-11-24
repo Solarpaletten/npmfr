@@ -18,11 +18,6 @@ import {
   faCreditCard, // для банков
   faGlobe, // для локаций
   faMoneyBillTransfer, // для валют
-  faTag, // для Client Prices
-  faFileInvoiceDollar, // для Automatic Invoicing
-  faRotateLeft, // для Sales Returns
-  faArrowRightArrowLeft, // для Item Movement
-  faScaleBalanced, // для Consignment Balance
 } from '@fortawesome/free-solid-svg-icons';
 
 const menuData = [
@@ -38,72 +33,31 @@ const menuData = [
     icon: faPeopleLine,
     active: true,
   },
-  // Вставка Warehause start
-{
-   label: "Warehouse",
-   labelRu: "Склад",
-   icon: faWarehouse,
-   active: true,
-   subItems: [
-     { 
-       label: "Sales",
-       labelRu: "Продажи",
-       path: "/warehouse/sales", 
-       icon: faArrowUp,
-       active: true
-     },
-     {
-       label: "Client Prices",
-       labelRu: "Цены клиентов",
-       path: "/warehouse/client-prices",
-       icon: faTag,
-       active: true
-     },
-     {
-       label: "Automatic Invoicing",
-       labelRu: "Автоматическое выставление счетов",
-       path: "/warehouse/auto-invoicing",
-       icon: faFileInvoiceDollar,
-       active: true
-     },
-     { 
-       label: "Purchases",
-       labelRu: "Закупки",
-       path: "/warehouse/purchases", 
-       icon: faArrowDown,
-       active: true
-     },
-     {
-       label: "Sales Returns",
-       labelRu: "Возвраты продаж",
-       path: "/warehouse/sales-returns",
-       icon: faRotateLeft,
-       active: true
-     },
-     {
-       label: "Item Stock",
-       labelRu: "Остатки товаров",
-       path: "/warehouse/stock",
-       icon: faBoxesStacked,
-       active: true
-     },
-     {
-       label: "Item Movement",
-       labelRu: "Движение товаров",
-       path: "/warehouse/movement",
-       icon: faArrowRightArrowLeft,
-       active: true
-     },
-     {
-       label: "Consignment Balance",
-       labelRu: "Остатки на консигнации",
-       path: "/warehouse/consignment",
-       icon: faScaleBalanced,
-       active: true
-     }
-   ],
- },
-//   вставкаWarehause end
+  {
+    label: 'Warehouse',
+    icon: faWarehouse,
+    active: true,
+    subItems: [
+      {
+        label: 'Sales',
+        path: '/warehouse/sales',
+        icon: faArrowUp,
+        active: true,
+      },
+      {
+        label: 'Purchases',
+        path: '/warehouse/purchases',
+        icon: faArrowDown,
+        active: true,
+      },
+      {
+        label: 'Stock',
+        path: '/warehouse/stock',
+        icon: faBoxesStacked,
+        active: true,
+      },
+    ],
+  },
   {
     label: 'General ledger',
     path: '/general-ledger',
