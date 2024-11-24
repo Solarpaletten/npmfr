@@ -303,7 +303,8 @@ const menuData = [
         labelRu: "Статистическая декларация",
         path: "/declaration/statistical",
         icon: faChartLine,
-        active: true,
+        active: false,
+        visible: false,
       },
       {
         label: "Customs Declaration",
