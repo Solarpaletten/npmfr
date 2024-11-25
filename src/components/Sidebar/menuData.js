@@ -29,6 +29,9 @@ import {
   faMoneyBillTransfer as faSepa, // для SEPA Payments
   faChartLine, // для Statistical Declaration
   faBoxes, // для Customs Declaration
+  faMoneyBillWave, // для Payroll
+  faCalendarDays, // для Timesheets
+  faCalendarWeek, // для Work schedule
 } from '@fortawesome/free-solid-svg-icons'; // Импорт иконок из библиотеки
 
 const filterVisibleItems = (items) => {
@@ -276,7 +279,44 @@ const menuData = [
     path: "/salary",
     icon: faHandHoldingDollar,
     active: true,
-  },
+    subItems: [
+        {
+            label: "Payroll",
+            labelRu: "Расчет зарплаты",
+            path: "/salary/payroll",
+            icon: faMoneyBillWave,
+            active: true,
+        },
+        {
+            label: "Timesheets",
+            labelRu: "Табели",
+            path: "/salary/timesheets",
+            icon: faCalendarDays,
+            active: true,
+        },
+        {
+            label: "Work schedule",
+            labelRu: "График работы",
+            path: "/salary/schedule",
+            icon: faCalendarWeek,
+            active: true,
+        },
+        {
+            label: "Wage prints",
+            labelRu: "Расчетные листы",
+            path: "/salary/wage-prints",
+            icon: faFileInvoiceDollar,
+            active: true,
+        },
+        {
+            label: "Reference book",
+            labelRu: "Справочники",
+            path: "/salary/reference",
+            icon: faBook,
+            active: true,
+          },
+        ],
+      },
   {
     label: "Declaration",
     labelRu: "Декларации",
