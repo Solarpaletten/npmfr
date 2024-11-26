@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import Page from "../../components/Page";
-
+import React from "react";
+import { Outlet } from "react-router-dom";
 import styles from "./index.module.css";
 
-function Salary() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
+const Salary = () => {
   return (
-    <Page loading={loading} error={error}>
-      Salary
-    </Page>
+    <div className={styles.container}>
+      <Outlet />
+    </div>
   );
-}
+};
 
 export default Salary;

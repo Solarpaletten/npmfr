@@ -8,6 +8,7 @@ import GeneralLedger from "../pages/GeneralLedger";
 import Personnel from "../pages/Personnel";
 import Production from "../pages/Production";
 import Salary from "../pages/Salary";
+import Payroll from "../pages/Salary/Payroll";
 import Reports from "../pages/Reports";
 import Settings from "../pages/Settings";
 import Purchases from "../pages/Warehouse/Purchases";
@@ -40,6 +41,7 @@ const routes = [
   { path: "/assets", component: Assets },
   { path: "/documents", component: Documents },
   { path: "/salary", component: Salary },
+  { path: "/salary/payroll", component: Payroll }, // Добавляем новый маршрут
   { path: "/declaration", component: Declaration },
   { path: "/settings", component: Settings },
 ];
