@@ -98,6 +98,8 @@ const PurchaseEditForm = () => {
 
   return (
     <Page>
+      <h2>Edit Purchase</h2>
+      <Button disabled>Print</Button>
       <Form
         onSubmit={handleSubmit}
         onClose={() => navigate("/warehouse/purchases")}
@@ -105,90 +107,100 @@ const PurchaseEditForm = () => {
         error={error}
         buttonPositiveName="Save changes"
         buttonNegativeName="Cancel"
+        fullscreen
       >
-        <h2>Edit Purchase</h2>
-
-        <Button>Print</Button>
-
-        <Select
-          label="Invoice type"
-          name="invoice_type"
-          value={formData.invoice_type}
-          onChange={handleChange}
-          options={[
-            { value: "", label: "-- select option --" },
-            { value: "purchase", label: "Purchase" },
-          ]}
-          disabled={loading}
-          required
-        />
-        <Field
-          type="text"
-          placeholder="Series/number"
-          name="invoice_number"
-          value={formData.invoice_number}
-          onChange={handleChange}
-          disabled={loading}
-          required
-        />
-        <Field
-          type="date"
-          name="purchase_date"
-          value={formatDate(formData.purchase_date)}
-          onChange={handleChange}
-          disabled={loading}
-          required
-        />
-
-        <Select
-          label="Warehouse"
-          name="warehouse_id"
-          value={formData.warehouse_id}
-          onChange={handleChange}
-          options={[
-            { value: "", label: "-- select option --" },
-            ...warehouses.map(({ id, name }) => ({
-              value: id,
-              label: name,
-            })),
-          ]}
-          disabled={loading || warehousesLoading}
-          required
-        />
-
-        <Select
-          label="Supplier/Partner"
-          name="supplier_id"
-          value={formData.supplier_id}
-          onChange={handleChange}
-          options={[
-            { value: "", label: "-- select option --" },
-            ...clients.map(({ id, name }) => ({
-              value: id,
-              label: name,
-            })),
-          ]}
-          disabled={loading || clientsLoading}
-          required
-        />
-
         <div>
-          <b>Buyer/Payer: </b>
-          <b>{clientsLoading ? "-" : mainCompany?.name}</b>
+          <Select
+            label="Invoice type"
+            name="invoice_type"
+            value={formData.invoice_type}
+            onChange={handleChange}
+            options={[
+              { value: "", label: "-- select option --" },
+              { value: "purchase", label: "Purchase" },
+            ]}
+            disabled={loading}
+            required
+          />
+          <Field
+            type="text"
+            label="Series/number"
+            placeholder="Series/number"
+            name="invoice_number"
+            value={formData.invoice_number}
+            onChange={handleChange}
+            disabled={loading}
+            required
+          />
+          <Field
+            type="date"
+            label="Purchase date"
+            name="purchase_date"
+            value={formatDate(formData.purchase_date)}
+            onChange={handleChange}
+            disabled={loading}
+            required
+          />
         </div>
 
-        <Select
-          label="Currency"
-          name="currency"
-          value={formData.currency}
-          onChange={handleChange}
-          options={[
-            { value: "USD", label: "USD" },
-            { value: "EUR", label: "EUR" },
-          ]}
-          disabled={loading}
-          required
-        />
+        <div>
+          <Select
+            label="Supplier/Partner"
+            name="supplier_id"
+            value={formData.supplier_id}
+            onChange={handleChange}
+            options={[
+              { value: "", label: "-- select option --" },
+              ...clients.map(({ id, name }) => ({
+                value: id,
+                label: name,
+              })),
+            ]}
+            disabled={loading || clientsLoading}
+            required
+          />
+
+          <div>
+            <b>Buyer/Payer: </b>
+            <p>
+              <b>
+                {clientsLoading
+                  ? "-"
+                  : `${mainCompany?.name} (Code: ${mainCompany?.code})`}
+              </b>
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <Select
+            label="Currency"
+            name="currency"
+            value={formData.currency}
+            onChange={handleChange}
+            options={[
+              { value: "USD", label: "USD" },
+              { value: "EUR", label: "EUR" },
+            ]}
+            disabled={loading}
+            required
+          />
+          <Select
+            label="Warehouse"
+            name="warehouse_id"
+            value={formData.warehouse_id}
+            onChange={handleChange}
+            options={[
+              { value: "", label: "-- select option --" },
+              ...warehouses.map(({ id, name }) => ({
+                value: id,
+                label: name,
+              })),
+            ]}
+            disabled={loading || warehousesLoading}
+            required
+          />
+        </div>
 
         <ProductCalculatorTable
           setData={setDataCallback}

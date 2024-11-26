@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Select from "../../../components/Select";
+import Field from "../../../components/Field";
+import Button from "../../../components/Button";
 import { useProduct } from "../../../contexts/ProductContext";
+import { faTrashCan, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const ProductCalculatorTable = ({ setData, loading, data }) => {
   const initialRow = {
@@ -96,7 +99,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
 
   return (
     <div>
-      <table border={1}>
+      <table>
         <thead>
           <tr>
             <th>№</th>
@@ -107,7 +110,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
             <th>Price excl. VAT</th>
             <th>VAT rate %</th>
             <th>Price incl. VAT</th>
-            <th>Actions</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -133,7 +136,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
                 />
               </td>
               <td>
-                <input
+                <Field
                   type="text"
                   value={row.code}
                   onChange={(e) => handleEdit(index, "code", e.target.value)}
@@ -141,7 +144,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
                 />
               </td>
               <td>
-                <input
+                <Field
                   type="text"
                   value={row.unit}
                   onChange={(e) => handleEdit(index, "unit", e.target.value)}
@@ -149,7 +152,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
                 />
               </td>
               <td>
-                <input
+                <Field
                   type="number"
                   value={row.quantity}
                   onChange={(e) =>
@@ -158,7 +161,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
                 />
               </td>
               <td>
-                <input
+                <Field
                   type="number"
                   value={row.priceExclVAT}
                   onChange={(e) =>
@@ -167,7 +170,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
                 />
               </td>
               <td>
-                <input
+                <Field
                   type="number"
                   value={row.vatRate}
                   onChange={(e) => handleEdit(index, "vatRate", e.target.value)}
@@ -180,16 +183,21 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
                 ).toFixed(2)}
               </td>
               <td>
-                <button onClick={() => handleDeleteRow(index)}>Delete</button>
+                <Button
+                  variant="danger"
+                  icon={faTrashCan}
+                  onClick={() => handleDeleteRow(index)}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button onClick={handleAddRow} style={{ marginTop: "10px" }}>
-        Add Row
-      </button>
-      <div style={{ marginTop: "20px" }}>
+      <Button icon={faPlus} onClick={handleAddRow}>
+        Add product
+      </Button>
+
+      <div>
         <div>Total excl. VAT: {totalExclVAT.toFixed(2)}</div>
         <div>Total VAT: {totalVAT.toFixed(2)}</div>
         <div>Total incl. VAT: {totalInclVAT.toFixed(2)}</div>

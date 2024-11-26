@@ -5,6 +5,7 @@ import styles from "./index.module.css";
 function Field({
   type,
   placeholder,
+  label,
   name,
   value,
   onChange,
@@ -12,16 +13,20 @@ function Field({
   disabled,
 }) {
   return (
-    <div className={styles.input}>
-      <input
-        type={type}
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        disabled={disabled}
-      />
+    <div className={styles.field}>
+      <label htmlFor={name}>{label}</label>
+      <div className={styles.input}>
+        <input
+          id={name}
+          type={type}
+          placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          disabled={disabled}
+        />
+      </div>
     </div>
   );
 }

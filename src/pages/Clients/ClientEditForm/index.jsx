@@ -57,7 +57,7 @@ const ClientEditForm = () => {
     setError(null);
 
     try {
-      await api.post("/clients", formData);
+      await api.put(`/clients/${id}`, formData);
 
       refetch();
       navigate("/clients");
