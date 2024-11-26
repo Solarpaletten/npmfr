@@ -1,8 +1,8 @@
-import React from 'react';
-import Button from '../Button';
-import ValidationError from '../ValidationError';
+import React from "react";
+import Button from "../Button";
+import ValidationError from "../ValidationError";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
 export const Modal = ({ children }) => {
   return (
@@ -20,18 +20,22 @@ export const Form = ({
   error,
   buttonPositiveName,
   buttonNegativeName,
+  fullscreen = false,
 }) => {
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form
+      className={fullscreen ? styles.form_fullscreen : styles.form}
+      onSubmit={onSubmit}
+    >
       {children}
 
       <ValidationError error={error} />
 
       <div className={styles.buttons}>
-        <Button type='button' onClick={onClose} disabled={loading}>
+        <Button type="button" onClick={onClose} disabled={loading}>
           {buttonNegativeName}
         </Button>
-        <Button variant='primary' type='submit' disabled={loading}>
+        <Button variant="primary" type="submit" disabled={loading}>
           {buttonPositiveName}
         </Button>
       </div>
