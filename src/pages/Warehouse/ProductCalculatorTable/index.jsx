@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Select from "../../../../components/Select";
-import { useProduct } from "../../../../contexts/ProductContext";
+import Select from "../../../components/Select";
+import { useProduct } from "../../../contexts/ProductContext";
 
-const SaleCalculatorTable = ({ setData, loading }) => {
+const ProductCalculatorTable = ({ setData, loading, data }) => {
+  const initialRow = {
+    product_name: "",
+    unit: "",
+    code: "",
+    quantity: 0,
+    priceExclVAT: 0,
+    vatRate: 0,
+  };
   const { products, loading: productsLoading } = useProduct();
-  const [rows, setRows] = useState([
-    {
-      product_name: "",
-      unit: "",
-      code: "",
-      quantity: 0,
-      priceExclVAT: 0,
-      vatRate: 0,
-    },
-  ]);
+  const [rows, setRows] = useState([initialRow]);
 
   const handleEdit = (index, field, value) => {
     setRows((prevRows) => {
@@ -81,19 +80,23 @@ const SaleCalculatorTable = ({ setData, loading }) => {
   const totalInclVAT = totalExclVAT + totalVAT;
 
   useEffect(() => {
-    setData((prevData) => ({
-      ...prevData,
+    if (data?.products) setRows(data.products);
+  }, [data.products]);
+
+  useEffect(() => {
+    setData({
+      ...data,
       total_amount: totalInclVAT.toFixed(2),
       vat_amount: totalVAT.toFixed(2),
       vat_rate:
         totalVAT > 0 ? ((totalVAT / totalExclVAT) * 100).toFixed(2) : "0",
       products: rows,
-    }));
-  }, [totalExclVAT, totalVAT, totalInclVAT, rows]);
+    });
+  }, [totalExclVAT, totalVAT, totalInclVAT, rows, data]);
 
   return (
     <div>
-      <table border={1} >
+      <table border={1}>
         <thead>
           <tr>
             <th>№</th>
@@ -195,4 +198,4 @@ const SaleCalculatorTable = ({ setData, loading }) => {
   );
 };
 
-export default SaleCalculatorTable;
+export default ProductCalculatorTable;

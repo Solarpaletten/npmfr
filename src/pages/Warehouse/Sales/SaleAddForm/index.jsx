@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../../components/Page";
 import { Form } from "../../../../components/Modal";
 import Field from "../../../../components/Field";
 import Select from "../../../../components/Select";
 import Button from "../../../../components/Button";
-import SaleCalculatorTable from "../SaleCalculatorTable";
+import ProductCalculatorTable from "../../ProductCalculatorTable";
 import { useClients } from "../../../../contexts/ClientContext";
 import { useWarehouse } from "../../../../contexts/WarehouseContext";
 import { useAuthenticatedApi } from "../../../../utils/api";
 
 const SaleAddForm = () => {
+  const api = useAuthenticatedApi();
+
   const { clients, loading: clientsLoading } = useClients();
   const { warehouses, loading: warehousesLoading } = useWarehouse();
-  const mainCompany = clients?.find((client) => client.is_main);
+
+  const [mainCompany, setMainCompany] = useState(null);
+  const [form, setForm] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     invoice_type: "sale",
@@ -21,19 +29,25 @@ const SaleAddForm = () => {
     sale_date: new Date().toISOString().split("T")[0],
     warehouse_id: "",
     buyer_id: "",
-    client_id: mainCompany?.id.toString(),
+    client_id: "",
     currency: "EUR",
     total_amount: (0).toFixed(2),
     vat_amount: (0).toFixed(2),
     vat_rate: (0).toFixed(2),
-    products: [],
+    products: null,
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (clients?.length) {
+      const main = clients.find((client) => client.is_main);
 
-  const api = useAuthenticatedApi();
+      setMainCompany(main);
+      setFormData((prevData) => ({
+        ...prevData,
+        client_id: main?.id?.toString() || "",
+      }));
+    }
+  }, [clients]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,15 +62,19 @@ const SaleAddForm = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    console.log(formData);
+
     try {
-      await api.post("/warehouse/sales", formData);
+      await api.post("/warehouse/sales", form);
 
       navigate("/warehouse/sales");
     } catch (err) {
       setError("Failed to create invoice");
       setLoading(false);
     }
+  };
+
+  const setDataCallback = (data) => {
+    setForm(data);
   };
 
   return (
@@ -71,7 +89,7 @@ const SaleAddForm = () => {
       >
         <h2>Create invoice</h2>
 
-        <Button>Распечатать</Button>
+        <Button>Print</Button>
 
         <Select
           label="Invoice type"
@@ -79,14 +97,8 @@ const SaleAddForm = () => {
           value={formData.invoice_type}
           onChange={handleChange}
           options={[
-            {
-              value: "",
-              label: "-- select option --",
-            },
-            {
-              value: "sale",
-              label: "Sale",
-            },
+            { value: "", label: "-- select option --" },
+            { value: "sale", label: "Sale" },
           ]}
           disabled={loading}
           required
@@ -116,10 +128,7 @@ const SaleAddForm = () => {
           value={formData.warehouse_id}
           onChange={handleChange}
           options={[
-            {
-              value: "",
-              label: "-- select option --",
-            },
+            { value: "", label: "-- select option --" },
             ...warehouses.map(({ id, name }) => ({
               value: id,
               label: name,
@@ -135,10 +144,7 @@ const SaleAddForm = () => {
           value={formData.buyer_id}
           onChange={handleChange}
           options={[
-            {
-              value: "",
-              label: "-- select option --",
-            },
+            { value: "", label: "-- select option --" },
             ...clients.map(({ id, name }) => ({
               value: id,
               label: name,
@@ -159,23 +165,17 @@ const SaleAddForm = () => {
           value={formData.currency}
           onChange={handleChange}
           options={[
-            {
-              value: "USD",
-              label: "USD",
-            },
-            {
-              value: "EUR",
-              label: "EUR",
-            },
+            { value: "USD", label: "USD" },
+            { value: "EUR", label: "EUR" },
           ]}
           disabled={loading}
           required
         />
 
-        <SaleCalculatorTable
-          data={formData}
-          setData={setFormData}
+        <ProductCalculatorTable
+          setData={setDataCallback}
           loading={loading}
+          data={formData}
         />
       </Form>
     </Page>
