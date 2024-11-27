@@ -32,6 +32,12 @@ import {
   faMoneyBillWave, // для Payroll
   faCalendarDays, // для Timesheets
   faCalendarWeek, // для Work schedule
+  faList, // для Register
+  faHandshake, // для Settlement
+  faCalendarCheck, // для Period Closure
+  faMoneyBill, // для Currency Range
+  faExchangeAlt, // для Exchange Rate
+  faChartLine as faChartBar , // для Chart of Accounts
 } from '@fortawesome/free-solid-svg-icons'; // Импорт иконок из библиотеки
 
 const filterVisibleItems = (items) => {
@@ -149,7 +155,6 @@ const menuData = [
         path: "/bank/correspondent-links",
         icon: faLink,
         active: true,
-        // visible: false,
       },
       {
         label: "SEPA Payments",
@@ -157,17 +162,66 @@ const menuData = [
         path: "/bank/sepa-payments",
         icon: faSepa,
         active: true,
-        // visible: false,
       },
     ],
   },
   {
-    label: "General ledger",
+    label: "General Ledger",
     labelRu: "Главная книга",
     path: "/general-ledger",
     icon: faBook,
     active: true,
-    // visible: false,
+    subItems: [
+      {
+        label: "Register",
+        labelRu: "Регистр",
+        path: "/general-ledger/register",
+        icon: faList,
+        active: true
+      },
+      {
+        label: "Ledger",
+        labelRu: "Книга учета",
+        path: "/general-ledger/ledger", 
+        icon: faBook,
+        active: true
+      },
+      {
+        label: "Settlement",
+        labelRu: "Взаиморасчеты",
+        path: "/general-ledger/settlement",
+        icon: faHandshake,
+        active: true
+      },
+      {
+        label: "Period Closure",
+        labelRu: "Закрытие периода",
+        path: "/general-ledger/period-closure",
+        icon: faCalendarCheck,
+        active: true
+      },
+      {
+        label: "Currency Range",
+        labelRu: "Диапазон валют",
+        path: "/general-ledger/currency-range",
+        icon: faMoneyBill,
+        active: true
+      },
+      {
+        label: "Exchange Rate",
+        labelRu: "Курс обмена",
+        path: "/general-ledger/exchange-rate",
+        icon: faExchangeAlt,
+        active: true
+      },
+      {
+        label: "Chart of Accounts",
+        labelRu: "План счетов",
+        path: "/general-ledger/chart-of-accounts",
+        icon: faChartBar,
+        active: true
+      }
+    ]
   },
   {
     label: "Reference Book",
@@ -360,3 +414,4 @@ const menuData = [
 
 const visibleMenuData = filterVisibleItems(menuData);
 export default visibleMenuData;
+
