@@ -22,8 +22,6 @@ const Payroll = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [editingId, setEditingId] = useState(null);
-
   const [selected, setSelected] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -47,31 +45,6 @@ const Payroll = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const handleEdit = (record) => {};
-
-  const handleDelete = async (id) => {
-    try {
-      await api.delete(`/payroll/${id}`);
-      fetchData();
-    } catch (error) {
-      setError("Error deleting record");
-    }
-  };
-
-  const handleSubmit = async () => {
-    try {
-      if (editingId) {
-        await api.put(`/payroll/${editingId}`, {});
-      } else {
-        await api.post("/payroll", {});
-      }
-
-      fetchData();
-    } catch (error) {
-      setError("Error saving record");
-    }
-  };
 
   return (
     <Page loading={loading} error={error}>

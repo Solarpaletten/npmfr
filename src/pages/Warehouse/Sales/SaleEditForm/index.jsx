@@ -27,7 +27,7 @@ const SaleEditForm = () => {
   const [formData, setFormData] = useState({
     invoice_type: "sale",
     invoice_number: "",
-    sale_date: new Date().toISOString().split("T")[0],
+    sale_date: "",
     warehouse_id: "",
     buyer_id: "",
     client_id: "",

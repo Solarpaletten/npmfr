@@ -26,12 +26,20 @@ const UserAddForm = ({ onShowForm, requery }) => {
       requery();
 
       setLoading(false);
-      setNewUser({ username: "", email: "", role: "standard" });
       onShowForm(false);
     } catch (error) {
       setError("Failed to add user");
       setLoading(false);
     }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setNewUser((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -47,24 +55,28 @@ const UserAddForm = ({ onShowForm, requery }) => {
         <h2>Add New User</h2>
         <Field
           type="text"
+          name="username"
+          label="User name"
           placeholder="User name"
           value={newUser.username}
-          onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+          onChange={handleChange}
           disabled={loading}
           required
         />
         <Field
           type="email"
+          name="email"
+          label="Email"
           placeholder="Email"
           value={newUser.email}
-          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+          onChange={handleChange}
           disabled={loading}
           required
         />
         <Select
           label="Role"
           value={newUser.role}
-          onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+          onChange={handleChange}
           options={[
             { value: "standard", label: "Standard" },
             { value: "admin", label: "Admin" },
