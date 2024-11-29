@@ -1,300 +1,152 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Space, Modal, Form, DatePicker, Select, InputNumber, message } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import axios from "axios";
-import moment from "moment";
-import styles from './index.module.css';
-
-
+import { createPortal } from "react-dom";
+import Page from "../../../components/Page";
+import Toolbar from "../../../components/Toolbar";
+import Button from "../../../components/Button";
+import SearchField from "../../../components/SearchField";
+import { Table, Row, Cell } from "../../../components/Table";
+import AddForm from "./AddForm";
+import EditForm from "./EditForm";
+import DeleteForm from "./DeleteForm";
+import { useAuthenticatedApi } from "../../../utils/api";
+import columns from "./columns";
+import {
+  faTrashCan,
+  faPenToSquare,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Payroll = () => {
+  const api = useAuthenticatedApi();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [form] = Form.useForm();
-  const [editingId, setEditingId] = useState(null);
-  const [employees, setEmployees] = useState([]); // Для списка сотрудников
+  const [error, setError] = useState(null);
 
-  // Получение данных
+  const [editingId, setEditingId] = useState(null);
+
+  const [selected, setSelected] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+
   const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
-      setLoading(true);
-      const response = await axios.get("/api/payroll");
-      setData(response.data);
+      const data = await api.get("/payroll");
+
+      setData(data);
     } catch (error) {
-      message.error("Error loading payroll data");
+      setError("Failed to fetch payroll");
     } finally {
       setLoading(false);
     }
   };
 
-  // Получение списка сотрудников
-  const fetchEmployees = async () => {
-    try {
-      const response = await axios.get("/api/employees");
-      setEmployees(response.data);
-    } catch (error) {
-      message.error("Error loading employees");
-    }
-  };
-
   useEffect(() => {
     fetchData();
-    fetchEmployees();
   }, []);
 
-  // Колонки таблицы
-  const columns = [
-    {
-      title: "Employee",
-      dataIndex: "employee_name",
-      key: "employee_name",
-    },
-    {
-      title: "Period Start",
-      dataIndex: "period_start",
-      key: "period_start",
-      render: (text) => new Date(text).toLocaleDateString(),
-    },
-    {
-      title: "Period End",
-      dataIndex: "period_end",
-      key: "period_end",
-      render: (text) => new Date(text).toLocaleDateString(),
-    },
-    {
-      title: "Base Salary",
-      dataIndex: "base_salary",
-      key: "base_salary",
-      render: (text, record) => `${text} ${record.currency}`,
-    },
-    {
-      title: "Bonus",
-      dataIndex: "bonus",
-      key: "bonus",
-      render: (text, record) => text ? `${text} ${record.currency}` : "-",
-    },
-    {
-      title: "Net Salary",
-      dataIndex: "net_salary",
-      key: "net_salary",
-      render: (text, record) => `${text} ${record.currency}`,
-    },
-    {
-      title: "Status",
-      dataIndex: "payment_status",
-      key: "payment_status",
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_, record) => (
-        <Space>
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          >
-            Edit
-          </Button>
-          <Button
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
-  ];
-
-  // Обработчики
-  const handleAdd = () => {
-    setEditingId(null);
-    form.resetFields();
-    setModalVisible(true);
-  };
-
-  const handleEdit = (record) => {
-    setEditingId(record.id);
-    form.setFieldsValue({
-      ...record,
-      period_start: moment(record.period_start),
-      period_end: moment(record.period_end),
-    });
-    setModalVisible(true);
-  };
+  const handleEdit = (record) => {};
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/payroll/${id}`);
-      message.success("Record deleted successfully");
+      await api.delete(`/payroll/${id}`);
       fetchData();
     } catch (error) {
-      message.error("Error deleting record");
+      setError("Error deleting record");
     }
   };
 
   const handleSubmit = async () => {
     try {
-      const values = await form.validateFields();
-      
-      // Форматируем даты
-      values.period_start = values.period_start.format("YYYY-MM-DD");
-      values.period_end = values.period_end.format("YYYY-MM-DD");
-
       if (editingId) {
-        await axios.put(`/api/payroll/${editingId}`, values);
-        message.success("Record updated successfully");
+        await api.put(`/payroll/${editingId}`, {});
       } else {
-        await axios.post("/api/payroll", values);
-        message.success("Record created successfully");
+        await api.post("/payroll", {});
       }
 
-      setModalVisible(false);
       fetchData();
     } catch (error) {
-      message.error("Error saving record");
+      setError("Error saving record");
     }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Payroll Management</h1>
-        <Button type="primary" onClick={handleAdd}>
-          Add New Record
+    <Page loading={loading} error={error}>
+      <h1>Payroll management</h1>
+
+      <Toolbar>
+        <Button icon={faPlus} onClick={() => setShowAddForm(true)}>
+          Add new record
         </Button>
-      </div>
+        <SearchField searchTerm={""} setSearchTerm={""} disabled />
+      </Toolbar>
 
-      <Table
-        columns={columns}
-        dataSource={data}
-        loading={loading}
-        rowKey="id"
-      />
+      <Table columns={columns} loading={loading} hasCheckboxes={false}>
+        {data.map((employee) => (
+          <Row key={employee.id}>
+            <Cell>{employee.employee_name || "-"}</Cell>
+            <Cell>
+              {new Date(employee.period_start).toLocaleDateString() || "-"}
+            </Cell>
+            <Cell>
+              {new Date(employee.period_end).toLocaleDateString() || "-"}
+            </Cell>
+            <Cell>{employee.base_salary || "-"}</Cell>
+            <Cell>{employee.bonus || "-"}</Cell>
+            <Cell>{employee.net_salary || "-"}</Cell>
+            <Cell>{employee.payment_status || "-"}</Cell>
+            <Cell align="right">
+              <Button
+                icon={faPenToSquare}
+                onClick={() => {
+                  setShowEditForm(true);
+                  setSelected(employee);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="danger"
+                icon={faTrashCan}
+                onClick={() => {
+                  setShowDeleteForm(true);
+                  setSelected(employee);
+                }}
+              >
+                Delete
+              </Button>
+            </Cell>
+          </Row>
+        ))}
+      </Table>
 
-      <Modal
-        title={editingId ? "Edit Payroll Record" : "Add Payroll Record"}
-        visible={modalVisible}
-        onOk={handleSubmit}
-        onCancel={() => setModalVisible(false)}
-        width={800}
-      >
-        <Form form={form} layout="vertical" className={styles.form}>
-          <Form.Item
-            name="employee_id"
-            label="Employee"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <Select className={styles.select}>
-              {employees.map(emp => (
-                <Select.Option key={emp.id} value={emp.id}>
-                  {emp.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="period_start"
-            label="Period Start"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <DatePicker className={styles.datePicker} />
-          </Form.Item>
-
-          <Form.Item
-            name="period_end"
-            label="Period End"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <DatePicker className={styles.datePicker} />
-          </Form.Item>
-
-          <Form.Item
-            name="base_salary"
-            label="Base Salary"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <InputNumber min={0} className={styles.inputNumber} />
-          </Form.Item>
-
-          <Form.Item 
-            name="bonus" 
-            label="Bonus"
-            className={styles.formItem}
-          >
-            <InputNumber min={0} className={styles.inputNumber} />
-          </Form.Item>
-
-          <Form.Item 
-            name="overtime_hours" 
-            label="Overtime Hours"
-            className={styles.formItem}
-          >
-            <InputNumber min={0} className={styles.inputNumber} />
-          </Form.Item>
-
-          <Form.Item 
-            name="overtime_rate" 
-            label="Overtime Rate"
-            className={styles.formItem}
-          >
-            <InputNumber min={0} className={styles.inputNumber} />
-          </Form.Item>
-
-          <Form.Item
-            name="tax_amount"
-            label="Tax Amount"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <InputNumber min={0} className={styles.inputNumber} />
-          </Form.Item>
-
-          <Form.Item
-            name="insurance_amount"
-            label="Insurance Amount"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <InputNumber min={0} className={styles.inputNumber} />
-          </Form.Item>
-
-          <Form.Item
-            name="payment_status"
-            label="Payment Status"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <Select className={styles.select}>
-              <Select.Option value="pending">Pending</Select.Option>
-              <Select.Option value="paid">Paid</Select.Option>
-              <Select.Option value="cancelled">Cancelled</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="currency"
-            label="Currency"
-            rules={[{ required: true }]}
-            className={styles.formItem}
-          >
-            <Select className={styles.select}>
-              <Select.Option value="EUR">EUR</Select.Option>
-              <Select.Option value="USD">USD</Select.Option>
-              <Select.Option value="GBP">GBP</Select.Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </div>
+      {showAddForm &&
+        createPortal(
+          <AddForm onShowForm={setShowAddForm} requery={fetchData} />,
+          document.body
+        )}
+      {showDeleteForm &&
+        createPortal(
+          <DeleteForm
+            selected={selected}
+            onShowForm={setShowDeleteForm}
+            requery={fetchData}
+          />,
+          document.body
+        )}
+      {showEditForm &&
+        createPortal(
+          <EditForm
+            selected={selected}
+            onShowForm={setShowEditForm}
+            requery={fetchData}
+          />,
+          document.body
+        )}
+    </Page>
   );
 };
 

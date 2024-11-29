@@ -8,7 +8,6 @@ import Personnel from "../pages/Personnel";
 import Production from "../pages/Production";
 import Reports from "../pages/Reports";
 import Settings from "../pages/Settings";
-import Salary from "../pages/Salary";
 import Payroll from "../pages/Salary/Payroll";
 import Purchases from "../pages/Warehouse/Purchases";
 import Sales from "../pages/Warehouse/Sales";
@@ -45,7 +44,6 @@ const routes = [
   { path: "/production", component: Production },
   { path: "/assets", component: Assets },
   { path: "/documents", component: Documents },
-  { path: "/salary", component: Salary },
   { path: "/salary/payroll", component: Payroll },
   { path: "/declaration", component: Declaration },
   { path: "/settings", component: Settings },
