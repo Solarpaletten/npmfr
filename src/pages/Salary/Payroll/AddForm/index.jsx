@@ -7,15 +7,15 @@ import { useAuthenticatedApi } from "../../../../utils/api";
 const AddForm = ({ onShowForm, requery }) => {
   const [newPayroll, setNewPayroll] = useState({
     employee_id: "",
-    period_start: new Date().toISOString().split("T")[0],
-    period_end: new Date().toISOString().split("T")[0],
+    period_start: "",
+    period_end: "",
     base_salary: 0,
     bonus: 0,
     overtime_hours: 0,
     overtime_rate: 0,
     tax_amount: 0,
     insurance_amount: 0,
-    payment_status: "",
+    payment_status: "pending",
     currency: "USD",
   });
   const [employees, setEmployees] = useState([]);

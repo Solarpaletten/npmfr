@@ -1,13 +1,7 @@
 import Dashboard from "../pages/Dashboard";
 import Clients from "../pages/Clients";
-import Assets from "../pages/Assets";
-import Cashier from "../pages/Cashier";
-import Declaration from "../pages/Declaration";
-import Documents from "../pages/Documents";
 import Personnel from "../pages/Personnel";
 import Production from "../pages/Production";
-import Reports from "../pages/Reports";
-import Settings from "../pages/Settings";
 import Payroll from "../pages/Salary/Payroll";
 import Purchases from "../pages/Warehouse/Purchases";
 import Sales from "../pages/Warehouse/Sales";
@@ -25,6 +19,24 @@ import PeriodClosure from "../pages/GeneralLedger/PeriodClosure";
 import CurrencyRange from "../pages/GeneralLedger/CurrencyRange";
 import ExchangeRate from "../pages/GeneralLedger/ExchangeRate";
 import ChartOfAccounts from "../pages/GeneralLedger/ChartOfAccounts";
+import AssetsList from "../pages/Assets/AssetsList";
+import Depreciation from "../pages/Assets/Depreciation";
+import Maintenance from "../pages/Assets/Maintenance";
+import CashBalance from "../pages/Cashier/CashBalance";
+import CashOperations from "../pages/Cashier/CashOperations";
+import CashReport from "../pages/Cashier/CashReport";
+import DeclarationList from "../pages/Declaration/DeclarationList";
+import Statistics from "../pages/Declaration/Statistics";
+import TaxReports from "../pages/Declaration/TaxReports";
+import Archive from "../pages/Documents/Archive";
+import DocumentsList from "../pages/Documents/DocumentsList";
+import Templates from "../pages/Documents/Templates";
+import ReportGenerator from "../pages/Reports/ReportGenerator";
+import ReportsList from "../pages/Reports/ReportsList";
+import ReportViewer from "../pages/Reports/ReportViewer";
+import Preferences from "../pages/Settings/Preferences";
+import Profile from "../pages/Settings/Profile";
+import Security from "../pages/Settings/Security";
 
 const routes = [
   { path: "/dashboard", component: Dashboard },
@@ -38,43 +50,34 @@ const routes = [
   { path: "/warehouse/sales/create", component: SaleAddForm },
   { path: "/warehouse/sales/edit/:id", component: SaleEditForm },
   { path: "/warehouse/stock", component: Stock },
-  { path: "/cashier", component: Cashier },
-  { path: "/reports", component: Reports },
+  { path: "/cashier/cash-balance", component: CashBalance },
+  { path: "/cashier/cash-operations", component: CashOperations },
+  { path: "/cashier/cash-report", component: CashReport },
+  { path: "/reports/report-generator", component: ReportGenerator },
+  { path: "/reports/reports-list", component: ReportsList },
+  { path: "/reports/report-viewer", component: ReportViewer },
   { path: "/personnel", component: Personnel },
   { path: "/production", component: Production },
-  { path: "/assets", component: Assets },
-  { path: "/documents", component: Documents },
+  { path: "/assets/assets-list", component: AssetsList },
+  { path: "/assets/depreciation", component: Depreciation },
+  { path: "/assets/maintenance", component: Maintenance },
+  { path: "/documents/archive", component: Archive },
+  { path: "/documents/documents-list", component: DocumentsList },
+  { path: "/documents/templates", component: Templates },
   { path: "/salary/payroll", component: Payroll },
-  { path: "/declaration", component: Declaration },
-  { path: "/settings", component: Settings },
-  {
-    path: "/general-ledger/register",
-    component: GeneralRegister,
-  },
-  {
-    path: "/general-ledger/ledger",
-    component: GeneralLedgerContent,
-  },
-  {
-    path: "/general-ledger/settlement",
-    component: DocSettlement,
-  },
-  {
-    path: "/general-ledger/period-closure",
-    component: PeriodClosure,
-  },
-  {
-    path: "/general-ledger/currency-range",
-    component: CurrencyRange,
-  },
-  {
-    path: "/general-ledger/exchange-rate",
-    component: ExchangeRate,
-  },
-  {
-    path: "/general-ledger/chart-of-accounts",
-    component: ChartOfAccounts,
-  },
+  { path: "/declaration/declaration-list", component: DeclarationList },
+  { path: "/declaration/statistics", component: Statistics },
+  { path: "/declaration/tax-reports", component: TaxReports },
+  { path: "/settings/preferences", component: Preferences },
+  { path: "/settings/profile", component: Profile },
+  { path: "/settings/security", component: Security },
+  { path: "/general-ledger/register", component: GeneralRegister },
+  { path: "/general-ledger/ledger", component: GeneralLedgerContent },
+  { path: "/general-ledger/settlement", component: DocSettlement },
+  { path: "/general-ledger/period-closure", component: PeriodClosure },
+  { path: "/general-ledger/currency-range", component: CurrencyRange },
+  { path: "/general-ledger/exchange-rate", component: ExchangeRate },
+  { path: "/general-ledger/chart-of-accounts", component: ChartOfAccounts },
 ];
 
 export default routes;

@@ -30,6 +30,15 @@ const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setCurrentUser((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <Modal>
       <Form
@@ -43,30 +52,28 @@ const UserEditForm = ({ onShowForm, requery, selectedUser }) => {
         <h2>Edit User</h2>
         <Field
           type="text"
+          name="username"
+          label="User name"
           placeholder="User name"
           value={currentUser.username}
-          onChange={(e) =>
-            setCurrentUser({ ...currentUser, username: e.target.value })
-          }
+          onChange={handleChange}
           disabled={loading}
           required
         />
         <Field
           type="email"
+          name="email"
+          label="Email"
           placeholder="Email"
           value={currentUser.email}
-          onChange={(e) =>
-            setCurrentUser({ ...currentUser, email: e.target.value })
-          }
+          onChange={handleChange}
           disabled={loading}
           required
         />
         <Select
           label="Role"
           value={currentUser.role}
-          onChange={(e) =>
-            setCurrentUser({ ...currentUser, role: e.target.value })
-          }
+          onChange={handleChange}
           options={[
             { value: "standard", label: "Standard" },
             { value: "admin", label: "Admin" },
