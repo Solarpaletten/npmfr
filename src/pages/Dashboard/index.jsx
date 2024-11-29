@@ -17,7 +17,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-function Dashboard({ onLogout }) {
+function Dashboard() {
   const api = useAuthenticatedApi();
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({
@@ -79,11 +79,7 @@ function Dashboard({ onLogout }) {
   };
 
   return (
-    <Page
-      loading={statsLoading && usersLoading}
-      error={error}
-      onLogout={onLogout}
-    >
+    <Page loading={statsLoading && usersLoading} error={error}>
       <h1>Dashboard</h1>
 
       <Cards columns={3}>
