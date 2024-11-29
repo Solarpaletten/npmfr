@@ -1,7 +1,7 @@
 import {
   faPeopleLine, // для Clients
   faWarehouse, // для Warehouse
-  faBox,  // для Product Cards
+  faBox, // для Product Cards
   faArrowDown, // для Purchases
   faArrowUp, // для Sales
   faBoxesStacked, // для Item Stock
@@ -14,7 +14,6 @@ import {
   faFolderOpen, // для Documents
   faHandHoldingDollar, // для Salary
   faReceipt, // для Declaration
-  faBook as faReference, // для Reference Book
   faCreditCard, // для Banks
   faGlobe, // для Locations
   faMoneyBillTransfer, // для Currencies
@@ -26,7 +25,6 @@ import {
   faUniversity, // для Bank
   faLink, // для Bank Link with Cor. Acc.
   faFileImport, // для Import Statements
-  faMoneyBillTransfer as faSepa, // для SEPA Payments
   faChartLine, // для Statistical Declaration
   faBoxes, // для Customs Declaration
   faMoneyBillWave, // для Payroll
@@ -37,8 +35,7 @@ import {
   faCalendarCheck, // для Period Closure
   faMoneyBill, // для Currency Range
   faExchangeAlt, // для Exchange Rate
-  faChartLine as faChartBar , // для Chart of Accounts
-} from '@fortawesome/free-solid-svg-icons'; // Импорт иконок из библиотеки
+} from "@fortawesome/free-solid-svg-icons";
 
 const filterVisibleItems = (items) => {
   return items
@@ -160,7 +157,7 @@ const menuData = [
         label: "SEPA Payments",
         labelRu: "SEPA платежи",
         path: "/bank/sepa-payments",
-        icon: faSepa,
+        icon: faMoneyBillTransfer,
         active: true,
       },
     ],
@@ -177,56 +174,56 @@ const menuData = [
         labelRu: "Регистр",
         path: "/general-ledger/register",
         icon: faList,
-        active: true
+        active: true,
       },
       {
         label: "Ledger",
         labelRu: "Книга учета",
-        path: "/general-ledger/ledger", 
+        path: "/general-ledger/ledger",
         icon: faBook,
-        active: true
+        active: true,
       },
       {
         label: "Settlement",
         labelRu: "Взаиморасчеты",
         path: "/general-ledger/settlement",
         icon: faHandshake,
-        active: true
+        active: true,
       },
       {
         label: "Period Closure",
         labelRu: "Закрытие периода",
         path: "/general-ledger/period-closure",
         icon: faCalendarCheck,
-        active: true
+        active: true,
       },
       {
         label: "Currency Range",
         labelRu: "Диапазон валют",
         path: "/general-ledger/currency-range",
         icon: faMoneyBill,
-        active: true
+        active: true,
       },
       {
         label: "Exchange Rate",
         labelRu: "Курс обмена",
         path: "/general-ledger/exchange-rate",
         icon: faExchangeAlt,
-        active: true
+        active: true,
       },
       {
         label: "Chart of Accounts",
         labelRu: "План счетов",
         path: "/general-ledger/chart-of-accounts",
-        icon: faChartBar,
-        active: true
-      }
-    ]
+        icon: faChartLine,
+        active: true,
+      },
+    ],
   },
   {
     label: "Reference Book",
     labelRu: "Справочники",
-    icon: faReference,
+    icon: faBook,
     active: true,
     subItems: [
       {
@@ -297,7 +294,6 @@ const menuData = [
     path: "/reports",
     icon: faSheetPlastic,
     active: true,
-    // visible: false,
   },
   {
     label: "Personnel",
@@ -334,43 +330,43 @@ const menuData = [
     icon: faHandHoldingDollar,
     active: true,
     subItems: [
-        {
-            label: "Payroll",
-            labelRu: "Расчет зарплаты",
-            path: "/salary/payroll",
-            icon: faMoneyBillWave,
-            active: true,
-        },
-        {
-            label: "Timesheets",
-            labelRu: "Табели",
-            path: "/salary/timesheets",
-            icon: faCalendarDays,
-            active: true,
-        },
-        {
-            label: "Work schedule",
-            labelRu: "График работы",
-            path: "/salary/schedule",
-            icon: faCalendarWeek,
-            active: true,
-        },
-        {
-            label: "Wage prints",
-            labelRu: "Расчетные листы",
-            path: "/salary/wage-prints",
-            icon: faFileInvoiceDollar,
-            active: true,
-        },
-        {
-            label: "Reference book",
-            labelRu: "Справочники",
-            path: "/salary/reference",
-            icon: faBook,
-            active: true,
-          },
-        ],
+      {
+        label: "Payroll",
+        labelRu: "Расчет зарплаты",
+        path: "/salary/payroll",
+        icon: faMoneyBillWave,
+        active: true,
       },
+      {
+        label: "Timesheets",
+        labelRu: "Табели",
+        path: "/salary/timesheets",
+        icon: faCalendarDays,
+        active: true,
+      },
+      {
+        label: "Work schedule",
+        labelRu: "График работы",
+        path: "/salary/schedule",
+        icon: faCalendarWeek,
+        active: true,
+      },
+      {
+        label: "Wage prints",
+        labelRu: "Расчетные листы",
+        path: "/salary/wage-prints",
+        icon: faFileInvoiceDollar,
+        active: true,
+      },
+      {
+        label: "Reference book",
+        labelRu: "Справочники",
+        path: "/salary/reference",
+        icon: faBook,
+        active: true,
+      },
+    ],
+  },
   {
     label: "Declaration",
     labelRu: "Декларации",
@@ -398,7 +394,6 @@ const menuData = [
         path: "/declaration/statistical",
         icon: faChartLine,
         active: true,
-        // visible: false,
       },
       {
         label: "Customs Declaration",
@@ -406,7 +401,6 @@ const menuData = [
         path: "/declaration/customs",
         icon: faBoxes,
         active: true,
-        // visible: false,
       },
     ],
   },
@@ -414,4 +408,3 @@ const menuData = [
 
 const visibleMenuData = filterVisibleItems(menuData);
 export default visibleMenuData;
-
