@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 const GeneralRegister = () => {
   return (
     <Page loading={false} error={""}>
-      <h1>GeneralRegister</h1>
+      <h1>General Register</h1>
       <div className={styles}>fix it</div>
     </Page>
   );
