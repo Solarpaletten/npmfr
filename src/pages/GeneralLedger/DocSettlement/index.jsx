@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 const DocSettlement = () => {
   return (
     <Page loading={false} error={""}>
-      <h1>DocSettlement</h1>
+      <h1>Doc Settlement</h1>
       <div className={styles}>fix it</div>
     </Page>
   );

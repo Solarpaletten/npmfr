@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 const CurrencyRange = () => {
   return (
     <Page loading={false} error={""}>
-      <h1>CurrencyRange</h1>
+      <h1>Currency Range</h1>
       <div className={styles}>fix it</div>
     </Page>
   );

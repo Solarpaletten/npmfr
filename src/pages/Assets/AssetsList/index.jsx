@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 const AssetsList = () => {
   return (
     <Page loading={false} error={""}>
-      <h1>AssetsList</h1>
+      <h1>Assets List</h1>
       <div className={styles}>fix it</div>
     </Page>
   );
