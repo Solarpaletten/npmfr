@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useAuthenticatedApi } from "../utils/api";
 import { useUser } from "./UserContext";
 
@@ -11,7 +17,7 @@ export const ClientProvider = ({ children }) => {
   const { get } = useAuthenticatedApi();
   const { user } = useUser();
 
-  const fetchClients = async () => {
+  const fetchClients = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -23,7 +29,7 @@ export const ClientProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [get]);
 
   const refetchClients = async () => {
     await fetchClients();
@@ -35,7 +41,7 @@ export const ClientProvider = ({ children }) => {
     } else {
       setClients([]);
     }
-  }, [user]);
+  }, [user, fetchClients]);
 
   return (
     <ClientContext.Provider

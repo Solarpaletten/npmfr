@@ -95,6 +95,7 @@ const ProductCalculatorTable = ({ setData, loading, data }) => {
         totalVAT > 0 ? ((totalVAT / totalExclVAT) * 100).toFixed(2) : "0",
       products: rows,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalExclVAT, totalVAT, totalInclVAT, rows, data]);
 
   return (

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useAuthenticatedApi } from "../utils/api";
 import { useUser } from "./UserContext";
 
@@ -11,7 +17,7 @@ export const ProductProvider = ({ children }) => {
   const { get } = useAuthenticatedApi();
   const { user } = useUser();
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -23,7 +29,7 @@ export const ProductProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [get]);
 
   useEffect(() => {
     if (user?.token) {
@@ -31,7 +37,7 @@ export const ProductProvider = ({ children }) => {
     } else {
       setProducts([]);
     }
-  }, [user]);
+  }, [user, fetchProducts]);
 
   return (
     <ProductContext.Provider

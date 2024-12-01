@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../../components/Page";
 import { Form } from "../../../components/Modal";
@@ -23,7 +23,7 @@ const ClientEditForm = () => {
 
   const api = useAuthenticatedApi();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -36,11 +36,11 @@ const ClientEditForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, api]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

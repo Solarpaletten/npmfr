@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../components/Page";
@@ -36,7 +36,7 @@ const Sales = () => {
 
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -49,11 +49,11 @@ const Sales = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [api]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     if (allSelected) {

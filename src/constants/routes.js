@@ -7,7 +7,6 @@ import WagePrints from "../pages/Salary/WagePrints";
 import SalaryReferenceBook from "../pages/Salary/SalaryReferenceBook";
 import Purchases from "../pages/Warehouse/Purchases";
 import Sales from "../pages/Warehouse/Sales";
-import Stock from "../pages/Warehouse/Stock";
 import SaleAddForm from "../pages/Warehouse/Sales/SaleAddForm";
 import SaleEditForm from "../pages/Warehouse/Sales/SaleEditForm";
 import PurchaseAddForm from "../pages/Warehouse/Purchases/PurchaseAddForm";
@@ -57,6 +56,12 @@ import Positions from "../pages/Personnel/Positions";
 import ProductionOrders from "../pages/Production/ProductionOrders";
 import ProductionPlans from "../pages/Production/ProductionPlans";
 import WorkshopManagement from "../pages/Production/WorkshopManagement";
+import ClientPrices from "../pages/Warehouse/ClientPrices";
+import AutomaticInvoicing from "../pages/Warehouse/AutomaticInvoicing";
+import SalesReturns from "../pages/Warehouse/SalesReturns";
+import ItemStock from "../pages/Warehouse/ClientPrices";
+import ItemMovement from "../pages/Warehouse/ClientPrices";
+import ConsignmentBalance from "../pages/Warehouse/ClientPrices";
 
 const routes = [
   { path: "/dashboard", component: Dashboard },
@@ -71,7 +76,12 @@ const routes = [
   { path: "/warehouse/sales", component: Sales },
   { path: "/warehouse/sales/create", component: SaleAddForm },
   { path: "/warehouse/sales/edit/:id", component: SaleEditForm },
-  { path: "/warehouse/stock", component: Stock },
+  { path: "/warehouse/client-prices", component: ClientPrices },
+  { path: "/warehouse/auto-invoicing", component: AutomaticInvoicing },
+  { path: "/warehouse/sales-returns", component: SalesReturns },
+  { path: "/warehouse/stock", component: ItemStock },
+  { path: "/warehouse/movement", component: ItemMovement },
+  { path: "/warehouse/consignment", component: ConsignmentBalance },
 
   { path: "/bank/operations", component: BankOperations },
   { path: "/bank/import-statements", component: ImportStatements },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Modal, Form } from "../../../../components/Modal";
 import Field from "../../../../components/Field";
 import Select from "../../../../components/Select";
@@ -24,7 +24,7 @@ const AddForm = ({ onShowForm, requery }) => {
 
   const api = useAuthenticatedApi();
 
-  const fetchEmployees = async () => {
+  const fetchEmployees = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -37,11 +37,11 @@ const AddForm = ({ onShowForm, requery }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [api]);
 
   useEffect(() => {
     fetchEmployees();
-  }, []);
+  }, [fetchEmployees]);
 
   const handleAdd = async (e) => {
     e.preventDefault();

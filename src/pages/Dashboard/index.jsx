@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Page from "../../components/Page";
 import Toolbar from "../../components/Toolbar";
@@ -36,34 +36,29 @@ function Dashboard() {
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  useEffect(() => {
-    fetchUsers({ searchTerm, ...sort });
-  }, [searchTerm, sort]);
+  const fetchUsers = useCallback(
+    async ({ searchTerm, sort, order }) => {
+      setUsersLoading(true);
+      setError(null);
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, [users]);
+      try {
+        const data = await api.get("/users", {
+          search: searchTerm,
+          sort,
+          order,
+        });
 
-  const fetchUsers = async ({ searchTerm, sort, order }) => {
-    setUsersLoading(true);
-    setError(null);
+        setUsers(data);
+      } catch (error) {
+        setError("Failed to fetch users");
+      } finally {
+        setUsersLoading(false);
+      }
+    },
+    [api]
+  );
 
-    try {
-      const data = await api.get("/users", {
-        search: searchTerm,
-        sort,
-        order,
-      });
-
-      setUsers(data);
-    } catch (error) {
-      setError("Failed to fetch users");
-    } finally {
-      setUsersLoading(false);
-    }
-  };
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     setStatsLoading(true);
     setError(null);
 
@@ -76,7 +71,15 @@ function Dashboard() {
     } finally {
       setStatsLoading(false);
     }
-  };
+  }, [api]);
+
+  useEffect(() => {
+    fetchUsers({ searchTerm, ...sort });
+  }, [fetchUsers, searchTerm, sort]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData, users]);
 
   return (
     <Page loading={statsLoading && usersLoading} error={error}>
