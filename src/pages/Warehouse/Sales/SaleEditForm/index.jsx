@@ -67,7 +67,7 @@ const SaleEditForm = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, api]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
