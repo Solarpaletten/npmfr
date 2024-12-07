@@ -19,5 +19,12 @@ npm i
 2. Start the project
 ```
 npm start
+
+or 
+
+npm run build
+
+serve -s build
+
 ```
 3. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
