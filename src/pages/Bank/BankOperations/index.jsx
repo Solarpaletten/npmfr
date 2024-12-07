@@ -50,18 +50,21 @@ const BankOperations = () => {
     
     try {
       setLoading(true);
-      await bankOperationsService.create({
+      const operationData = {
         type: operationType,
         amount: formData.get('amount'),
         date: formData.get('date'),
         client: formData.get('client'),
-        description: formData.get('description'),
+        description: formData.get('description') || '',
         correspondingAccount: formData.get('correspondingAccount')
-      });
+      };
+      
+      await bankOperationsService.create(operationData);
       await loadOperations();
       setShowForm(false);
     } catch (err) {
-      setError(err.message);
+      console.error('Error creating operation:', err);
+      setError(err.message || 'Failed to create operation');
     } finally {
       setLoading(false);
     }
