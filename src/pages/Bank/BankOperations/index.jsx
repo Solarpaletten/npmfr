@@ -12,8 +12,20 @@ const BankOperations = () => {
   const [operationType, setOperationType] = useState('');
 
   useEffect(() => {
-    loadOperations();
-  }, []);
+    const fetchOperations = async () => {
+      try {
+        setLoading(true);
+        const response = await bankOperationsService.getAll();
+        setOperations(response.data || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOperations();
+  }, [bankOperationsService]);
 
   const loadOperations = async () => {
     try {
