@@ -1,36 +1,29 @@
 .container {
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 .buttons {
+  margin-bottom: 20px;
   display: flex;
   gap: 10px;
 }
 
 .buttons button {
   padding: 8px 16px;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: white;
+  border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .buttons button:hover {
-  background-color: #e9ecef;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  background: #f5f5f5;
 }
 
 .tableContainer {
   overflow-x: auto;
-  background-color: white;
+  margin-bottom: 20px;
+  background: white;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -44,29 +37,29 @@
 .table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #eee;
 }
 
 .table th {
-  background-color: #f8f9fa;
+  background: #f8f9fa;
   font-weight: 500;
+}
+
+.table td {
+  white-space: nowrap;
 }
 
 .editButton {
   padding: 4px 8px;
-  background-color: transparent;
-  border: 1px solid #dee2e6;
+  background: transparent;
+  border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.editButton:hover {
-  background-color: #f8f9fa;
-}
-
 .form {
+  background: white;
   padding: 20px;
-  background-color: white;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -79,15 +72,9 @@
 }
 
 .formContent input {
-  padding: 8px 12px;
-  border: 1px solid #dee2e6;
+  padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 14px;
-}
-
-.formContent input:disabled {
-  background-color: #f8f9fa;
-  cursor: not-allowed;
 }
 
 .formButtons {
@@ -101,24 +88,15 @@
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: 500;
 }
 
 .cancelButton {
-  background-color: white;
-  border: 1px solid #dee2e6;
-}
-
-.cancelButton:hover {
-  background-color: #f8f9fa;
+  background: white;
+  border: 1px solid #ddd;
 }
 
 .saveButton {
-  background-color: #0d6efd;
+  background: #0066cc;
   color: white;
-  border: 1px solid #0d6efd;
-}
-
-.saveButton:hover {
-  background-color: #0b5ed7;
+  border: 1px solid #0066cc;
 }
