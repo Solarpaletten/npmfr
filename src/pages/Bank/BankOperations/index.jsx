@@ -2,58 +2,140 @@ import React, { useState } from "react";
 import Page from "../../../components/Page";
 import styles from "./index.module.css";
 
-const pesaroBankData = [
+const bankData = [
   {
-    date: "27.08.2021",
-    doc: "",
-    client: "UAB A JUSTICE",
-    amount: "1050,00",
+    date: "16.11.2020",
+    doc: "11",
+    client: "Bank Commission",
+    amount: "0,10",
     currency: "EUR",
     transactionType: "Транзакции с клиентами",
-    type: "PA-",
+    type: "PA",
     user: "sprapsoil@gmail.com",
-    description: "Счет № 1069 (26.08.2021)"
+    description: "Банковская комиссия",
+    isDebit: true
   },
   {
-    date: "08.07.2021",
-    doc: "",
+    date: "16.11.2020",
+    doc: "7",
     client: "UAB A JUSTICE",
-    amount: "1188,00",
+    amount: "10 125,00",
     currency: "EUR",
     transactionType: "Транзакции с клиентами",
-    type: "PA-",
+    type: "PA",
     user: "sprapsoil@gmail.com",
     description: "Предоплата"
   },
-  // ... добавьте остальные операции здесь
   {
-    date: "28.10.2020",
-    doc: "43",
+    date: "16.09.2020",
+    doc: "10",
     client: "UAB A JUSTICE",
-    amount: "-1395,24",
+    amount: "130,00",
     currency: "EUR",
     transactionType: "Транзакции с клиентами",
-    type: "PA-62",
+    type: "PA",
     user: "sprapsoil@gmail.com",
-    description: "UAB A JUSTICE (refund of the invoice)",
-    isDebit: true
+    description: "Предоплата"
+  },
+  {
+    date: "24.08.2020",
+    doc: "9",
+    client: "UAB A JUSTICE",
+    amount: "2 435,00",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
+  },
+  {
+    date: "18.08.2020",
+    doc: "5",
+    client: "UAB A JUSTICE",
+    amount: "2 960,25",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
+  },
+  {
+    date: "27.07.2020",
+    doc: "6",
+    client: "UAB A JUSTICE",
+    amount: "19 000,00",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
+  },
+  {
+    date: "19.06.2020",
+    doc: "1",
+    client: "UAB A JUSTICE",
+    amount: "11 356,00",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
+  },
+  {
+    date: "11.06.2020",
+    doc: "8",
+    client: "UAB A JUSTICE",
+    amount: "1 019,05",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
+  },
+  {
+    date: "25.05.2020",
+    doc: "2",
+    client: "UAB A JUSTICE",
+    amount: "960,00",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
+  },
+  {
+    date: "08.05.2020",
+    doc: "3",
+    client: "UAB A JUSTICE",
+    amount: "774,52",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Счет № 1012 (06.05.2020)"
+  },
+  {
+    date: "05.05.2020",
+    doc: "4",
+    client: "UAB A JUSTICE",
+    amount: "1 577,00",
+    currency: "EUR",
+    transactionType: "Транзакции с клиентами",
+    type: "PA",
+    user: "sprapsoil@gmail.com",
+    description: "Предоплата"
   }
-];
-
-const alphaBankData = [
-  // ... ваши предыдущие данные по Альфа-банку
 ];
 
 const BankOperations = () => {
   const [showForm, setShowForm] = useState(false);
   const [operationType, setOperationType] = useState("");
-  const [selectedBank, setSelectedBank] = useState("alpha"); // для выбора банка в форме
 
   const calculateTotals = (operations) => {
     return operations.reduce((acc, op) => {
       const amount = parseFloat(op.amount.replace(/\s/g, '').replace(',', '.'));
-      if (op.isDebit || amount < 0) {
-        acc.debit += Math.abs(amount);
+      if (op.isDebit) {
+        acc.debit += amount;
       } else {
         acc.credit += amount;
       }
@@ -61,59 +143,10 @@ const BankOperations = () => {
     }, { credit: 0, debit: 0 });
   };
 
-  const renderBankSection = (data, bankName, accountNumber) => (
-    <div className={styles.bankSection}>
-      <h2>{bankName} (Счет: {accountNumber})</h2>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Док</th>
-            <th>Клиент/Поставщик</th>
-            <th>Сумма</th>
-            <th>Вал.</th>
-            <th>Тип транзакции</th>
-            <th>T.</th>
-            <th>Пользователь</th>
-            <th>Описание</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((operation, index) => (
-            <tr key={index}>
-              <td>{operation.date}</td>
-              <td>{operation.doc}</td>
-              <td>{operation.client}</td>
-              <td className={operation.isDebit || parseFloat(operation.amount.replace(/\s/g, '').replace(',', '.')) < 0 
-                ? styles.debitAmount 
-                : styles.creditAmount}
-              >
-                {operation.amount}
-              </td>
-              <td>{operation.currency}</td>
-              <td>{operation.transactionType}</td>
-              <td>{operation.type}</td>
-              <td>{operation.user}</td>
-              <td>{operation.description}</td>
-              <td>
-                <button className={styles.editButton}>Edit</button>
-              </td>
-            </tr>
-          ))}
-          <tr className={styles.totalRow}>
-            <td colSpan="3">Итого по счету {accountNumber}:</td>
-            <td>
-              <div>Поступления: {new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(calculateTotals(data).credit)} EUR</div>
-              <div>Списания: {new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(calculateTotals(data).debit)} EUR</div>
-              <div>Баланс: {new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(calculateTotals(data).credit - calculateTotals(data).debit)} EUR</div>
-            </td>
-            <td colSpan="6"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+  const handleNewOperation = (type) => {
+    setOperationType(type);
+    setShowForm(true);
+  };
 
   return (
     <Page loading={false} error={""}>
@@ -123,26 +156,79 @@ const BankOperations = () => {
         <div className={styles.buttons}>
           <button onClick={() => handleNewOperation("D")}>Д</button>
           <button onClick={() => handleNewOperation("K")}>К</button>
-          <select 
-            value={selectedBank} 
-            onChange={(e) => setSelectedBank(e.target.value)}
-            className={styles.bankSelect}
-          >
-            <option value="alpha">Альфа Банк</option>
-            <option value="pesaro">Pesaro Bank</option>
-          </select>
         </div>
 
-        {/* Секция Альфа-банка */}
-        {renderBankSection(alphaBankData, "Альфа Банк", "271")}
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Док</th>
+                <th>Клиент/Поставщик</th>
+                <th>Сумма</th>
+                <th>Вал.</th>
+                <th>Тип транзакции</th>
+                <th>T.</th>
+                <th>Пользователь</th>
+                <th>Описание</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bankData.map((operation) => (
+                <tr key={operation.doc}>
+                  <td>{operation.date}</td>
+                  <td>{operation.doc}</td>
+                  <td>{operation.client}</td>
+                  <td className={operation.isDebit ? styles.debitAmount : styles.creditAmount}>
+                    {operation.amount}
+                  </td>
+                  <td>{operation.currency}</td>
+                  <td>{operation.transactionType}</td>
+                  <td>{operation.type}</td>
+                  <td>{operation.user}</td>
+                  <td>{operation.description}</td>
+                  <td>
+                    <button className={styles.editButton}>Edit</button>
+                  </td>
+                </tr>
+              ))}
+              <tr className={styles.totalRow}>
+                <td colSpan="3">Итого:</td>
+                <td>
+                  <div>Поступления: {new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(calculateTotals(bankData).credit)} EUR</div>
+                  <div>Списания: {new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(calculateTotals(bankData).debit)} EUR</div>
+                  <div>Баланс: {new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(calculateTotals(bankData).credit - calculateTotals(bankData).debit)} EUR</div>
+                </td>
+                <td colSpan="6"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        {/* Секция Pesaro банка */}
-        {renderBankSection(pesaroBankData, "Pesaro Bank", "272")}
-
-        {/* Форма добавления операции */}
         {showForm && (
           <div className={styles.form}>
-            {/* ... остальной код формы ... */}
+            <div className={styles.formContent}>
+              <input disabled value="271" />
+              <input disabled value={operationType} />
+              <input type="date" />
+              <input type="text" placeholder="Документ" />
+              <input placeholder="Клиент/Поставщик" />
+              <input type="number" step="0.01" placeholder="Сумма" />
+              <input placeholder="Валюта" defaultValue="EUR" />
+              <input placeholder="Тип транзакции" defaultValue="Транзакции с клиентами" />
+              <input placeholder="Пользователь" />
+              <input placeholder="Описание" />
+            </div>
+            <div className={styles.formButtons}>
+              <button 
+                className={styles.cancelButton}
+                onClick={() => setShowForm(false)}
+              >
+                Cancel
+              </button>
+              <button className={styles.saveButton}>Save</button>
+            </div>
           </div>
         )}
       </div>
