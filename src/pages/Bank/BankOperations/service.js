@@ -4,15 +4,19 @@ const useBankOperationsService = () => {
   const api = useAuthenticatedApi();
 
   return {
-    // Get all operations
-    getAll: () => {
-      // Убираем https://npmbk.onrender.com из URL, так как это уже включено в BASE_URL
-      return api.get('/v1/bank/operations');
+    getAll: async () => {
+      console.log('API URL:', process.env.REACT_APP_API_URL);
+      try {
+        const response = await api.get('api/bank/operations');
+        console.log('Response:', response);
+        return response;
+      } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+      }
     },
 
-    // Create new operation
-    create: (operationData) => {
-      // Форматируем данные перед отправкой
+    create: async (operationData) => {
       const data = {
         type: operationData.type,
         amount: Number(operationData.amount),
@@ -22,7 +26,12 @@ const useBankOperationsService = () => {
         correspondingAccount: operationData.correspondingAccount
       };
       
-      return api.post('/v1/bank/operations', data);
+      try {
+        return await api.post('api/bank/operations', data);
+      } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+      }
     }
   };
 };
