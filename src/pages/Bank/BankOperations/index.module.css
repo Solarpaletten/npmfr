@@ -45,8 +45,21 @@
   font-weight: 500;
 }
 
-.table td {
-  white-space: nowrap;
+.debitAmount {
+  color: #dc3545;
+}
+
+.creditAmount {
+  color: #28a745;
+}
+
+.totalRow {
+  font-weight: bold;
+  background-color: #f8f9fa;
+}
+
+.totalRow td {
+  padding: 15px;
 }
 
 .editButton {
