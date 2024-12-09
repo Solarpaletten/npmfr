@@ -1,54 +1,15 @@
+/* BankOperations/index.module.css */
 .container {
   padding: 20px;
 }
 
-.buttons {
+.header {
   margin-bottom: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.buttons button {
-  padding: 8px 16px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.buttons button:hover {
-  background: #f5f5f5;
-}
-
-.tableContainer {
-  overflow-x: auto;
-  margin-bottom: 20px;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-.sortableHeader {
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  padding-right: 24px;
-}
-
-.sortableHeader:hover {
-  background-color: #f8f9fa;
 }
 
 .debitAmount {
@@ -59,21 +20,8 @@
   color: #28a745;
 }
 
-.totalRow {
-  font-weight: bold;
-  background-color: #f8f9fa;
-}
-
-.totalRow td {
-  padding: 15px;
-}
-
-.editButton {
-  padding: 4px 8px;
-  background: transparent;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
+.operations {
+  margin-top: 20px;
 }
 
 .form {
@@ -81,58 +29,57 @@
   padding: 20px;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
 }
 
-.formContent {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
+.formGroup {
+  margin-bottom: 15px;
 }
 
-.formContent input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.formButtons {
+.formActions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 20px;
 }
 
-.cancelButton,
-.saveButton {
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+.searchField {
+  width: 300px;
+  margin-left: auto;
 }
 
-.cancelButton {
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.toolbar button {
+  margin-right: 10px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContent {
   background: white;
-  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 4px;
+  min-width: 400px;
 }
 
-.saveButton {
-  background: #0066cc;
-  color: white;
-  border: 1px solid #0066cc;
-}
-
-.saveButton:hover {
-  background: #0052a3;
-}
-
-.cancelButton:hover {
-  background: #f5f5f5;
-}
-
-.table tr:hover {
-  background-color: #f8f9fa;
-}
-
-.editButton:hover {
-  background: #f5f5f5;
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
 }
