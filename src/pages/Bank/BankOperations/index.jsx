@@ -8,10 +8,6 @@ import { Table, Row, Cell } from "../../../components/Table";
 import Button from "../../../components/Button";
 import BankOperationCopyForm from "../BankOperationCopyForm";
 import BankOperationDeleteForm from "../BankOperationDeleteForm";
-
-
-
-
 import { useBankOperations } from "../../../contexts/BankOperationsContext";
 import columns from "./columns";
 import {
