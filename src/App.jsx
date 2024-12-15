@@ -16,6 +16,7 @@ import { ClientProvider } from "./contexts/ClientContext";
 import { WarehouseProvider } from "./contexts/WarehouseContext";
 import { ProductProvider } from "./contexts/ProductContext";
 import { BankOperationsProvider } from "./contexts/BankOperationsContext";
+import { AccountProvider } from "./contexts/AccountContext";
 
 import "./App.css";
 
@@ -81,9 +82,11 @@ export default function RootApp() {
         <WarehouseProvider>
           <ProductProvider>
             <BankOperationsProvider>
+            <AccountProvider>
               <Router>
                 <App />
               </Router>
+              </AccountProvider>
             </BankOperationsProvider>
           </ProductProvider>
         </WarehouseProvider>
