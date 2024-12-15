@@ -6,8 +6,8 @@ import Toolbar from "../../../components/Toolbar";
 import SearchField from "../../../components/SearchField";
 import { Table, Row, Cell } from "../../../components/Table";
 import Button from "../../../components/Button";
-import AccountCopyForm from "../AccountCopyForm";
-import AccountDeleteForm from "../AccountDeleteForm";
+import AccountCopyForm from "./AccountCopyForm";
+import AccountDeleteForm from "./AccountDeleteForm";
 import { useAccounts } from "../../../contexts/AccountContext";
 import columns from "./columns";
 import {
