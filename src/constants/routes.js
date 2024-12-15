@@ -46,6 +46,8 @@ import Banks from "../pages/ReferenceBook/Banks";
 import CorrespondentBanks from "../pages/ReferenceBook/CorrespondentBanks";
 import Currencies from "../pages/ReferenceBook/Currencies";
 import CurrencyRates from "../pages/ReferenceBook/CurrencyRates";
+import AccountAddForm from "../pages/GeneralLedger/ChartOfAccounts/AccountAddForm";
+import AccountEditForm from "../pages/GeneralLedger/ChartOfAccounts/AccountEditForm";
 import BankOperations from "../pages/Bank/BankOperations";
 import ImportStatements from "../pages/Bank/ImportStatements";
 import BankLink from "../pages/Bank/BankLink";
@@ -95,6 +97,8 @@ const routes = [
   { path: "/general-ledger/currency-range", component: CurrencyRange },
   { path: "/general-ledger/exchange-rate", component: ExchangeRate },
   { path: "/general-ledger/chart-of-accounts", component: ChartOfAccounts },
+  { path: "/general-ledger/chart-of-accounts/create", component: AccountAddForm },
+  { path: "/general-ledger/chart-of-accounts/edit/:id", component: AccountEditForm },
 
   { path: "/references/product-cards", component: ProductCards },
   { path: "/references/warehouse", component: WarehouseReferences },
