@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Form } from "../../../components/Modal";
-import { useAuthenticatedApi } from "../../../utils/api";
+import Form from "../../../../components/Form";
+import { Modal } from "../../../../components/Modal";  // Используем именованный импорт
+import { useAuthenticatedApi } from "../../../../utils/api";
 
 const AccountDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const api = useAuthenticatedApi();
 
   const handleDelete = async (e) => {
@@ -13,7 +15,7 @@ const AccountDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
 
     try {
       await Promise.all(
-        selected.map((s) => api.delete(`/chart-of-accounts/${s.id}`))
+        selected.map((account) => api.delete(`/chart-of-accounts/${account.id}`))
       );
 
       requery();
@@ -33,8 +35,8 @@ const AccountDeleteForm = ({ onShowForm, requery, selected, setSelected }) => {
         onClose={() => onShowForm(false)}
         loading={loading}
         error={error}
-        buttonPositiveName="Delete"
-        buttonNegativeName="Cancel"
+        buttonPositiveName={"Delete"}
+        buttonNegativeName={"Cancel"}
       >
         <h2>Delete account(s)</h2>
         <p>

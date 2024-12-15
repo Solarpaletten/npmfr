@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Modal, Form } from "../../../components/Modal";
-import { useAuthenticatedApi } from "../../../utils/api";
+import Form from "../../../../components/Form";
+import { Modal } from "../../../../components/Modal";
+import { useAuthenticatedApi } from "../../../../utils/api";
 
 const AccountCopyForm = ({ onShowForm, requery, selected, setSelected }) => {
   const [loading, setLoading] = useState(false);

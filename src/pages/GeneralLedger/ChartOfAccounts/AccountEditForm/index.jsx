@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../../../components/Page";
-import { Form } from "../../../../components/Modal";
-import Field from "../../../../components/Field";
-import { Checkbox } from "../../../components/Checkbox";
-import { useAccounts } from "../../../../contexts/AccountContext";
-import { useAuthenticatedApi } from "../../../../utils/api";
+import Page from "../../../../components/Page";  // Исправили путь
+import Form from "../../../../components/Form";  // Исправили путь
+import Field from "../../../../components/Field";  // Исправили путь
+import { useAccounts } from "../../../../contexts/AccountContext";  // Исправили путь
+import { useAuthenticatedApi } from "../../../../utils/api";  // Исправили путь
 
 const AccountEditForm = () => {
   const { refetch } = useAccounts();
@@ -114,27 +113,36 @@ const AccountEditForm = () => {
           disabled={loading}
         />
         <div className="checkbox-group">
-          <Checkbox
-            name="is_reserve"
-            checked={formData.is_reserve}
-            onChange={handleChange}
-            disabled={loading}
-            label="Reserve"
-          />
-          <Checkbox
-            name="is_advance"
-            checked={formData.is_advance}
-            onChange={handleChange}
-            disabled={loading}
-            label="Advance"
-          />
-          <Checkbox
-            name="is_active"
-            checked={formData.is_active}
-            onChange={handleChange}
-            disabled={loading}
-            label="Active"
-          />
+          <label>
+            <Field
+              type="checkbox"
+              name="is_reserve"
+              checked={formData.is_reserve}
+              onChange={handleChange}
+              disabled={loading}
+            />
+            Reserve
+          </label>
+          <label>
+            <Field
+              type="checkbox"
+              name="is_advance"
+              checked={formData.is_advance}
+              onChange={handleChange}
+              disabled={loading}
+            />
+            Advance
+          </label>
+          <label>
+            <Field
+              type="checkbox"
+              name="is_active"
+              checked={formData.is_active}
+              onChange={handleChange}
+              disabled={loading}
+            />
+            Active
+          </label>
         </div>
       </Form>
     </Page>
