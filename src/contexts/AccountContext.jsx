@@ -25,6 +25,16 @@ export const AccountProvider = ({ children }) => {
     }
   }, [get]);
 
+  useEffect(() => {
+    if (user?.token) {
+      console.log('User token present, fetching accounts');
+      fetchAccounts();
+    } else {
+      console.log('No user token, clearing accounts');
+      setAccounts([]);
+    }
+  }, [user, fetchAccounts]);
+
   const refetchAccounts = async () => {
     await fetchAccounts();
   };

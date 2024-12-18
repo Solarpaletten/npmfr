@@ -20,7 +20,7 @@ import { AccountProvider } from "./contexts/AccountContext";
 
 import "./App.css";
 
-function App() {
+function AppContent() {
   const { user, logoutUser } = useUser();
   const navigate = useNavigate();
 
@@ -75,22 +75,30 @@ function App() {
   );
 }
 
-export default function RootApp() {
+function AppProviders({ children }) {
   return (
     <UserProvider>
       <ClientProvider>
         <WarehouseProvider>
           <ProductProvider>
             <BankOperationsProvider>
-            <AccountProvider>
-              <Router>
-                <App />
-              </Router>
+              <AccountProvider>
+                {children}
               </AccountProvider>
             </BankOperationsProvider>
           </ProductProvider>
         </WarehouseProvider>
       </ClientProvider>
     </UserProvider>
+  );
+}
+
+export default function RootApp() {
+  return (
+    <Router>
+      <AppProviders>
+        <AppContent />
+      </AppProviders>
+    </Router>
   );
 }

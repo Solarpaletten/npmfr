@@ -148,4 +148,5 @@ const routes = [
   { path: "/settings/security", component: Security },
 ];
 
+
 export default routes;
