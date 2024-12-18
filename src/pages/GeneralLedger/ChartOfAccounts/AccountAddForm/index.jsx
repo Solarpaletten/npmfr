@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../../../components/Page";
-import Form from "../../../../components/Form";
-import Field from "../../../../components/Field";
-import { useAccounts } from "../../../../contexts/AccountContext";
-import { useAuthenticatedApi } from "../../../../utils/api";
+import Page from "../../../../components/Page";  // Исправлен путь
+import { Form } from "../../../../components/Modal";  // Исправлен путь
+import Field from "../../../../components/Field";  // Исправлен путь
+import { useAccounts } from "../../../../contexts/AccountContext";  // Исправлен путь
+import { useAuthenticatedApi } from "../../../../utils/api";  // Исправлен путь
 
 const AccountAddForm = () => {
   const { refetch } = useAccounts();
@@ -12,12 +12,12 @@ const AccountAddForm = () => {
     code: "",
     name: "",
     parent_code: "",
+    cost_center: "",
     is_reserve: false,
     is_advance: false,
-    cost_center: "",
     is_active: true
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -39,14 +39,15 @@ const AccountAddForm = () => {
     setError(null);
 
     try {
-      await api.post("/chart-of-accounts", formData);
-      refetch();
-      navigate("/general-ledger/chart-of-accounts");
+        await api.post("/chart-of-accounts", formData);
+        refetch();
+        navigate("/general-ledger/chart-of-accounts");
     } catch (err) {
-      setError("Failed to create account");
-      setLoading(false);
+        console.error('Error details:', err);  // Добавляем детальный лог ошибки
+        setError(err.message || "Failed to create account");
+        setLoading(false);
     }
-  };
+};
 
   return (
     <Page>
