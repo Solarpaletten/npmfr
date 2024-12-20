@@ -13,7 +13,7 @@ import columns from "./columns";
 import {
  faTrashCan,
  faCopy,
- faPenToSquare, 
+ faPenToSquare,
  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -25,17 +25,15 @@ const ChartOfAccounts = () => {
    error: accountsError,
  } = useAccounts();
 
- // States
  const [searchTerm, setSearchTerm] = useState("");
  const [sort, setSort] = useState({ sort: "code", order: "ASC" });
- const [showCopyForm, setShowCopyForm] = useState(false);  
+ const [showCopyForm, setShowCopyForm] = useState(false);
  const [showDeleteForm, setShowDeleteForm] = useState(false);
  const [selected, setSelected] = useState([]);
  const [allSelected, setAllSelected] = useState(false);
 
  const navigate = useNavigate();
 
- // Debug useEffects
  useEffect(() => {
    console.log('ChartOfAccounts state:', {
      accountsLength: accounts?.length || 0,
@@ -58,7 +56,6 @@ const ChartOfAccounts = () => {
    }
  }, [accounts, accountsLoading, accountsError]);
 
- // Filtering and selection logic
  const selectedAccounts = accounts?.filter((account) =>
    selected.includes(account.id)
  ) || [];
@@ -86,7 +83,6 @@ const ChartOfAccounts = () => {
    });
  };
 
- // If no accounts data available at all
  if (accounts === null || accounts === undefined) {
    console.log('Accounts data is null/undefined');
    return (
@@ -105,7 +101,6 @@ const ChartOfAccounts = () => {
    <Page loading={accountsLoading} error={accountsError}>
      <h1>Chart of Accounts</h1>
 
-     {/* Display total accounts count */}
      {accounts.length > 0 && (
        <p>Total accounts: {accounts.length}</p>
      )}
@@ -173,17 +168,13 @@ const ChartOfAccounts = () => {
            >
              <Cell>{account.code}</Cell>
              <Cell>{account.name}</Cell>
+             <Cell>{account.account_type || "-"}</Cell>
              <Cell>{account.parent_code || "-"}</Cell>
-             <Cell>{account.cost_center || "-"}</Cell>
-             <Cell>{account.is_reserve ? "Yes" : "No"}</Cell>
-             <Cell>{account.is_advance ? "Yes" : "No"}</Cell>
              <Cell>{account.is_active ? "Yes" : "No"}</Cell>
              <Cell align="right">
                <Button
                  icon={faPenToSquare}
-                 onClick={() => 
-                   navigate(`/general-ledger/chart-of-accounts/edit/${account.id}`)
-                 }
+                 onClick={() => navigate(`/general-ledger/chart-of-accounts/edit/${account.id}`)}
                >
                  Edit
                </Button>
@@ -206,7 +197,6 @@ const ChartOfAccounts = () => {
          />,
          document.body
        )}
-
      {showDeleteForm &&
        createPortal(
          <AccountDeleteForm

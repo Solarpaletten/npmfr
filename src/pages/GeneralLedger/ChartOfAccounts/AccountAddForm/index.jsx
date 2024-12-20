@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../../../components/Page";  // Исправлен путь
-import { Form } from "../../../../components/Modal";  // Исправлен путь
-import Field from "../../../../components/Field";  // Исправлен путь
-import { useAccounts } from "../../../../contexts/AccountContext";  // Исправлен путь
-import { useAuthenticatedApi } from "../../../../utils/api";  // Исправлен путь
+import Page from "../../../../components/Page";
+import { Form } from "../../../../components/Modal";
+import Field from "../../../../components/Field";
+import { useAccounts } from "../../../../contexts/AccountContext";
+import { useAuthenticatedApi } from "../../../../utils/api";
 
 const AccountAddForm = () => {
   const { refetch } = useAccounts();
   const [formData, setFormData] = useState({
     code: "",
     name: "",
+    account_type: "",
     parent_code: "",
-    cost_center: "",
-    is_reserve: false,
-    is_advance: false,
     is_active: true
   });
 
@@ -39,15 +37,15 @@ const AccountAddForm = () => {
     setError(null);
 
     try {
-        await api.post("/chart-of-accounts", formData);
-        refetch();
-        navigate("/general-ledger/chart-of-accounts");
+      await api.post("/chart-of-accounts", formData);
+      refetch();
+      navigate("/general-ledger/chart-of-accounts");
     } catch (err) {
-        console.error('Error details:', err);  // Добавляем детальный лог ошибки
-        setError(err.message || "Failed to create account");
-        setLoading(false);
+      console.error('Error details:', err);
+      setError(err.message || "Failed to create account");
+      setLoading(false);
     }
-};
+  };
 
   return (
     <Page>
@@ -80,41 +78,21 @@ const AccountAddForm = () => {
         />
         <Field
           type="text"
+          name="account_type"
+          value={formData.account_type}
+          onChange={handleChange}
+          placeholder="Account type"
+          disabled={loading}
+        />
+        <Field
+          type="text"
           name="parent_code"
           value={formData.parent_code}
           onChange={handleChange}
           placeholder="Parent code"
           disabled={loading}
         />
-        <Field
-          type="text"
-          name="cost_center"
-          value={formData.cost_center}
-          onChange={handleChange}
-          placeholder="Cost center"
-          disabled={loading}
-        />
         <div className="checkbox-group">
-          <label>
-            <Field
-              type="checkbox"
-              name="is_reserve"
-              checked={formData.is_reserve}
-              onChange={handleChange}
-              disabled={loading}
-            />
-            Reserve
-          </label>
-          <label>
-            <Field
-              type="checkbox"
-              name="is_advance"
-              checked={formData.is_advance}
-              onChange={handleChange}
-              disabled={loading}
-            />
-            Advance
-          </label>
           <label>
             <Field
               type="checkbox"
