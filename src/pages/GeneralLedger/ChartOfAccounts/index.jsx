@@ -8,6 +8,7 @@ import { Table, Row, Cell } from "../../../components/Table";
 import Button from "../../../components/Button";
 import AccountCopyForm from "./AccountCopyForm";
 import AccountDeleteForm from "./AccountDeleteForm";
+import AccountImportForm from "./AccountImportForm";
 import { useAccounts } from "../../../contexts/AccountContext";
 import columns from "./columns";
 import {
@@ -15,6 +16,7 @@ import {
  faCopy,
  faPenToSquare,
  faPlus,
+ faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ChartOfAccounts = () => {
@@ -31,6 +33,8 @@ const ChartOfAccounts = () => {
  const [showDeleteForm, setShowDeleteForm] = useState(false);
  const [selected, setSelected] = useState([]);
  const [allSelected, setAllSelected] = useState(false);
+ const [showImportForm, setShowImportForm] = useState(false);
+ 
 
  const navigate = useNavigate();
 
@@ -107,20 +111,27 @@ const ChartOfAccounts = () => {
 
      <Toolbar>
        <div>
-         <Button
-           icon={faPlus}
-           onClick={() => navigate("/general-ledger/chart-of-accounts/create")}
-           disabled={accountsLoading}
-         >
-           Add new account
-         </Button>
-         <Button
-           icon={faCopy}
-           onClick={() => {
-             setShowCopyForm(true);
-           }}
-           disabled={!selectedAccountsQty || accountsLoading}
-         >
+       <Button
+      icon={faPlus}
+      onClick={() => navigate("/general-ledger/chart-of-accounts/create")}
+      disabled={accountsLoading}
+    >
+      Add new account
+    </Button>
+    <Button
+      icon={faUpload} 
+      onClick={() => setShowImportForm(true)}
+      disabled={accountsLoading}
+    >
+      Import accounts
+    </Button>
+    <Button
+      icon={faCopy}
+      onClick={() => {
+        setShowCopyForm(true);
+      }}
+      disabled={!selectedAccountsQty || accountsLoading}
+    >
            Copy
            {selectedAccountsQty ? ` ${selectedAccountsQty} item(s)` : ""}
          </Button>
@@ -143,6 +154,10 @@ const ChartOfAccounts = () => {
          disabled={accountsLoading}
        />
      </Toolbar>
+     
+     {showImportForm && (
+        <AccountImportForm onClose={() => setShowImportForm(false)} />
+      )}
 
      {accounts.length === 0 ? (
        <div style={{ padding: "20px 0" }}>
