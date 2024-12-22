@@ -19,6 +19,10 @@ import {
  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
+const FormPortal = ({ show, children }) => {
+  return show ? createPortal(children, document.body) : null;
+};
+
 const ChartOfAccounts = () => {
  const {
    accounts,
@@ -35,7 +39,6 @@ const ChartOfAccounts = () => {
  const [allSelected, setAllSelected] = useState(false);
  const [showImportForm, setShowImportForm] = useState(false);
  
-
  const navigate = useNavigate();
 
  useEffect(() => {
@@ -81,11 +84,17 @@ const ChartOfAccounts = () => {
    setSelected((prev) => {
      if (prev.includes(id)) {
        return prev.filter((item_id) => item_id !== id);
-     } else {
+     } 
        return [...prev, id];
-     }
    });
  };
+
+ const resetSelection = () => {
+  setSelected([]);
+  setAllSelected(false);
+};
+
+const handleRequery = () => refetch({ searchTerm, ...sort });
 
  if (accounts === null || accounts === undefined) {
    console.log('Accounts data is null/undefined');
@@ -110,43 +119,41 @@ const ChartOfAccounts = () => {
      )}
 
      <Toolbar>
-       <div>
-       <Button
+       <div className="toolbar-buttons">
+       <Button 
+      size="small"
       icon={faPlus}
       onClick={() => navigate("/general-ledger/chart-of-accounts/create")}
       disabled={accountsLoading}
     >
       Add new account
     </Button>
-    <Button
+    <Button 
+      size="small"
       icon={faUpload} 
       onClick={() => setShowImportForm(true)}
       disabled={accountsLoading}
     >
       Import accounts
     </Button>
-    <Button
+    <Button 
+      size="small"
       icon={faCopy}
-      onClick={() => {
-        setShowCopyForm(true);
-      }}
+      onClick={() => setShowCopyForm(true)}
       disabled={!selectedAccountsQty || accountsLoading}
     >
-           Copy
-           {selectedAccountsQty ? ` ${selectedAccountsQty} item(s)` : ""}
+           Copy{selectedAccountsQty ? ` ${selectedAccountsQty} item(s)` : ""}
          </Button>
-         <Button
+         <Button 
+           size="small"
            variant="danger"
            icon={faTrashCan}
-           onClick={() => {
-             setShowDeleteForm(true);
-           }}
+           onClick={() => setShowDeleteForm(true)}
            disabled={!selectedAccountsQty || accountsLoading}
          >
-           Delete
-           {selectedAccountsQty ? ` ${selectedAccountsQty} item(s)` : ""}
+           Delete{selectedAccountsQty ? ` ${selectedAccountsQty} item(s)` : ""}
          </Button>
-       </div>
+         </div>
 
        <SearchField
          searchTerm={searchTerm}
@@ -199,32 +206,23 @@ const ChartOfAccounts = () => {
        </Table>
      )}
 
-     {showCopyForm &&
-       createPortal(
-         <AccountCopyForm
-           selected={selectedAccounts}
-           setSelected={() => {
-             setSelected([]);
-             setAllSelected(false);
-           }}
-           onShowForm={setShowCopyForm}
-           requery={() => refetch({ searchTerm, ...sort })}
-         />,
-         document.body
-       )}
-     {showDeleteForm &&
-       createPortal(
-         <AccountDeleteForm
-           selected={selectedAccounts}
-           setSelected={() => {
-             setSelected([]);
-             setAllSelected(false);
-           }}
-           onShowForm={setShowDeleteForm}
-           requery={() => refetch({ searchTerm, ...sort })}
-         />,
-         document.body
-       )}
+      <FormPortal show={showCopyForm}>
+        <AccountCopyForm
+          selected={selectedAccounts}
+          setSelected={resetSelection}
+          onShowForm={setShowCopyForm}
+          requery={handleRequery}
+        />
+      </FormPortal>
+
+      <FormPortal show={showDeleteForm}>
+        <AccountDeleteForm
+          selected={selectedAccounts}
+          setSelected={resetSelection}
+          onShowForm={setShowDeleteForm}
+          requery={handleRequery}
+        />
+      </FormPortal>
    </Page>
  );
 };
