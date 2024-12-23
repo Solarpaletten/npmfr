@@ -1,4 +1,4 @@
-// src/pages/Bank/BankOperations/components/BankOperationImportForm/index.jsx
+// src/pages/Bank/ImportStatements/components/BankOperationImportForm/index.jsx
 import React, { useState } from 'react';
 import { Form } from "../../../../../components/Modal";
 import { useAccounts } from "../../../../../contexts/AccountContext";
@@ -45,7 +45,7 @@ const BankOperationImportForm = ({ onClose, onSuccess }) => {
       });
 
       // Валидация данных
-      const requiredFields = ['date', 'type', 'amount', 'client', 'account', 'corresponding_account'];
+      const requiredFields = ['date', 'type', 'amount', 'client', 'corresponding_account'];
       const isValid = data.every(row => {
         // Проверка наличия всех обязательных полей
         const hasRequiredFields = requiredFields.every(field => 
@@ -108,7 +108,7 @@ const BankOperationImportForm = ({ onClose, onSuccess }) => {
       buttonNegativeName="Cancel"
     >
       <h2>Import bank operations</h2>
-      <p>Select a CSV file with bank operations data</p>
+      <p>Select a CSV file with operations data</p>
       <input
         type="file"
         accept=".csv"
@@ -122,7 +122,6 @@ const BankOperationImportForm = ({ onClose, onSuccess }) => {
           <li>type - Operation type (D/K)</li>
           <li>amount - Operation amount (positive number)</li>
           <li>client - Client name</li>
-          <li>account - Bank account (default: 271)</li>
           <li>corresponding_account - Account code from chart of accounts</li>
         </ul>
         <p className="mt-2">Optional columns:</p>
