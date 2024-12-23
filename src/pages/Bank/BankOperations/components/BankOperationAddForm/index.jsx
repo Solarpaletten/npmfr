@@ -1,11 +1,11 @@
-// src/pages/Bank/BankOperations/components/BankOperationForm/index.jsx
+// src/pages/Bank/BankOperations/components/BankOperationAddForm/index.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../../../components/Page";
-import { Form } from "../../../../components/Modal";          // Исправлен путь
-import Field from "../../../../components/Field";            // Исправлен путь
-import { useBankOperations } from "../../../../contexts/BankOperationsContext"; // Исправлен путь
-import { useAuthenticatedApi } from "../../../../utils/api"; // Исправлен путь
+import { Form } from "../../../../../components/Modal";
+import Field from "../../../../../components/Field";
+import { useBankOperations } from "../../../../../contexts/BankOperationsContext";
+import { useAuthenticatedApi } from "../../../../../utils/api";
 
 const BankOperationAddForm = () => {
   const { refetch } = useBankOperations();
@@ -17,11 +17,13 @@ const BankOperationAddForm = () => {
     description: "",
     account: "271",
     corresponding_account: "",
+    purpose_of_payment: "",
     reference_number: "",
     initial_client: "",
     initial_customer_code: "",
     transfer_no: ""
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -61,6 +63,7 @@ const BankOperationAddForm = () => {
         buttonNegativeName="Cancel"
       >
         <h2>Create bank operation</h2>
+        
         <div className="grid grid-cols-2 gap-4">
           <Field
             label="Accounting bank"
@@ -122,6 +125,7 @@ const BankOperationAddForm = () => {
             name="amount"
             value={formData.amount}
             onChange={handleChange}
+            placeholder="0.00"
             disabled={loading}
             required
           />
@@ -154,25 +158,27 @@ const BankOperationAddForm = () => {
             disabled={loading}
             required
           />
-
-          <Field
-            label="Description"
-            type="text"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            disabled={loading}
-          />
-
-          <Field
-            label="Reference number"
-            type="text"
-            name="reference_number"
-            value={formData.reference_number}
-            onChange={handleChange}
-            disabled={loading}
-          />
         </div>
+
+        <Field
+          label="Purpose of payment"
+          type="textarea"
+          name="purpose_of_payment"
+          value={formData.purpose_of_payment}
+          onChange={handleChange}
+          disabled={loading}
+          className="mt-4"
+        />
+
+        <Field
+          label="Reference number"
+          type="text"
+          name="reference_number"
+          value={formData.reference_number}
+          onChange={handleChange}
+          disabled={loading}
+          className="mt-4"
+        />
       </Form>
     </Page>
   );
