@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
-import Page from "../../../components/Page";
-import Toolbar from "../../../components/Toolbar";
-import SearchField from "../../../components/SearchField";
-import { Table, Row, Cell } from "../../../components/Table";
-import Button from "../../../components/Button";
-import Field from "../../../components/Field";
+import Page from "../../components/Page";
+import Toolbar from "../../components/Toolbar";
+import SearchField from "../../components/SearchField";
+import { Table, Row, Cell } from "../../components/Table";
+import Button from "../../components/Button";
+import Field from "../../components/Field";
 import BankOperationCopyForm from "./components/BankOperationCopyForm";
 import BankOperationDeleteForm from "./components/BankOperationDeleteForm";
-import { useBankOperations } from "../../../contexts/BankOperationsContext";
+import { useBankOperations } from "../../contexts/BankOperationsContext";
 import {
   Plus,
   Minus,
