@@ -1,11 +1,11 @@
-// src/pages/Bank/BankOperations/components/BankOperationAddForm/index.jsx
+// src/pages/Bank/BankOperations/components/BankOperationForm/index.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../../../components/Page";
-import { Form } from "../../../../../components/Modal";
-import Field from "../../../../../components/Field";
-import { useBankOperations } from "../../../../../contexts/BankOperationsContext";
-import { useAuthenticatedApi } from "../../../../../utils/api";
+import { Form } from "../../../../components/Modal";          // Исправлен путь
+import Field from "../../../../components/Field";            // Исправлен путь
+import { useBankOperations } from "../../../../contexts/BankOperationsContext"; // Исправлен путь
+import { useAuthenticatedApi } from "../../../../utils/api"; // Исправлен путь
 
 const BankOperationAddForm = () => {
   const { refetch } = useBankOperations();

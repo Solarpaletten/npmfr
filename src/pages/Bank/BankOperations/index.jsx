@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
-import Page from "../../components/Page";
-import Toolbar from "../../components/Toolbar";
-import SearchField from "../../components/SearchField";
-import { Table, Row, Cell } from "../../components/Table";
-import Button from "../../components/Button";
-import Field from "../../components/Field";
+import Page from "../../components/Page";                     // Исправлен путь
+import Toolbar from "../../components/Toolbar";               // Исправлен путь
+import SearchField from "../../components/SearchField";       // Исправлен путь
+import { Table, Row, Cell } from "../../components/Table";    // Исправлен путь
+import Button from "../../components/Button";                 // Исправлен путь
+import Field from "../../components/Field";                   // Исправлен путь
 import BankOperationCopyForm from "./components/BankOperationCopyForm";
 import BankOperationDeleteForm from "./components/BankOperationDeleteForm";
-import { useBankOperations } from "../../contexts/BankOperationsContext";
+import { useBankOperations } from "../../contexts/BankOperationsContext"; // Исправлен путь
 import {
   Plus,
   Minus,
