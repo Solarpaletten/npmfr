@@ -1,4 +1,4 @@
-.button {
+.button { 
   padding: 10px;
   border-radius: 4px;
   font-size: 14px;
@@ -57,4 +57,29 @@
 .danger:hover {
   background-color: var(--red-0);
   border: 1px solid var(--red-0);
+}
+
+/* Класс кнопки "Сохранить" */
+.save {
+  background-color: var(--green-1);    /* Зеленый фон */
+  border: 1px solid var(--green-1);    /* Зеленая рамка */
+  color: var(--white-0);               /* Белый текст */
+}
+
+/* Эффект наведения на кнопку "Сохранить" */
+.save:hover {
+  background-color: var(--green-0);    /* Более темный зеленый при наведении */
+  border: 1px solid var(--green-0);    /* Рамка темнеет вместе с фоном */
+}
+
+/* Класс кнопки "Печать" */
+.print {
+  background-color: var(--blue-5);     /* Светло-синий фон */
+  border: 1px solid var(--blue-4);     /* Синяя рамка */
+  color: var(--blue-1);                /* Темно-синий текст */
+}
+
+/* Эффект наведения на кнопку "Печать" */ 
+.print:hover {
+  background-color: var(--white-0);    /* Белый фон при наведении */
 }
