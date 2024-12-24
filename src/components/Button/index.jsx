@@ -3,7 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styles from "./index.module.css";
 
-function Button({ children, className, variant, icon, type, onClick, disabled }) {
+function Button({ 
+  children, 
+  className, 
+  variant,  // 'save' | 'print' | 'default' | 'primary' | 'danger' | 'link'
+  icon, 
+  type, 
+  onClick, 
+  disabled 
+}) {
   return (
     <button
       className={`${className || ''} ${styles.button} ${styles[variant] || styles.default}`}
@@ -11,12 +19,7 @@ function Button({ children, className, variant, icon, type, onClick, disabled })
       onClick={onClick}
       disabled={disabled}
     >
-      {icon && (
-        <FontAwesomeIcon
-          icon={icon}
-          style={{ fontSize: "14px", margin: "0 5px" }}
-        />
-      )}
+      {icon && <FontAwesomeIcon icon={icon} style={{ fontSize: "14px", margin: "0 5px" }} />}
       {children}
     </button>
   );

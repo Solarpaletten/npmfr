@@ -1,40 +1,37 @@
-.container {
-  padding: 20px;
-}
-
-.header {
-  margin-bottom: 20px;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.debitAmount {
-  color: #dc3545;
-}
-
-.creditAmount {
-  color: #28a745;
-}
-
-.operations {
-  margin-top: 20px;
-}
-
-.searchField {
-  width: 300px;
-  margin-left: auto;
-}
-
-.toolbar {
+/* src/pages/Bank/BankOperations/index.module.css */
+.buttonsContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 8px;
 }
 
-.toolbar button {
-  margin-right: 10px;
+.buttonGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.debitButton,
+.creditButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+}
+
+.debitButton:hover,
+.creditButton:hover {
+  background-color: #45a049;
+}
+
+.utilityButton {
+  background-color: #f5f5f5;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+}
+
+.utilityButton:hover {
+  background-color: #e0e0e0;
 }
