@@ -1,5 +1,8 @@
 import React from 'react';
-import { seasonalEmojis } from '../../utils/seasonal';
+import { 
+    seasonalEmojis, 
+  } from '../../utils/seasonal';
+    
 
 const SeasonalDecorations = () => (
  <div className="relative overflow-hidden">
@@ -17,6 +20,16 @@ const SeasonalDecorations = () => (
          {seasonalEmojis[Math.floor(Math.random() * seasonalEmojis.length)]}
        </span>
      ))}
+
+        <style>
+        {`
+            @keyframes snowfall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+            }
+        `}
+        </style>
+
    </div>
  </div>
 );
