@@ -41,7 +41,7 @@ function AppContent() {
   };
 
   const accessibleRoutes = routes.filter(
-    ({ path }) => path !== "/dashboard" || user?.role === "admin"
+    ({ path }) => path !== "/clients" || user?.role === "admin"
   );
 
   return (
@@ -64,10 +64,7 @@ function AppContent() {
         <Route
           path="*"
           element={
-            <Navigate
-              to={user?.role === "admin" ? "/dashboard" : "/clients"}
-              replace
-            />
+            <Navigate to="/clients" replace />
           }
         />
       </Routes>
