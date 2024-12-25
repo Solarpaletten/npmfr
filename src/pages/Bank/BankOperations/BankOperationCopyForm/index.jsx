@@ -1,7 +1,7 @@
 // src/pages/Bank/BankOperations/components/BankOperationCopyForm/index.jsx
 import React, { useState } from "react";
-import { Form } from "../../../../../components/Modal";
-import { useAuthenticatedApi } from "../../../../../utils/api";
+import { Form } from "../../../../components/Modal";
+import { useAuthenticatedApi } from "../../../../utils/api";
 
 const BankOperationCopyForm = ({ selected, setSelected, onShowForm, requery }) => {
   const [loading, setLoading] = useState(false);

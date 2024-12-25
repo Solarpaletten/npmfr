@@ -1,7 +1,7 @@
 // src/pages/Bank/BankOperations/components/BankOperationDeleteForm/index.jsx
 import React, { useState } from "react";
-import { Form } from "../../../../../components/Modal";
-import { useAuthenticatedApi } from "../../../../../utils/api";
+import { Form } from "../../../../components/Modal";
+import { useAuthenticatedApi } from "../../../../utils/api";
 
 const BankOperationDeleteForm = ({ selected, setSelected, onShowForm, requery }) => {
   const [loading, setLoading] = useState(false);

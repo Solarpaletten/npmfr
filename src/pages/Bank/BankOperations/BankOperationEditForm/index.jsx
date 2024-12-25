@@ -1,11 +1,11 @@
 // src/pages/Bank/BankOperations/components/BankOperationEditForm/index.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../../../../components/Page";
-import { Form } from "../../../../../components/Modal";
-import Field from "../../../../../components/Field";
-import { useBankOperations } from "../../../../../contexts/BankOperationsContext";
-import { useAuthenticatedApi } from "../../../../../utils/api";
+import Page from "../../../../components/Page";
+import { Form } from "../../../../components/Modal";
+import Field from "../../../../components/Field";
+import { useBankOperations } from "../../../../contexts/BankOperationsContext";
+import { useAuthenticatedApi } from "../../../../utils/api";
 
 const BankOperationEditForm = () => {
   const { id } = useParams();
