@@ -63,9 +63,7 @@ function AppContent() {
         ))}
         <Route
           path="*"
-          element={
-            <Navigate to="/clients" replace />
-          }
+          element={<Navigate to="/clients" replace />}
         />
       </Routes>
     </div>
