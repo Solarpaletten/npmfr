@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Page from "../../../components/Page";
 import Toolbar from "../../../components/Toolbar";
@@ -27,24 +27,23 @@ const Payroll = () => {
   const [showDeleteForm, setShowDeleteForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     try {
       const data = await api.get("/payroll");
-
       setData(data);
     } catch (error) {
       setError("Failed to fetch payroll");
     } finally {
       setLoading(false);
     }
-  };
+  }, [api]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <Page loading={loading} error={error}>
