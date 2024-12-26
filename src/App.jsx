@@ -63,9 +63,7 @@ function AppContent() {
         ))}
         <Route
           path="*"
-          element={
-            <Navigate to="/dashboard" /> // Redirect to dashboard if route doesn't exist
-          }
+          element={<Navigate to="/clients" replace />}
         />
       </Routes>
     </div>
