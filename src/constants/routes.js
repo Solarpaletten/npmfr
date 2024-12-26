@@ -1,5 +1,5 @@
 // // Dashboard
-// import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Dashboard";
 //Clients
 import Clients from "../pages/Clients";
 import ClientAddForm from "../pages/Clients/ClientAddForm";
@@ -77,7 +77,7 @@ import Profile from "../pages/Settings/Profile";
 import Security from "../pages/Settings/Security";
 
 const routes = [
-  // { path: "/dashboard", component: Dashboard },
+  { path: "/dashboard", component: Dashboard },
   //Clients
   { path: "/clients", component: Clients },
   { path: "/clients/create", component: ClientAddForm },
