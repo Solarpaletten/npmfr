@@ -29,6 +29,8 @@ serve -s build
 ```
 3. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+        REACT_APP_API_URL=https://npmbk.onrender.com
+
 Plan
 //Warehouse
 // import ClientPrices from "../pages/Warehouse/ClientPrices";
