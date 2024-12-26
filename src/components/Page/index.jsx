@@ -1,24 +1,33 @@
-import React from 'react';
-import { seasonalEmojis } from '../../utils/seasonal';
+import React from "react";
+import Header from "../Header";
+import Sidebar from "../Sidebar";
+import Loader from "../../components/Loader";
+import Error from "../../components/Error";
 
-const SeasonalDecorations = () => (
- <div className="relative overflow-hidden">
-   <div className="absolute w-full h-full">
-     {[...Array(20)].map((_, i) => (
-       <span 
-         key={i}
-         className="absolute animate-snowfall"
-         style={{
-           left: `${Math.random() * 100}%`,
-           animationDelay: `${Math.random() * 5}s`,
-           fontSize: `${Math.random() * 20 + 10}px`
-         }}
-       >
-         {seasonalEmojis[Math.floor(Math.random() * seasonalEmojis.length)]}
-       </span>
-     ))}
-   </div>
- </div>
-);
+import styles from "./index.module.css";
 
-export default SeasonalDecorations;
+function Page({ loading, error, children }) {
+  const showContent = () => {
+    if (loading) {
+      return <Loader />;
+    }
+
+    if (error) {
+      return <Error error={error} />;
+    }
+
+    return <div className={styles.container}>{children}</div>;
+  };
+
+  return (
+    <div className={styles.page}>
+      <Sidebar />
+      <main>
+        <Header />
+        {showContent()}
+      </main>
+    </div>
+  );
+}
+
+export default Page;

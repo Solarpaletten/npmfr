@@ -41,8 +41,8 @@ function AppContent() {
   };
 
   const accessibleRoutes = routes.filter(
-    ({ path }) => path !== "/clients" || user?.role === "admin"
-  );
+    ({ path }) => path !== "/dashboard" && path !== "/login"
+    );
 
   return (
     <div className="app-container">
@@ -64,7 +64,7 @@ function AppContent() {
         <Route
           path="*"
           element={
-            <Navigate to="/clients" replace />
+            <Navigate to="/dashboard" /> // Redirect to dashboard if route doesn't exist
           }
         />
       </Routes>
