@@ -30,10 +30,3 @@
   --blue-transparent: #25305e80;
   --white-transparent: #ffffff17;
 }
-
-body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-}

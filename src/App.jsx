@@ -41,8 +41,8 @@ function AppContent() {
   };
 
   const accessibleRoutes = routes.filter(
-    ({ path }) => path !== "/clients" || user?.role === "admin"
-  );
+    ({ path }) => path !== "/dashboard" && path !== "/login"
+    );
 
   return (
     <div className="app-container">
