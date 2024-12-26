@@ -1,8 +1,13 @@
-@keyframes snowfall {
- 0% { transform: translateY(0) rotate(0deg); }
- 100% { transform: translateY(100vh) rotate(360deg); }
-}
-
-.animate-snowfall {
- animation: snowfall 5s linear infinite;
-}
+.page {
+    display: flex;
+  }
+  
+  .page main {
+    flex: auto;
+  }
+  
+  .container {
+    margin: 10px 20px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
