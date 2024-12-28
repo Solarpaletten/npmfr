@@ -21,8 +21,8 @@ import React, {
       setLoading(true);
       setError(null);
       try {
-        const data = await get("/bank/operations");
-        setOperations(data);
+        const data = await get("/bank-operations");
+       setOperations(data);
       } catch (error) {
         setError("Failed to fetch bank operations");
         console.error("Error fetching bank operations:", error);
