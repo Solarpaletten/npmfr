@@ -4,13 +4,18 @@ import Dashboard from "../pages/Dashboard";
 import Clients from "../pages/Clients";
 import ClientAddForm from "../pages/Clients/ClientAddForm";
 import ClientEditForm from "../pages/Clients/ClientEditForm";
-//Warehouse
+//Purchases
 import Purchases from "../pages/Warehouse/Purchases";
+import PurchaseAddForm from "../pages/Warehouse/Purchases/PurchaseAddForm";
+import PurchaseEditForm from "../pages/Warehouse/Purchases/PurchaseEditForm";
+import PurchaseCopyForm from "../pages/Warehouse/Purchases/PurchaseCopyForm";
+import PurchaseDeleteForm from "../pages/Warehouse/Purchases/PurchaseDeleteForm";
+//Sales
 import Sales from "../pages/Warehouse/Sales";
 import SaleAddForm from "../pages/Warehouse/Sales/SaleAddForm";
 import SaleEditForm from "../pages/Warehouse/Sales/SaleEditForm";
-import PurchaseAddForm from "../pages/Warehouse/Purchases/PurchaseAddForm";
-import PurchaseEditForm from "../pages/Warehouse/Purchases/PurchaseEditForm";
+import SaleCopyForm from "../pages/Warehouse/Sales/SaleCopyForm";
+import SaleDeleteForm from "../pages/Warehouse/Sales/SaleDeleteForm";
 //Bank
 import BankOperations from "../pages/Bank/BankOperations";
 import BankOperationAddForm from "../pages/Bank/BankOperations/BankOperationAddForm";
@@ -82,13 +87,18 @@ const routes = [
   { path: "/clients", component: Clients },
   { path: "/clients/create", component: ClientAddForm },
   { path: "/clients/edit/:id", component: ClientEditForm },
-  //Warehouse
+  //Purchases
   { path: "/warehouse/purchases", component: Purchases },
   { path: "/warehouse/purchases/create", component: PurchaseAddForm },
   { path: "/warehouse/purchases/edit/:id", component: PurchaseEditForm },
-  { path: "/warehouse/sales", component: Sales },
+  { path: "/warehouse/purchases/copy/:id", component: PurchaseCopyForm },
+  { path: "/warehouse/purchases/delete/:id", component: PurchaseDeleteForm },
+  //Sales
+  { path: "warehouse/sales", component: Sales },
   { path: "/warehouse/sales/create", component: SaleAddForm },
   { path: "/warehouse/sales/edit/:id", component: SaleEditForm },
+  { path: "/warehouse/sales/copy/:id", component: SaleCopyForm },
+  { path: "/warehouse/sales/delete/:id", component: SaleDeleteForm },
   //Bank
   { path: "/bank/operations", component: BankOperations },
   { path: "/bank/operations/create", component: BankOperationAddForm },
@@ -149,6 +159,7 @@ const routes = [
   { path: "/cashier/cash-balance", component: CashBalance },
   { path: "/cashier/cash-operations", component: CashOperations },
   { path: "/cashier/cash-report", component: CashReport },
+  //Settings
   { path: "/settings/preferences", component: Preferences },
   { path: "/settings/profile", component: Profile },
   { path: "/settings/security", component: Security },
