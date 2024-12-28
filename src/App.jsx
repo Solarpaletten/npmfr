@@ -13,12 +13,14 @@ import LoginForm from "./pages/LoginForm";
 import routes from "./constants/routes.js";
 import { UserProvider, useUser } from "./contexts/UserContext";
 import { ClientProvider } from "./contexts/ClientContext";
-import { WarehouseProvider } from "./contexts/WarehouseContext";
+import { SaleProvider } from "./contexts/SaleContext.jsx";
+import { PurchaseProvider } from "./contexts/PurchaseContext.jsx";
 import { ProductProvider } from "./contexts/ProductContext";
 import { BankOperationsProvider } from "./contexts/BankOperationsContext";
 import { AccountProvider } from "./contexts/AccountContext";
 
 import "./App.css";
+
 
 function AppContent() {
   const { user, logoutUser } = useUser();
@@ -74,7 +76,8 @@ function AppProviders({ children }) {
   return (
     <UserProvider>
       <ClientProvider>
-        <WarehouseProvider>
+        <SaleProvider>
+         <PurchaseProvider>
           <ProductProvider>
             <BankOperationsProvider>
               <AccountProvider>
@@ -82,7 +85,8 @@ function AppProviders({ children }) {
               </AccountProvider>
             </BankOperationsProvider>
           </ProductProvider>
-        </WarehouseProvider>
+         </PurchaseProvider>
+        </SaleProvider>
       </ClientProvider>
     </UserProvider>
   );
