@@ -163,6 +163,10 @@ const routes = [
   { path: "/settings/preferences", component: Preferences },
   { path: "/settings/profile", component: Profile },
   { path: "/settings/security", component: Security },
+  //Warehouses
+  // { path: "/warehouses", component: WarehouseReferences },
+
+
 ];
 
 export default routes;
