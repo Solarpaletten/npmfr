@@ -1,4 +1,4 @@
-// // Dashboard
+// Dashboard
 import Dashboard from "../pages/Dashboard";
 //Clients
 import Clients from "../pages/Clients";
@@ -81,92 +81,90 @@ import Preferences from "../pages/Settings/Preferences";
 import Profile from "../pages/Settings/Profile";
 import Security from "../pages/Settings/Security";
 
+// Оставляем все импорты как есть...
+
 const routes = [
-  { path: "/dashboard", component: Dashboard },
+  { path: "/dashboard", element: <Dashboard /> },
   //Clients
-  { path: "/clients", component: Clients },
-  { path: "/clients/create", component: ClientAddForm },
-  { path: "/clients/edit/:id", component: ClientEditForm },
+  { path: "/clients", element: <Clients /> },
+  { path: "/clients/create", element: <ClientAddForm /> },
+  { path: "/clients/edit/:id", element: <ClientEditForm /> },
   //Purchases
-  { path: "/warehouse/purchases", component: Purchases },
-  { path: "/warehouse/purchases/create", component: PurchaseAddForm },
-  { path: "/warehouse/purchases/edit/:id", component: PurchaseEditForm },
-  { path: "/warehouse/purchases/copy/:id", component: PurchaseCopyForm },
-  { path: "/warehouse/purchases/delete/:id", component: PurchaseDeleteForm },
+  { path: "/warehouse/purchases", element: <Purchases /> },
+  { path: "/warehouse/purchases/create", element: <PurchaseAddForm /> },
+  { path: "/warehouse/purchases/edit/:id", element: <PurchaseEditForm /> },
+  { path: "/warehouse/purchases/copy/:id", element: <PurchaseCopyForm /> },
+  { path: "/warehouse/purchases/delete/:id", element: <PurchaseDeleteForm /> },
   //Sales
-  { path: "warehouse/sales", component: Sales },
-  { path: "/warehouse/sales/create", component: SaleAddForm },
-  { path: "/warehouse/sales/edit/:id", component: SaleEditForm },
-  { path: "/warehouse/sales/copy/:id", component: SaleCopyForm },
-  { path: "/warehouse/sales/delete/:id", component: SaleDeleteForm },
+  { path: "warehouse/sales", element: <Sales /> },
+  { path: "/warehouse/sales/create", element: <SaleAddForm /> },
+  { path: "/warehouse/sales/edit/:id", element: <SaleEditForm /> },
+  { path: "/warehouse/sales/copy/:id", element: <SaleCopyForm /> },
+  { path: "/warehouse/sales/delete/:id", element: <SaleDeleteForm /> },
   //Bank
-  { path: "/bank/operations", component: BankOperations },
-  { path: "/bank/operations/create", component: BankOperationAddForm },
-  { path: "/bank/operations/edit/:id", component: BankOperationEditForm },
-  { path: "/bank/import-statements", component: ImportStatements },
-  { path: "/bank/correspondent-links", component: BankLink },
-  { path: "/bank/sepa-payments", component: SepaPayments },
+  { path: "/bank/operations", element: <BankOperations /> },
+  { path: "/bank/operations/create", element: <BankOperationAddForm /> },
+  { path: "/bank/operations/edit/:id", element: <BankOperationEditForm /> },
+  { path: "/bank/import-statements", element: <ImportStatements /> },
+  { path: "/bank/correspondent-links", element: <BankLink /> },
+  { path: "/bank/sepa-payments", element: <SepaPayments /> },
   //General Ledger
-  { path: "/general-ledger/register", component: GeneralRegister },
-  { path: "/general-ledger/ledger", component: GeneralLedgerContent },
-  { path: "/general-ledger/settlement", component: DocSettlement },
-  { path: "/general-ledger/period-closure", component: PeriodClosure },
-  { path: "/general-ledger/currency-range", component: CurrencyRange },
-  { path: "/general-ledger/exchange-rate", component: ExchangeRate },
-  { path: "/general-ledger/chart-of-accounts", component: ChartOfAccounts },
-  { path: "/general-ledger/chart-of-accounts/create", component: AccountAddForm },
-  { path: "/general-ledger/chart-of-accounts/edit/:id", component: AccountEditForm },
+  { path: "/general-ledger/register", element: <GeneralRegister /> },
+  { path: "/general-ledger/ledger", element: <GeneralLedgerContent /> },
+  { path: "/general-ledger/settlement", element: <DocSettlement /> },
+  { path: "/general-ledger/period-closure", element: <PeriodClosure /> },
+  { path: "/general-ledger/currency-range", element: <CurrencyRange /> },
+  { path: "/general-ledger/exchange-rate", element: <ExchangeRate /> },
+  { path: "/general-ledger/chart-of-accounts", element: <ChartOfAccounts /> },
+  { path: "/general-ledger/chart-of-accounts/create", element: <AccountAddForm /> },
+  { path: "/general-ledger/chart-of-accounts/edit/:id", element: <AccountEditForm /> },
   //Reference Book
-  { path: "/references/product-cards", component: ProductCards },
-  { path: "/references/warehouse", component: WarehouseReferences },
-  { path: "/references/locations", component: Locations },
-  { path: "/references/banks", component: Banks },
-  { path: "/references/correspondent-banks", component: CorrespondentBanks },
-  { path: "/references/currencies", component: Currencies },
-  { path: "/references/currency-rates", component: CurrencyRates },
+  { path: "/references/product-cards", element: <ProductCards /> },
+  { path: "/references/warehouse", element: <WarehouseReferences /> },
+  { path: "/references/locations", element: <Locations /> },
+  { path: "/references/banks", element: <Banks /> },
+  { path: "/references/correspondent-banks", element: <CorrespondentBanks /> },
+  { path: "/references/currencies", element: <Currencies /> },
+  { path: "/references/currency-rates", element: <CurrencyRates /> },
   //Personnel
-  { path: "/personnel/departments", component: Departments },
-  { path: "/personnel/employee-list", component: EmployeeList },
-  { path: "/personnel/positions", component: Positions },
+  { path: "/personnel/departments", element: <Departments /> },
+  { path: "/personnel/employee-list", element: <EmployeeList /> },
+  { path: "/personnel/positions", element: <Positions /> },
   //Production
-  { path: "/production/production-orders", component: ProductionOrders },
-  { path: "/production/production-plans", component: ProductionPlans },
-  { path: "/production/workshop-management", component: WorkshopManagement },
+  { path: "/production/production-orders", element: <ProductionOrders /> },
+  { path: "/production/production-plans", element: <ProductionPlans /> },
+  { path: "/production/workshop-management", element: <WorkshopManagement /> },
   //Assets
-  { path: "/assets/assets-list", component: AssetsList },
-  { path: "/assets/depreciation", component: Depreciation },
-  { path: "/assets/maintenance", component: Maintenance },
+  { path: "/assets/assets-list", element: <AssetsList /> },
+  { path: "/assets/depreciation", element: <Depreciation /> },
+  { path: "/assets/maintenance", element: <Maintenance /> },
   //Documents
-  { path: "/documents/archive", component: Archive },
-  { path: "/documents/documents-list", component: DocumentsList },
-  { path: "/documents/templates", component: Templates },
+  { path: "/documents/archive", element: <Archive /> },
+  { path: "/documents/documents-list", element: <DocumentsList /> },
+  { path: "/documents/templates", element: <Templates /> },
   //Reports
-  { path: "/reports/report-generator", component: ReportGenerator },
-  { path: "/reports/reports-list", component: ReportsList },
-  { path: "/reports/report-viewer", component: ReportViewer },
+  { path: "/reports/report-generator", element: <ReportGenerator /> },
+  { path: "/reports/reports-list", element: <ReportsList /> },
+  { path: "/reports/report-viewer", element: <ReportViewer /> },
   //Salary
-  { path: "/salary/payroll", component: Payroll },
-  { path: "/salary/timesheets", component: Timesheets },
-  { path: "/salary/schedule", component: WorkSchedule },
-  { path: "/salary/wage-prints", component: WagePrints },
-  { path: "/salary/reference", component: SalaryReferenceBook },
+  { path: "/salary/payroll", element: <Payroll /> },
+  { path: "/salary/timesheets", element: <Timesheets /> },
+  { path: "/salary/schedule", element: <WorkSchedule /> },
+  { path: "/salary/wage-prints", element: <WagePrints /> },
+  { path: "/salary/reference", element: <SalaryReferenceBook /> },
   //Declaration
-  { path: "/declaration/vat", component: VatDeclaration },
-  { path: "/declaration/tax", component: TaxDeclaration },
-  { path: "/declaration/statistical", component: StatisticalDeclaration },
-  { path: "/declaration/customs", component: CustomsDeclaration },
+  { path: "/declaration/vat", element: <VatDeclaration /> },
+  { path: "/declaration/tax", element: <TaxDeclaration /> },
+  { path: "/declaration/statistical", element: <StatisticalDeclaration /> },
+  { path: "/declaration/customs", element: <CustomsDeclaration /> },
   //Cashier
-  { path: "/cashier/cash-balance", component: CashBalance },
-  { path: "/cashier/cash-operations", component: CashOperations },
-  { path: "/cashier/cash-report", component: CashReport },
+  { path: "/cashier/cash-balance", element: <CashBalance /> },
+  { path: "/cashier/cash-operations", element: <CashOperations /> },
+  { path: "/cashier/cash-report", element: <CashReport /> },
   //Settings
-  { path: "/settings/preferences", component: Preferences },
-  { path: "/settings/profile", component: Profile },
-  { path: "/settings/security", component: Security },
-  //Warehouses
-  // { path: "/warehouses", component: WarehouseReferences },
-
-
+  { path: "/settings/preferences", element: <Preferences /> },
+  { path: "/settings/profile", element: <Profile /> },
+  { path: "/settings/security", element: <Security /> }
 ];
 
 export default routes;

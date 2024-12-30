@@ -21,7 +21,6 @@ import { AccountProvider } from "./contexts/AccountContext";
 
 import "./App.css";
 
-
 function AppContent() {
   const { user, logoutUser } = useUser();
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ function AppContent() {
 
   const accessibleRoutes = routes.filter(
     ({ path }) => path !== "/dashboard" && path !== "/login"
-    );
+  );
 
   return (
     <div className="app-container">
@@ -52,13 +51,13 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
-        {accessibleRoutes.map(({ path, component: Component }) => (
+        {accessibleRoutes.map(({ path, element }) => (
           <Route
             key={path}
             path={path}
             element={
               <ProtectedRoute>
-                <Component />
+                {element}
               </ProtectedRoute>
             }
           />
@@ -77,15 +76,15 @@ function AppProviders({ children }) {
     <UserProvider>
       <ClientProvider>
         <SaleProvider>
-         <PurchaseProvider>
-          <ProductProvider>
-            <BankOperationsProvider>
-              <AccountProvider>
-                {children}
-              </AccountProvider>
-            </BankOperationsProvider>
-          </ProductProvider>
-         </PurchaseProvider>
+          <PurchaseProvider>
+            <ProductProvider>
+              <BankOperationsProvider>
+                <AccountProvider>
+                  {children}
+                </AccountProvider>
+              </BankOperationsProvider>
+            </ProductProvider>
+          </PurchaseProvider>
         </SaleProvider>
       </ClientProvider>
     </UserProvider>
