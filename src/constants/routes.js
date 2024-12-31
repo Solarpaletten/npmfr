@@ -11,11 +11,11 @@ import PurchaseEditForm from "../pages/Warehouse/Purchases/PurchaseEditForm";
 import PurchaseCopyForm from "../pages/Warehouse/Purchases/PurchaseCopyForm";
 import PurchaseDeleteForm from "../pages/Warehouse/Purchases/PurchaseDeleteForm";
 //Sales
-import Sales from "../pages/Warehouse/Sales";
-import SaleAddForm from "../pages/Warehouse/Sales/SaleAddForm";
-import SaleEditForm from "../pages/Warehouse/Sales/SaleEditForm";
-import SaleCopyForm from "../pages/Warehouse/Sales/SaleCopyForm";
-import SaleDeleteForm from "../pages/Warehouse/Sales/SaleDeleteForm";
+import Sales from "../pages/Sales";
+import SaleAddForm from "../pages/Sales/SaleAddForm";
+import SaleEditForm from "../pages/Sales/SaleEditForm";
+import SaleCopyForm from "../pages/Sales/SaleCopyForm";
+import SaleDeleteForm from "../pages/Sales/SaleDeleteForm";
 //Bank
 import BankOperations from "../pages/Bank/BankOperations";
 import BankOperationAddForm from "../pages/Bank/BankOperations/BankOperationAddForm";
@@ -96,11 +96,11 @@ const routes = [
   { path: "/warehouse/purchases/copy/:id", element: <PurchaseCopyForm /> },
   { path: "/warehouse/purchases/delete/:id", element: <PurchaseDeleteForm /> },
   //Sales
-  { path: "warehouse/sales", element: <Sales /> },
-  { path: "/warehouse/sales/create", element: <SaleAddForm /> },
-  { path: "/warehouse/sales/edit/:id", element: <SaleEditForm /> },
-  { path: "/warehouse/sales/copy/:id", element: <SaleCopyForm /> },
-  { path: "/warehouse/sales/delete/:id", element: <SaleDeleteForm /> },
+  { path: "/sales", element: <Sales /> },
+  { path: "/sales/create", element: <SaleAddForm /> },
+  { path: "/sales/edit/:id", element: <SaleEditForm /> },
+  { path: "/sales/copy/:id", element: <SaleCopyForm /> },
+  { path: "/sales/delete/:id", element: <SaleDeleteForm /> },
   //Bank
   { path: "/bank/operations", element: <BankOperations /> },
   { path: "/bank/operations/create", element: <BankOperationAddForm /> },

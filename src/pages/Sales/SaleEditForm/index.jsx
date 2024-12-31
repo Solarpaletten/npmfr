@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../../../components/Page";
-import { Form } from "../../../../components/Modal";
-import Field from "../../../../components/Field";
-import Select from "../../../../components/Select";
-import Button from "../../../../components/Button";
-import ProductCalculatorTable from "../../ProductCalculatorTable";
-import { useClients } from "../../../../contexts/ClientContext";
-import { useSales } from "../../../../contexts/SaleContext"; 
-import { useAuthenticatedApi } from "../../../../utils/api";
+import Page from "../../../components/Page";
+import { Form } from "../../../components/Modal";
+import Field from "../../../components/Field";
+import Select from "../../../components/Select";
+import Button from "../../../components/Button";
+import ProductCalculatorTable from "../../../pages/Warehouse/ProductCalculatorTable";
+import { useClients } from "../../../contexts/ClientContext";
+import { useSales } from "../../../contexts/SaleContext"; 
+import { useAuthenticatedApi } from "../../../utils/api";
 
 const SaleEditForm = () => {
   const { id } = useParams();
@@ -41,7 +41,7 @@ const SaleEditForm = () => {
   useEffect(() => {
     const fetchSale = async () => {
       try {
-        const response = await api.get(`/warehouse/sales/${id}`);
+        const response = await api.get(`/sales/${id}`);
         setFormData(response.data);
       } catch (error) {
         setError("Failed to fetch sale");
@@ -81,8 +81,8 @@ const SaleEditForm = () => {
     setError(null);
 
     try {
-      await api.put(`/warehouse/sales/${id}`, form);
-      navigate("/warehouse/sales");
+      await api.put(`/sales/${id}`, form);
+      navigate("/sales");
     } catch (err) {
       setError("Failed to update sale");
       setLoading(false);
@@ -103,7 +103,7 @@ const SaleEditForm = () => {
       
       <Form
         onSubmit={handleSubmit}
-        onClose={() => navigate("/warehouse/sales")}
+        onClose={() => navigate("/sales")}
         loading={loading}
         error={error}
         buttonPositiveName="Update Sale"
