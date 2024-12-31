@@ -68,7 +68,7 @@ const menuData = [
       {
         label: "Sales",
         labelRu: "Продажи",
-        path: "/warehouse/sales",
+        path: "/sales",
         icon: faArrowUp,
       },
       {

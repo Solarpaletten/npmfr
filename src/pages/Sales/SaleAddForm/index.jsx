@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../../../components/Page";
-import { Form } from "../../../../components/Modal";
-import Field from "../../../../components/Field";
-import Select from "../../../../components/Select";
-import Button from "../../../../components/Button";
-import ProductCalculatorTable from "../../ProductCalculatorTable";
-import { useClients } from "../../../../contexts/ClientContext";
-import { useSales } from "../../../../contexts/SaleContext"; 
-import { useAuthenticatedApi } from "../../../../utils/api";
+import Page from "../../../components/Page";
+import { Form } from "../../../components/Modal";
+import Field from "../../../components/Field";
+import Select from "../../../components/Select";
+import Button from "../../../components/Button";
+import ProductCalculatorTable from "../../../pages/Warehouse/ProductCalculatorTable";
+import { useClients } from "../../../contexts/ClientContext";
+import { useSales } from "../../../contexts/SaleContext"; 
+import { useAuthenticatedApi } from "../../../utils/api";
 
 const SaleAddForm = () => {
  const api = useAuthenticatedApi();
@@ -62,8 +62,8 @@ const SaleAddForm = () => {
    setError(null);
 
    try {
-     await api.post("/warehouse/sales", form);
-     navigate("/warehouse/sales");
+     await api.post("/sales", form);
+     navigate("/sales");
    } catch (err) {
      setError("Failed to create sale");
      setLoading(false);
@@ -81,7 +81,7 @@ const SaleAddForm = () => {
      
      <Form
        onSubmit={handleSubmit}
-       onClose={() => navigate("/warehouse/sales")}
+       onClose={() => navigate("/sales")}
        loading={loading}
        error={error}
        buttonPositiveName="Create Sale"

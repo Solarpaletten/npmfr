@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import Page from "../../../components/Page";
-import Toolbar from "../../../components/Toolbar";
-import SearchField from "../../../components/SearchField";
-import { Table, Row, Cell } from "../../../components/Table";
-import Button from "../../../components/Button";
+import Page from "../../components/Page";
+import Toolbar from "../../components/Toolbar";
+import SearchField from "../../components/SearchField";
+import { Table, Row, Cell } from "../../components/Table";
+import Button from "../../components/Button";
 import SaleCopyForm from "./SaleCopyForm";
 import SaleDeleteForm from "./SaleDeleteForm";
-import { useAuthenticatedApi } from "../../../utils/api";
+import { useAuthenticatedApi } from "../../utils/api";
 import columns from "./columns";
 import {
   faTrashCan,
@@ -41,7 +41,7 @@ const Sales = () => {
     setError(null);
 
     try {
-      const data = await api.get("/warehouse/sales");
+      const data = await api.get("/sales");
 
       setSales(data);
     } catch (error) {
@@ -85,7 +85,7 @@ const Sales = () => {
         <div>
           <Button
             icon={faPlus}
-            onClick={() => navigate("/warehouse/sales/create")}
+            onClick={() => navigate("/sales/create")}
             disabled={loading}
           >
             Create invoice
@@ -147,7 +147,7 @@ const Sales = () => {
             <Cell align="right">
               <Button
                 icon={faPenToSquare}
-                onClick={() => navigate(`/warehouse/sales/edit/${sale.id}`)}
+                onClick={() => navigate(`/sales/edit/${sale.id}`)}
               >
                 Edit
               </Button>
