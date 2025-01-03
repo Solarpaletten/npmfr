@@ -48,7 +48,7 @@
 
 .deleteButton,
 .clientsButton {
-  background-color: #da1111;
+  background-color: hsla(37, 87%, 33%, 0.866);
   color: white;
   padding: 6px 12px;
   border: none;
@@ -57,7 +57,7 @@
 
 .addButton:hover,
 .clientsButton:hover {
-  background-color: #45a049;
+  background-color:hwb(0 5% 5% / 0.866);
 }
 
 .utilityButton {
@@ -68,6 +68,6 @@
 }
 
 .utilityButton:hover {
-  background-color: #e0e0e0;
+  background-color: #45a049;
 }
 

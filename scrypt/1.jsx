@@ -10,7 +10,6 @@ import {
 import Home from "./pages/Home";
 import RegisterForm from "./pages/RegisterForm";
 import LoginForm from "./pages/LoginForm";
-import Dashboard from "./pages/Dashboard";
 import routes from "./constants/routes.js";
 import { UserProvider, useUser } from "./contexts/UserContext";
 import { ClientProvider } from "./contexts/ClientContext";
@@ -42,7 +41,9 @@ function AppContent() {
     return user ? children : <Navigate to="/login" />;
   };
 
-  const accessibleRoutes = routes.filter(({ path }) => path !== "/login");
+  const accessibleRoutes = routes.filter(
+    ({ path }) => path !== "/dashboard" && path !== "/login"
+  );
 
   return (
     <div className="app-container">
@@ -50,14 +51,6 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
         {accessibleRoutes.map(({ path, element }) => (
           <Route
             key={path}
@@ -83,7 +76,9 @@ function AppProviders({ children }) {
           <PurchaseProvider>
             <ProductProvider>
               <BankOperationsProvider>
-                <AccountProvider>{children}</AccountProvider>
+                <AccountProvider>
+                  {children}
+                </AccountProvider>
               </BankOperationsProvider>
             </ProductProvider>
           </PurchaseProvider>
