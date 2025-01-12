@@ -9,7 +9,11 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: ['https://npmfr.onrender.com', 'http://localhost:3000'],
+  origin: [
+    'https://npmfr.onrender.com',  // фронтенд на render
+    'http://localhost:3000',       // локальный фронтенд
+    'http://localhost:3001'        // локальный бэкенд
+  ],
   credentials: true
 }));
 
