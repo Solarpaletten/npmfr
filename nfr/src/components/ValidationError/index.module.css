@@ -1,0 +1,10 @@
+.error_plug {
+  height: 30px;
+}
+
+.error {
+  color: #B43F3F;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}

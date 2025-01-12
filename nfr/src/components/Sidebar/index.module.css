@@ -1,0 +1,91 @@
+.sidebar {
+  max-width: 240px;
+  min-width: 240px;
+  box-sizing: border-box;
+  background-color: var(--blue-0);
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  height: 100vh;
+  position: sticky;
+}
+
+.items {
+  color: var(--white-0);
+  margin: 30px 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.items {
+  color: var(--white-0);
+  margin: 30px 0;
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.items::-webkit-scrollbar {
+  display: none;
+}
+
+.sub {
+  background-color: var(--white-transparent);
+  border-radius: 5px;
+}
+
+.sub .item {
+  padding: 10px;
+}
+
+.sub_title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item {
+  padding: 10px 0;
+}
+
+.item svg {
+  color: var(--white-0);
+  margin: 0 10px 0 0;
+  width: 14px;
+}
+
+.item a,
+.sub_title {
+  color: var(--white-0);
+  text-decoration: none;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.item:hover a,
+.item:hover svg,
+.sub_title:hover,
+.active a,
+.active a svg {
+  color: var(--orange-2);
+}
+
+.logo {
+  height: 40px;
+}
+
+.bottom {
+  border-top: 1px solid var(--blue-1);
+  position: absolute;
+  bottom: 20px;
+  background-color: var(--blue-0);
+  width: calc(100% - 40px);
+}
+
+.bottom .item {
+  margin: 10px 0 40px;
+}
+
+.bottom .button {
+  width: 100%;
+  margin: 4px 0;
+}

@@ -1,0 +1,25 @@
+.statsGrid {
+  display: grid;
+  gap: 15px;
+  margin: 15px 0;
+  background: white;
+}
+
+.statCard {
+  border-radius: 6px;
+  padding: 20px;
+  border: 1px solid var(--grey-2);
+}
+
+.statCard h3 {
+  color: var(--grey-1);
+  font-size: 14px;
+  margin: 0 0 10px;
+  font-weight: normal;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--blue-1);
+}

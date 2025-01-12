@@ -1,0 +1,12 @@
+.container_error {
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+.error svg {
+  color: var(--red-1);
+  font-size: 28px;
+}

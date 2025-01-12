@@ -1,0 +1,22 @@
+{
+  "name": "npmfr",
+  "version": "1.0.0",
+  "description": "Full stack application with NBK backend and NFR frontend",
+  "scripts": {
+    "install:all": "npm install && cd nbk && npm install && cd ../nfr && npm install",
+    "start": "cd nbk && npm start",
+    "start:backend": "cd nbk && npm run start",
+    "start:frontend": "cd nfr && npm start",
+    "build": "cd nfr && npm install && npm run build && cd ../nbk && npm install",
+    "build:backend": "cd nbk && npm run build",
+    "build:frontend": "cd nfr && npm run build",
+    "dev": "concurrently \"cd nbk && npm run dev\" \"cd nfr && npm start\"",
+    "serve": "cd nfr && serve -s build",
+    "copy-frontend": "cp -r nfr/build nbk/public",
+    "start:prod": "cd nbk && npm start",
+    "postbuild": "cp -r nfr/build nbk/public"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 
