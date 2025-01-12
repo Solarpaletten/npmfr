@@ -24,7 +24,7 @@ or
 ```
 npm run dev
 ```
-3. Open [http://localhost:4000](http://localhost:4000).
+3. Open [http://localhost:3001](http://localhost:3001).
 
 
 generator client {
