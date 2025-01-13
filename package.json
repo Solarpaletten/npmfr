@@ -7,13 +7,14 @@
     "frontend"
   ],
   "scripts": {
-    "start": "concurrently \"cd nbk && npm start\" \"cd frontend && npm start\"",
-    "build": "cd nbk && npm install && npx prisma generate && cd ../frontend && npm install && npm run build",
-    "dev": "concurrently \"cd nbk && npm run dev\" \"cd frontend && npm start\"",
-    "start:backend": "cd nbk && npm start",
-    "start:frontend": "cd frontend && npm start"
+    "install-backend": "cd nbk && npm install && npx prisma generate",
+    "install-frontend": "cd frontend && npm install",
+    "build-frontend": "cd frontend && npm run build",
+    "build": "npm run install-backend && npm run install-frontend && npm run build-frontend",
+    "start": "cd nbk && npm start",
+    "dev": "concurrently \"cd nbk && npm run dev\" \"cd frontend && npm start\""
   },
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^8.2.2"
   }
 }
