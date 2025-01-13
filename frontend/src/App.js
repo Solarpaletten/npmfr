@@ -5,7 +5,7 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <Router basename="/npmfr">
+    <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
