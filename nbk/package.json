@@ -10,6 +10,10 @@
     "start": "node src/index.js",
     "routes": "node -e \"console.log(require('./app')._router.stack.filter(r => r.route).map(r => r.route.path))\"",
     "postinstall": "prisma generate"
+    "dev": "nodemon src/index.js",
+    "build": "npx prisma generate",
+    "start": "node src/index.js",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
