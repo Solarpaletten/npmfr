@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:4000/api/v1
+
+### 1. Тест авторизации
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "solar@solar.pl",
+    "password": "pass123"
+}
+
+### 2. Тест получения профиля (с токеном)
+GET {{baseUrl}}/users/profile
+Authorization: Bearer 
+Content-Type: application/json
+
+### 3. Тест получения дашборда (с токеном)
+GET {{baseUrl}}/dashboard
+Authorization: Bearer 
+Content-Type: application/json 

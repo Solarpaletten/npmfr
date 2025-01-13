@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:4000
+
+### 1. Сначала регистрация (выполнить один раз)
+# @name register
+POST {{baseUrl}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "username": "solar",
+    "email": "solar@solar.pl",
+    "password": "pass123"
+}
+
+
+### 2. Затем логин (выполнить для получения токена)
+# @name login
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "solar@solar.pl",
+    "password": "pass123"
+}
+
+### 3. После логина можно получить профиль
+# @name profile
+GET {{baseUrl}}/api/v1/users/profile
+Authorization: Bearer 
+Content-Type: application/json
+
+### 4. И данные дашборда
+
