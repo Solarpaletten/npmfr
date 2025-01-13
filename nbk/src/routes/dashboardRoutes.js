@@ -1,13 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const dashboardController = require('../controllers/dashboardController');
 
-// Базовый маршрут для проверки
+// Базовые маршруты дашборда
 router.get('/', (req, res) => {
-  res.json({ message: 'Dashboard API is working' });
+  // Получение данных дашборда
 });
-
-// Маршрут для получения статистики
-router.get('/summary', dashboardController.getSummaryStats);
 
 module.exports = router;

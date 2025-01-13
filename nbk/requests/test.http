@@ -1,9 +1,20 @@
-### Тестовый маршрут
-GET http://localhost:3001/api/v1/test
+@baseUrl = http://localhost:4000/api/v1
 
-### Базовый маршрут дашборда
-GET http://localhost:3001/api/v1/dashboard
+### 1. Тест авторизации
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
 
-### Маршрут статистики
-GET http://localhost:3001/api/v1/dashboard/summary
-Authorization: Bearer {{$dotenv authToken}} 
+{
+    "email": "solar@solar.pl",
+    "password": "pass123"
+}
+
+### 2. Тест получения профиля (с токеном)
+GET {{baseUrl}}/users/profile
+Authorization: Bearer 
+Content-Type: application/json
+
+### 3. Тест получения дашборда (с токеном)
+GET {{baseUrl}}/dashboard
+Authorization: Bearer 
+Content-Type: application/json 

@@ -1,20 +1,19 @@
 const jwt = require('jsonwebtoken');
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'Не предоставлен токен авторизации' });
-  }
-
+const auth = async (req, res, next) => {
   try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      throw new Error();
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(403).json({ message: 'Недействительный токен' });
+    res.status(401).json({ error: 'Please authenticate' });
   }
 };
 
-module.exports = authenticateToken; 
+module.exports = auth;

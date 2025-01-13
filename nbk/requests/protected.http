@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:4000
+@authToken = your_token_here
+
+### Получение профиля пользователя
+GET {{baseUrl}}/api/v1/users/profile
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+### Получение данных дашборда
+GET {{baseUrl}}/api/v1/dashboard
+Authorization: Bearer {{authToken}}
+Content-Type: application/json 
