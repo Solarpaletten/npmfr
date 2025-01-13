@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "cd nbk && npm start",
-    "build": "cd nbk && npm install",
+    "build": "cd nbk && npm install && npx prisma generate",
     "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "cd nbk && npm start",
     "start:frontend": "cd frontend && npm start"
@@ -16,4 +16,4 @@
   "dependencies": {
     "concurrently": "^8.2.0"
   }
-} 
+}
