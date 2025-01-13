@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
+
+    "dev": "nodemon app.js",
     "build": "npx prisma generate",
     "start": "node src/index.js",
+    "routes": "node -e \"console.log(require('./app')._router.stack.filter(r => r.route).map(r => r.route.path))\"",
+
     "postinstall": "prisma generate"
   },
   "keywords": [],
