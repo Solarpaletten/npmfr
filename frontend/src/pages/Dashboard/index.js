@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../../config';
 
 function Dashboard() {
   const [data, setData] = useState(null);
@@ -8,7 +9,7 @@ function Dashboard() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:4000/api/v1/dashboard', {
+      axios.get(`${API_URL}/api/v1/dashboard`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(response => setData(response.data))

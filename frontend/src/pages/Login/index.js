@@ -2,6 +2,7 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../config';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ function Login() {
     e.preventDefault();
     console.log('Attempting login with:', { email, password });
     try {
-      const response = await axios.post('http://localhost:4000/api/v1/auth/login', {
+      const response = await axios.post(`${API_URL}/api/v1/auth/login`, {
         email,
         password
       });
