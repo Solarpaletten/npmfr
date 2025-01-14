@@ -2,7 +2,7 @@
 
 ### 1. Сначала регистрация (выполнить один раз)
 # @name register
-POST {{baseUrl}}/api/v1/auth/register
+POST http://localhost:4000/api/v1/auth/register
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ### 2. Затем логин (выполнить для получения токена)
 # @name login
-POST {{baseUrl}}/api/v1/auth/login
+POST http://localhost:4000/api/v1/auth/login
 Content-Type: application/json
 
 {

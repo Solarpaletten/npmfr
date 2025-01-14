@@ -1,19 +1,39 @@
 const jwt = require('jsonwebtoken');
 
-const auth = async (req, res, next) => {
+const auth = (req, res, next) => {
   try {
+    // Получаем токен из заголовка
     const token = req.header('Authorization')?.replace('Bearer ', '');
     
     if (!token) {
-      throw new Error();
+      return res.status(401).json({ message: 'Authentication required' });
     }
 
+    // Проверяем токен
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    
+    // Добавляем данные пользователя в request
+    req.user = {
+      userId: decoded.userId,
+      role: decoded.role
+    };
+
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Please authenticate' });
+    res.status(401).json({ message: 'Invalid token' });
   }
 };
 
-module.exports = auth;
+// Middleware для проверки роли админа
+const adminAuth = (req, res, next) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Admin access required' });
+  }
+  next();
+};
+
+// Экспортируем оба middleware
+module.exports = {
+  auth,
+  adminAuth
+};

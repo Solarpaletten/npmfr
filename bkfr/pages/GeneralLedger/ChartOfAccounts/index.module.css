@@ -1,0 +1,23 @@
+.checkbox-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .toolbar-buttons {
+    display: flex;
+    gap: 8px;  /* Отступ между кнопками */
+    align-items: center;
+  }
+  
+  .button-small {
+    padding: 4px 8px;
+    font-size: 12px;
+    height: 28px;
+  }
